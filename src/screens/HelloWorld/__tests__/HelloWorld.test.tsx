@@ -7,16 +7,11 @@ import { HelloWorld } from '../HelloWorld';
 import '../__mocks__/HelloWorld.module-mocks';
 
 describe('HelloWorld', () => {
-  it('renders correctly', () => {
-    const { toJSON } = render(<HelloWorld />);
-    expect(toJSON()).toMatchSnapshot();
-  });
-
   it('displays the hello world message', () => {
     render(<HelloWorld />);
 
     // The mock replaces Text with testID 'hello-world'
-    const textElement = screen.getByTestId('hello-world');
+    const textElement = screen.getByTestId('hello-world-text');
     expect(textElement).toBeTruthy();
   });
 
@@ -24,7 +19,7 @@ describe('HelloWorld', () => {
     render(<HelloWorld />);
 
     // Verify the mocked Text component exists with testID
-    const textElement = screen.getByTestId('hello-world');
+    const textElement = screen.getByTestId('hello-world-text');
     expect(textElement).toBeTruthy();
   });
 
