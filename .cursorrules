@@ -1,0 +1,26 @@
+# AI Usage Policy
+
+## Allowed
+
+- Generating boilerplate code
+- Writing tests
+- Refactoring
+- Documentation
+
+## Not Allowed
+
+- Inserting sensitive data into prompts
+- Copying code without review
+- Using for security-critical logic without verification
+
+## AI Code Review Process
+
+1. Generate
+2. Read and understand every line
+3. Check for security issues
+4. Write tests
+5. Only then commit
+
+## Licenses
+
+- Verify AI doesn't copy GPL code into MIT project
