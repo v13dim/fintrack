@@ -1,26 +1,238 @@
-# AI Usage Policy
+# FinTrack - AI Development Guidelines
 
-## Allowed
+## Project Overview
 
-- Generating boilerplate code
-- Writing tests
-- Refactoring
-- Documentation
+FinTrack is a React Native personal finance tracking mobile application. It uses TypeScript with strict mode, follows a Layered Architecture pattern, and stores all data locally (offline-first).
 
-## Not Allowed
+**Tech Stack:**
 
-- Inserting sensitive data into prompts
-- Copying code without review
-- Using for security-critical logic without verification
+- React Native 0.83+ with New Architecture
+- TypeScript (strict mode)
+- RealmJS by MongoDB (local database)
+- Jest for testing
+- React Native Testing Library
 
-## AI Code Review Process
+## Architecture
 
-1. Generate
-2. Read and understand every line
-3. Check for security issues
-4. Write tests
-5. Only then commit
+**Layered Architecture:**
 
-## Licenses
+1. **Presentation Layer**: `components/` (flexibly organized), `screens/`, `navigation/`
+2. **Business Logic Layer**: `hooks/`, `services/`
+3. **Data Layer**: `store/`, `db/`
+4. **Infrastructure Layer**: `utils/`, `theme/`, `constants/`, `assets/`, `localization/`
 
-- Verify AI doesn't copy GPL code into MIT project
+**Key Principles:**
+
+- Separation of concerns: UI components are presentation-only
+- Business logic lives in hooks and services
+- Database accessed only through services (never directly from components)
+- Dependencies point inward: screens → components → hooks/services → db
+- Single responsibility: each module has one clear purpose
+- Flexible component organization: organize by type, feature, or common/shared as needed
+
+## Folder Structure & Where to Find Things
+
+### Core Directories
+
+- **`src/components/`** - UI components (flexibly organized)
+  - Organize by type: `common/`, `forms/`, `cards/`, `lists/`
+  - Or by feature: `transactions/`, `budgets/`, `categories/`
+  - Or mix as needed for discoverability
+- **`src/screens/`** - Screen components (compose components)
+- **`src/hooks/`** - Custom React hooks (business logic)
+- **`src/services/`** - Business logic services (data operations)
+- **`src/db/`** - Database layer (Realm schemas, models, migrations)
+- **`src/navigation/`** - Navigation configuration
+- **`src/utils/`** - Pure utility functions
+- **`src/theme/`** - Design tokens (colors, typography, spacing)
+- **`src/constants/`** - Application constants
+- **`src/assets/`** - Static assets (fonts, images, SVG)
+- **`src/localization/`** - i18n translations
+- **`src/testUtils/`** - Testing utilities
+- **`docs/architecture/`** - ADR documents (read ADR-001 and ADR-002 for details)
+
+### Module Structure Pattern
+
+Every module follows this structure:
+
+```
+ModuleName/
+  ├── __tests__/              # Test files
+  │   └── ModuleName.test.tsx
+  ├── __mocks__/              # Mock files
+  │   └── ModuleName.module-mocks.ts
+  ├── ModuleName.tsx          # Implementation
+  ├── ModuleName.types.ts     # Types (if separate)
+  ├── ModuleName.styles.ts    # Styles (if separate)
+  └── index.ts                # Export
+```
+
+## Code Style & Conventions
+
+### File Naming
+
+- Components: `PascalCase.tsx` (e.g., `Button.tsx`)
+- Screens: `PascalCase.tsx` (e.g., `HomeScreen.tsx`)
+- Hooks: `useCamelCase.ts` (e.g., `useTransactions.ts`)
+- Services: `camelCaseService.ts` (e.g., `transactionService.ts`)
+- Utils: `camelCase.ts` (e.g., `formatCurrency.ts`)
+- Tests: `*.test.tsx` or `*.test.ts`
+- Styles: `*.styles.ts`
+
+### Import Organization
+
+1. External dependencies (React, React Native, third-party)
+2. Internal absolute imports (by layer, alphabetical):
+   - Navigation → Components → Hooks → Services → Utils → Theme → Constants → Localization
+3. Relative imports
+
+**Use path aliases** (configured in `tsconfig.json`):
+
+- `components/*`, `hooks/*`, `services/*`, `utils/*`, `screens/*`, etc.
+
+### Code Formatting
+
+- Prettier: single quotes, trailing commas, arrow parens: avoid
+- ESLint: extends `@react-native`
+- TypeScript: strict mode enabled
+
+### Component Structure
+
+```typescript
+// 1. Imports (external → internal → relative)
+import React, { FC } from 'react';
+import { View } from 'react-native';
+import { Button } from 'components/common';
+import { styles } from './styles';
+
+// 2. Types/Interfaces
+interface IComponentProps {
+  // props
+}
+
+// 3. Component
+export const Component: FC<IComponentProps> = ({ ...props }) => {
+  // logic
+  return <View style={styles.container}>{/* JSX */}</View>;
+};
+```
+
+## Component Organization Rules
+
+**Organization Strategy:**
+
+- Organize components by purpose, type, or feature as makes sense
+- Common patterns: `components/common/`, `components/forms/`, `components/cards/`, `components/lists/`
+- Feature-specific: `components/transactions/`, `components/budgets/` (if needed)
+- Prioritize discoverability and logical grouping
+- No strict hierarchy or dependency rules between component folders
+- Components can import from other components as needed
+- Focus on reusability through good design, not enforced structure
+
+**Dependency Rule:**
+
+- Screens compose components and use hooks/services
+- Components can use other components, hooks, and services
+- No enforced dependency rules between component folders
+
+## Testing Requirements
+
+**ALWAYS:**
+
+- Write tests for new components, hooks, services, and utilities
+- Place tests in `__tests__/` folder co-located with source
+- Use React Native Testing Library for component tests
+- Mock external dependencies in `__mocks__/` folders
+- Test files follow naming: `ModuleName.test.tsx` or `ModuleName.test.ts`
+
+**Test Structure:**
+
+- Import mocks at the top of test files
+- Use descriptive test names
+- Test user interactions, not implementation details
+
+## Do's and Don'ts
+
+### DO:
+
+- ✅ Follow the layered architecture (components → hooks → services → db)
+- ✅ Organize components flexibly (by type, feature, or common/shared)
+- ✅ Create tests for all new code
+- ✅ Use path aliases for imports
+- ✅ Export from `index.ts` files
+- ✅ Use TypeScript strict typing
+- ✅ Place business logic in hooks/services, not components
+- ✅ Access database only through services
+- ✅ Use theme constants for colors/spacing
+- ✅ Use localization for all user-facing text
+- ✅ Follow the module structure pattern (tests, mocks, implementation)
+- ✅ Read ADR documents in `docs/architecture/` for architectural decisions
+- ✅ Prioritize component discoverability and logical grouping
+
+### DON'T:
+
+- ❌ Import database directly from components (use services)
+- ❌ Put business logic in components
+- ❌ Use relative imports when path aliases are available
+- ❌ Skip writing tests
+- ❌ Hardcode strings (use localization)
+- ❌ Hardcode colors/spacing (use theme)
+- ❌ Create files outside the established structure
+- ❌ Mix concerns (UI + business logic + data access)
+- ❌ Overthink component organization - start simple, refactor as patterns emerge
+
+## Where to Look for Specific Things
+
+- **Architecture decisions**: `docs/architecture/ADR-001-high-level-architecture.md`, `ADR-002.md`
+- **Component examples**: `src/screens/HelloWorld/` (shows full module structure)
+- **TypeScript config**: `tsconfig.json` (path aliases, baseUrl)
+- **Test examples**: `src/screens/HelloWorld/__tests__/`
+- **Mock examples**: `src/screens/HelloWorld/__mocks__/`
+- **Project spec**: `fintrack-spec-en.md`
+- **PRD**: `fintrack-prd-en.md`
+
+## Common Tasks
+
+**Adding a new component:**
+
+1. Decide organization (common, forms, cards, lists, or feature-specific)
+2. Create folder: `components/{organization}/ComponentName/` (e.g., `components/common/Button/`)
+3. Follow module structure pattern (tests, mocks, implementation)
+4. Export from `components/{organization}/index.ts` or `components/index.ts`
+
+**Adding a new screen:**
+
+1. Create folder: `screens/ScreenName/`
+2. Follow module structure pattern
+3. Compose using components from `components/`
+4. Export from `screens/index.ts`
+
+**Adding a new hook:**
+
+1. Create folder: `hooks/useHookName/`
+2. Follow module structure pattern
+3. Encapsulate business logic
+4. Export from `hooks/index.ts`
+
+**Adding a new service:**
+
+1. Create folder: `services/serviceNameService/`
+2. Follow module structure pattern
+3. Abstract data access (use `db/` layer)
+4. Export from `services/index.ts`
+
+## Important Notes
+
+- **Database**: RealmJS - accessed ONLY through services, never directly from components
+- **State Management**: To be decided (see ADR-003)
+- **Navigation**: To be decided (see ADR-006)
+- **Offline-first**: All data stored locally, no cloud sync
+- **Security**: PIN/biometric auth, secure local storage
+- **Performance**: Fast transaction entry (<500ms), smooth scrolling (≥55 FPS)
+
+## When in Doubt
+
+1. Check existing code in `src/screens/HelloWorld/` for structure examples
+2. Read ADR documents in `docs/architecture/`
+3. Follow the established patterns - consistency is key
+4. When adding new code, match the existing module structure exactly

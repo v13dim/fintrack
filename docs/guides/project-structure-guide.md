@@ -1,93 +1,6 @@
-# ADR-002: Project Structure
+# Project Structure Guide
 
-## Status
-
-Accepted
-
-## Context
-
-Following ADR-001's decision to adopt a Layered Architecture with Atomic Design, we need to define a detailed, consistent project structure. This structure must:
-
-- Support the architectural layers defined in ADR-001
-- Enable easy navigation and code discovery
-- Facilitate team collaboration
-- Make testing straightforward
-- Scale as the project grows
-- Follow React Native and TypeScript best practices
-
-The structure should be intuitive enough that developers can quickly find where to add new code without extensive documentation lookup.
-
-## Considered Options
-
-### Option A: Flat Structure
-
-```
-src/
-  components.tsx
-  screens.tsx
-  hooks.ts
-  services.ts
-  ...
-```
-
-- ✅ Minimal nesting
-- ❌ Files become unmanageably large
-- ❌ No organization for related code
-- ❌ Poor scalability
-
-### Option B: Feature-Based Structure
-
-```
-src/
-  features/
-    transactions/
-      components/
-      hooks/
-      services/
-      types/
-    categories/
-      ...
-  shared/
-    components/
-    utils/
-```
-
-- ✅ Clear feature boundaries
-- ✅ Good for large teams
-- ❌ Code duplication risk
-- ❌ Harder to share common code
-- ❌ Overkill for current project scope
-
-### Option C: Layered Structure with Atomic Design (Selected)
-
-```
-src/
-  components/ (atoms, molecules, organisms)
-  screens/
-  navigation/
-  hooks/
-  services/
-  store/
-  db/
-  api/
-  utils/
-  theme/
-  constants/
-  assets/
-  localization/
-  testUtils/
-```
-
-- ✅ Aligns with ADR-001 architecture
-- ✅ Clear separation of concerns
-- ✅ Easy to locate code by type
-- ✅ Promotes reusability
-- ✅ Scales well
-- ❌ Requires discipline to maintain boundaries
-
-## Decision
-
-We will adopt **Layered Structure with Atomic Design** (Option C), with detailed folder organization as specified below.
+This document provides a detailed guide to the project structure adopted in [ADR-002: Project Structure](../adr/ADR-002-project-structure.md). For the architectural decision and rationale, see the ADR document.
 
 ## Project Structure
 
@@ -101,7 +14,7 @@ fintrack/
 ├── __tests__/            # Root-level tests
 ├── __mocks__/            # Root-level mocks
 ├── docs/                  # Documentation
-│   └── architecture/      # ADR documents
+│   └── adr/              # ADR documents
 ├── App.tsx               # Application entry point
 ├── index.js              # React Native entry point
 ├── package.json          # Dependencies and scripts
@@ -116,17 +29,14 @@ fintrack/
 
 ```
 src/
-├── api/                  # API layer (future use)
-│   └── index.ts          # API client exports
-│
 ├── assets/               # Static assets
 │   ├── fonts/            # Custom fonts
 │   ├── images/           # Image files
 │   └── svg/              # SVG icons
 │       └── index.ts      # SVG exports
 │
-├── components/           # UI Components (Atomic Design)
-│   ├── atoms/            # Basic building blocks
+├── components/           # UI Components (flexible organization)
+│   ├── common/           # Widely reused components
 │   │   ├── Button/
 │   │   │   ├── __tests__/
 │   │   │   │   └── Button.test.tsx
@@ -138,19 +48,12 @@ src/
 │   │   │   └── index.ts
 │   │   ├── Input/
 │   │   ├── Text/
-│   │   └── index.ts      # Public exports
+│   │   └── index.ts      # Common component exports
 │   │
-│   ├── molecules/        # Simple component combinations
+│   ├── forms/            # Form-related components
 │   │   ├── FormField/
-│   │   ├── TransactionItem/
-│   │   ├── CategoryCard/
-│   │   └── index.ts      # Public exports
-│   │
-│   ├── organisms/        # Complex UI sections
-│   │   ├── TransactionList/
-│   │   ├── BudgetCard/
-│   │   ├── CategoryList/
-│   │   └── index.ts      # Public exports
+│   │   ├── FormGroup/
+│   │   └── index.ts      # Form component exports
 │   │
 │   └── index.ts          # Main component exports
 │
@@ -328,35 +231,39 @@ ComponentName/
   └── index.ts                # Export
 ```
 
-**Atomic Design Levels:**
+**Component Organization:**
 
-1. **Atoms** (`components/atoms/`)
+Components are organized flexibly within the `components/` directory. Common organizational patterns include:
 
-   - Smallest, most reusable components
+1. **By Type** (`components/common/`, `components/forms/`, `components/cards/`, `components/lists/`)
+
+   - Groups components by their UI pattern or purpose
+   - Examples: `common/Button`, `forms/FormField`, `cards/TransactionCard`, `lists/TransactionList`
+   - Good for discovering components by what they do
+   - Promotes reuse of similar component types
+
+2. **By Feature** (`components/transactions/`, `components/budgets/`, `components/categories/`)
+
+   - Groups components by business domain or feature
+   - Examples: `transactions/TransactionItem`, `budgets/BudgetCard`
+   - Useful when components are tightly coupled to a specific feature
+   - Can be combined with type-based organization
+
+3. **Common/Shared** (`components/common/`)
+
+   - Widely reused components that don't fit a specific category
    - Examples: `Button`, `Input`, `Text`, `Icon`, `Avatar`
+   - Foundation components used throughout the app
    - No business logic, only presentation
-   - Can be used by molecules, organisms, and screens
 
-2. **Molecules** (`components/molecules/`)
+**Organization Principles:**
 
-   - Combine atoms for specific use cases
-   - Examples: `FormField`, `TransactionItem`, `CategoryCard`, `BudgetProgress`
-   - May contain minimal local state
-   - Can use atoms and other molecules
-   - Can be used by organisms and screens
-
-3. **Organisms** (`components/organisms/`)
-   - Complex UI sections combining molecules and atoms
-   - Examples: `TransactionList`, `BudgetCard`, `CategoryList`, `AnalyticsChart`
-   - May use hooks for data fetching
-   - Can use atoms, molecules, and other organisms
-   - Primarily used by screens
-
-**Dependency Rule:**
-
-- Atoms cannot import from molecules or organisms
-- Molecules cannot import from organisms
-- Organisms can import from all levels
+- Organize by purpose, type, or feature as makes sense
+- Prioritize discoverability and logical grouping
+- No strict hierarchy or dependency rules between component folders
+- Components can import from other components as needed
+- Focus on reusability through good design, not enforced structure
+- Structure can evolve as the project grows
 
 ### Screens (`screens/`)
 
@@ -378,7 +285,7 @@ ScreenName/
 
 **Guidelines:**
 
-- Screens compose organisms and molecules
+- Screens compose components from the `components/` directory
 - Screens use hooks for business logic
 - Screens handle navigation and lifecycle
 - Screen-specific components go in `components/` subfolder
@@ -616,10 +523,10 @@ import { useNavigation } from '@react-navigation/native';
 // Navigation
 import { routes } from 'navigation';
 
-// Components (atoms → molecules → organisms)
-import { Button } from 'components/atoms';
-import { FormField } from 'components/molecules';
-import { TransactionList } from 'components/organisms';
+// Components (organized by type/feature)
+import { Button } from 'components/common';
+import { FormField } from 'components/forms';
+import { TransactionList } from 'components/lists';
 
 // Hooks
 import { useTransactions } from 'hooks';
@@ -656,7 +563,6 @@ Configure in `tsconfig.json`:
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "api/*": ["api/*"],
       "assets/*": ["assets/*"],
       "components/*": ["components/*"],
       "constants/*": ["constants/*"],
@@ -681,7 +587,7 @@ Configure in `tsconfig.json`:
 // 1. Imports (external → internal → relative)
 import React, { FC } from 'react';
 import { View, Text } from 'react-native';
-import { Button } from 'components/atoms';
+import { Button } from 'components/common';
 import { useTransactions } from 'hooks';
 import { styles } from './styles';
 
@@ -712,10 +618,15 @@ export default Component;
 Each folder should have an `index.ts` file that exports public APIs:
 
 ```typescript
-// components/atoms/index.ts
+// components/common/index.ts
 export { Button } from './Button';
 export { Input } from './Input';
 export { Text } from './Text';
+
+// components/index.ts
+export { Button, Input, Text } from './common';
+export { FormField } from './forms';
+export { TransactionCard } from './cards';
 
 // hooks/index.ts
 export { useTransactions } from './useTransactions';
@@ -725,9 +636,10 @@ export { useAuth } from './useAuth';
 
 **Benefits:**
 
-- Cleaner imports: `import { Button } from 'components/atoms'`
+- Cleaner imports: `import { Button } from 'components/common'` or `import { Button } from 'components'`
 - Encapsulation: hide internal structure
 - Easier refactoring: change internal structure without breaking imports
+- Flexible organization: components can be reorganized without breaking external imports
 
 ## Module Structure Pattern
 
@@ -778,61 +690,17 @@ ModuleName/
    - Clear conventions reduce confusion
    - New team members understand structure immediately
 
-## Consequences
-
-### Positive
-
-1. **Discoverability**
-
-   - Developers can quickly find where code belongs
-   - Consistent structure reduces cognitive load
-
-2. **Maintainability**
-
-   - Clear separation makes refactoring easier
-   - Easy to locate and fix bugs
-
-3. **Scalability**
-
-   - Structure supports growth
-   - New features fit naturally into existing structure
-
-4. **Team Collaboration**
-
-   - Reduces merge conflicts
-   - Clear conventions reduce discussions
-
-5. **Testing**
-   - Test files co-located with source
-   - Easy to find and maintain tests
-
-### Negative / Trade-offs
-
-1. **File Count**
-
-   - More files to navigate
-   - **Mitigation**: Good IDE support, search functionality
-
-2. **Initial Setup**
-
-   - More boilerplate for new components
-   - **Mitigation**: Code snippets/templates
-
-3. **Discipline Required**
-
-   - Must follow structure consistently
-   - **Mitigation**: Linting rules, code reviews
-
-4. **Import Paths**
-   - Longer import paths
-   - **Mitigation**: Path aliases, index files
-
 ## Guidelines for Adding New Code
 
 ### Adding a New Component
 
-1. Determine atomic level (atom/molecule/organism)
-2. Create folder: `components/{level}/ComponentName/`
+1. Determine appropriate organization (common, forms, cards, lists, or feature-specific)
+2. Create folder: `components/{category}/ComponentName/`
+   - Use `common/` for widely reused components (Button, Input, Text)
+   - Use `forms/` for form-related components (FormField, FormGroup)
+   - Use `cards/` for card components (TransactionCard, BudgetCard)
+   - Use `lists/` for list components (TransactionList, CategoryList)
+   - Use feature folders if component is feature-specific (e.g., `transactions/TransactionItem`)
 3. Create folder structure:
    - `__tests__/ComponentName.test.tsx` - Test file
    - `__mocks__/ComponentName.module-mocks.ts` - Mock file
@@ -840,7 +708,8 @@ ModuleName/
    - `ComponentName.styles.ts` (if needed) - Styles
    - `ComponentName.types.ts` (if needed) - Types
    - `index.ts` - Export file
-4. Export from `components/{level}/index.ts`
+4. Export from `components/{category}/index.ts` (if category has index file)
+5. Export from `components/index.ts` for public API
 
 ### Adding a New Screen
 
@@ -959,8 +828,9 @@ If code exists outside this structure:
 
 ## References
 
-- ADR-001: Architectural Approach
+- [ADR-002: Project Structure](../adr/ADR-002-project-structure.md) - Architectural decision
+- [ADR-001: Architectural Approach](../adr/ADR-001-high-level-architecture.md) - High-level architecture
+- [Layered Architecture Implementation Guide](./layered-architecture-implementation.md) - Architecture implementation details
 - [React Native Project Structure](https://reactnative.dev/docs/contributing)
-- [Atomic Design Methodology](https://bradfrost.com/blog/post/atomic-web-design/)
 - [TypeScript Path Mapping](https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping)
 - Project Specification: `fintrack-spec-en.md`
