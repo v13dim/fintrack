@@ -10,15 +10,18 @@ The application follows a Layered Architecture pattern with four main layers:
 
 - **UI Components** (`components/`): Organized flexibly by type, feature, or common/shared
 
-  - UI components are presentation-only
-  - Screens compose components and handle navigation
-  - Container/Presentation pattern for logic separation
+  - UI components are presentation-only with zero dependencies on business logic
+  - Components can only use: other components, theme, constants, utils, assets
+  - Components receive all data and callbacks via props
+  - Components cannot use hooks, services, or access the database
+  - Container/Presentation pattern: screens are containers, components are presentational
 
 - **Screens** (`screens/`): Screen-level components that compose UI components
 
   - Handle navigation and lifecycle
-  - Use hooks for business logic
+  - Use hooks for business logic (screens are the only layer that can consume hooks)
   - Compose components from the `components/` directory
+  - Pass data and callbacks to components via props
 
 - **Navigation** (`navigation/`): Navigation configuration and routing setup
   - Navigation is used by screens, but screens don't depend on navigation internals
@@ -29,11 +32,14 @@ The application follows a Layered Architecture pattern with four main layers:
 
   - Examples: `useTransactions`, `useBudgets`, `useAuth`
   - Encapsulate business logic in reusable hooks
+  - **Consumed only by screens** - components cannot use hooks
+  - Hooks use services for data operations
 
 - **Services** (`services/`): Business logic services that handle data operations
   - Handle data operations and business rules
   - Pure functions where possible
   - Abstract data access (database, API)
+  - Used by hooks (and potentially by other services)
 
 ### 3. Data Layer (`store/`, `db/`)
 
@@ -93,8 +99,10 @@ components/
 
 - Organize by purpose, type, or feature as makes sense
 - Prioritize discoverability and logical grouping
+- Components have zero dependencies on business logic (hooks, services)
+- Components can import from other components, theme, constants, utils, assets
+- Components receive all data and callbacks via props
 - No strict hierarchy or dependency rules between component folders
-- Components can import from other components as needed
 - Focus on reusability through good design, not enforced structure
 - Structure can evolve as the project grows
 
@@ -102,8 +110,10 @@ components/
 
 ### 1. Separation of Concerns
 
-- UI components are presentation-only
+- UI components are presentation-only with zero dependencies on business logic
+- Components receive all data and callbacks via props
 - Business logic lives in hooks and services
+- Hooks are consumed only by screens, never by components
 - Data access is abstracted through services
 
 ### 2. Single Responsibility Principle
@@ -115,11 +125,21 @@ components/
 
 Dependencies point inward: screens → components → hooks/services → db
 
-- Screens compose components and use hooks/services
-- Navigation is used by screens, but screens don't depend on navigation internals
-- Services and hooks can be used by any layer
-- Database layer (`db/`) is accessed through services, not directly from components
-- Utils are shared utilities with no dependencies
+- **Screens** compose components and use hooks/services
+  - Screens are the only layer that can consume hooks
+  - Screens handle business logic through hooks
+  - Navigation is used by screens, but screens don't depend on navigation internals
+- **Components** have zero dependencies on other parts of the app
+  - Components are pure presentation components
+  - Components can only use: other components, theme, constants, utils, assets (infrastructure layer)
+  - Components cannot use hooks, services, or access the database
+  - Components receive all data and callbacks via props
+- **Hooks** are consumed only by screens
+  - Hooks encapsulate business logic and use services
+  - Hooks are never used directly by components
+- **Services** are used by hooks (and potentially by other services)
+  - Database layer (`db/`) is accessed through services, not directly from components or hooks
+- **Utils** are shared utilities with no dependencies
 
 ### 4. Testability
 
@@ -146,7 +166,9 @@ Dependencies point inward: screens → components → hooks/services → db
 
 ### 1. Container/Presentation Pattern
 
-- Separate data/logic containers from presentational components
+- **Screens** act as containers: use hooks, handle business logic, manage state
+- **Components** are presentational: receive data via props, have zero dependencies on business logic
+- Strict separation: components cannot use hooks or services
 - Improves testability and reusability
 
 ### 2. Custom Hooks Pattern
