@@ -95,3 +95,30 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+# AI Usage Policy
+
+## Allowed
+
+- Generating boilerplate code
+- Writing tests
+- Refactoring
+- Documentation
+
+## Not Allowed
+
+- Inserting sensitive data into prompts
+- Copying code without review
+- Using for security-critical logic without verification
+
+## AI Code Review Process
+
+1. Generate
+2. Read and understand every line
+3. Check for security issues
+4. Write tests
+5. Only then commit
+
+## Licenses
+
+- Verify AI doesn't copy GPL code into MIT project
