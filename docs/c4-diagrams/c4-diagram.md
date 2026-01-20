@@ -93,36 +93,35 @@ Shows the components within the React Native application container, organized by
 C4Component
     title Component Diagram - React Native Application
 
-    Container_Boundary(mobile_app, "React Native App") {
+    Container(mobile_app, "React Native App", "React Native 0.83+", "Main application container")
 
-        Component_Boundary(presentation, "Presentation Layer") {
-            Component(screens, "Screens", "React Native", "Screen-level components (Home, Transactions, Analytics, Settings)")
-            Component(components, "UI Components", "React Native", "Reusable presentation components (Button, Input, Card, List)")
-            Component(navigation, "Navigation", "React Navigation", "Navigation configuration and routing")
-        }
-
-        Component_Boundary(business, "Business Logic Layer") {
-            Component(hooks, "Custom Hooks", "React Hooks", "Business logic hooks (useTransactions, useBudgets, useAuth, useCategories)")
-            Component(services, "Services", "TypeScript", "Business logic services (transactionService, categoryService, budgetService)")
-        }
-
-        Component_Boundary(data, "Data Layer") {
-            Component(store, "State Management", "TBD (see ADR-003)", "Application state management")
-            Component(db, "Database Layer", "RealmJS", "Database schemas, models, queries")
-        }
-
-        Component_Boundary(infrastructure, "Infrastructure Layer") {
-            Component(utils, "Utilities", "TypeScript", "Pure utility functions")
-            Component(theme, "Theme", "TypeScript", "Design tokens (colors, typography, spacing)")
-            Component(constants, "Constants", "TypeScript", "Application constants")
-            Component(assets, "Assets", "Static", "Images, fonts, SVG icons")
-            Component(localization, "Localization", "i18n", "Translations (English)")
-        }
+    Component_Boundary(presentation, "Presentation Layer") {
+        Component(screens, "Screens", "React Native", "Screen-level components (Home, Transactions, Analytics, Settings)")
+        Component(components, "UI Components", "React Native", "Reusable presentation components (Button, Input, Card, List)")
+        Component(navigation, "Navigation", "React Navigation", "Navigation configuration and routing")
     }
 
-    ContainerDb(local_db, "Realm Database", "RealmJS")
-    Container(secure_storage, "Secure Storage", "Keychain/Keystore")
-    System_Ext(biometric_api, "Biometric API")
+    Component_Boundary(business, "Business Logic Layer") {
+        Component(hooks, "Custom Hooks", "React Hooks", "Business logic hooks (useTransactions, useBudgets, useAuth, useCategories)")
+        Component(services, "Services", "TypeScript", "Business logic services (transactionService, categoryService, budgetService)")
+    }
+
+    Component_Boundary(data, "Data Layer") {
+        Component(store, "State Management", "Redux Toolkit", "Application state management")
+        Component(db, "Database Layer", "RealmJS", "Database schemas, models, queries")
+    }
+
+    Component_Boundary(infrastructure, "Infrastructure Layer") {
+        Component(utils, "Utilities", "TypeScript", "Pure utility functions")
+        Component(theme, "Theme", "TypeScript", "Design tokens (colors, typography, spacing)")
+        Component(constants, "Constants", "TypeScript", "Application constants")
+        Component(assets, "Assets", "Static", "Images, fonts, SVG icons")
+        Component(localization, "Localization", "i18n", "Translations (English)")
+    }
+
+    ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all application data locally")
+    Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN and sensitive data")
+    System_Ext(biometric_api, "Biometric API", "iOS Face ID / Android Fingerprint")
 
     Rel(screens, components, "Composes", "Uses UI components")
     Rel(screens, hooks, "Uses", "Consumes business logic hooks")
@@ -232,8 +231,8 @@ C4Component
 
 #### State Management
 
-- To be decided (see ADR-003)
-- Potential options: Redux Toolkit, Zustand, MobX, Jotai
+- **Redux Toolkit**: Selected in ADR-003 for state management
+- Store structure with slices for auth, transactions, categories, budgets
 
 ---
 
