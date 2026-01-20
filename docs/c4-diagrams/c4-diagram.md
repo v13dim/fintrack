@@ -95,57 +95,35 @@ C4Component
 
     Container(mobile_app, "React Native App", "React Native 0.83+", "Main application container")
 
-    Component_Boundary(presentation, "Presentation Layer") {
-        Component(screens, "Screens", "React Native", "Screen-level components (Home, Transactions, Analytics, Settings)")
-        Component(components, "UI Components", "React Native", "Reusable presentation components (Button, Input, Card, List)")
-        Component(navigation, "Navigation", "React Navigation", "Navigation configuration and routing")
-    }
+    Component(screens, "Screens", "React Native", "Screen-level components")
+    Component(components, "UI Components", "React Native", "Reusable presentation components")
+    Component(navigation, "Navigation", "React Navigation", "Navigation configuration")
+    Component(hooks, "Custom Hooks", "React Hooks", "Business logic hooks")
+    Component(services, "Services", "TypeScript", "Business logic services")
+    Component(store, "State Management", "Redux Toolkit", "Application state")
+    Component(db, "Database Layer", "RealmJS", "Database schemas and queries")
+    Component(utils, "Utilities", "TypeScript", "Pure utility functions")
+    Component(theme, "Theme", "TypeScript", "Design tokens")
+    Component(constants, "Constants", "TypeScript", "Application constants")
+    Component(assets, "Assets", "Static", "Images, fonts, SVG")
+    Component(localization, "Localization", "i18n", "Translations")
 
-    Component_Boundary(business, "Business Logic Layer") {
-        Component(hooks, "Custom Hooks", "React Hooks", "Business logic hooks (useTransactions, useBudgets, useAuth, useCategories)")
-        Component(services, "Services", "TypeScript", "Business logic services (transactionService, categoryService, budgetService)")
-    }
+    ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all data locally")
+    Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN")
+    System_Ext(biometric_api, "Biometric API", "iOS Face ID / Android")
 
-    Component_Boundary(data, "Data Layer") {
-        Component(store, "State Management", "Redux Toolkit", "Application state management")
-        Component(db, "Database Layer", "RealmJS", "Database schemas, models, queries")
-    }
-
-    Component_Boundary(infrastructure, "Infrastructure Layer") {
-        Component(utils, "Utilities", "TypeScript", "Pure utility functions")
-        Component(theme, "Theme", "TypeScript", "Design tokens (colors, typography, spacing)")
-        Component(constants, "Constants", "TypeScript", "Application constants")
-        Component(assets, "Assets", "Static", "Images, fonts, SVG icons")
-        Component(localization, "Localization", "i18n", "Translations (English)")
-    }
-
-    ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all application data locally")
-    Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN and sensitive data")
-    System_Ext(biometric_api, "Biometric API", "iOS Face ID / Android Fingerprint")
-
-    Rel(screens, components, "Composes", "Uses UI components")
-    Rel(screens, hooks, "Uses", "Consumes business logic hooks")
-    Rel(screens, navigation, "Uses", "Navigation")
-
-    Rel(components, theme, "Uses", "Design tokens")
-    Rel(components, constants, "Uses", "Constants")
-    Rel(components, utils, "Uses", "Utility functions")
-    Rel(components, assets, "Uses", "Static assets")
-
-    Rel(hooks, services, "Uses", "Calls business services")
-    Rel(services, db, "Uses", "Database operations")
-    Rel(services, secure_storage, "Uses", "Secure storage")
-
-    Rel(hooks, biometric_api, "Uses", "Biometric authentication")
-
-    Rel(db, local_db, "Reads/Writes", "Data persistence")
-
-    UpdateElementStyle(screens, $bgColor="#2196F3", $fontColor="#FFFFFF")
-    UpdateElementStyle(components, $bgColor="#03A9F4", $fontColor="#FFFFFF")
-    UpdateElementStyle(hooks, $bgColor="#4CAF50", $fontColor="#FFFFFF")
-    UpdateElementStyle(services, $bgColor="#8BC34A", $fontColor="#FFFFFF")
-    UpdateElementStyle(db, $bgColor="#FF9800", $fontColor="#FFFFFF")
-    UpdateElementStyle(local_db, $bgColor="#FF9800", $fontColor="#FFFFFF")
+    Rel(screens, components, "Uses")
+    Rel(screens, hooks, "Uses")
+    Rel(screens, navigation, "Uses")
+    Rel(components, theme, "Uses")
+    Rel(components, constants, "Uses")
+    Rel(components, utils, "Uses")
+    Rel(components, assets, "Uses")
+    Rel(hooks, services, "Uses")
+    Rel(services, db, "Uses")
+    Rel(services, secure_storage, "Uses")
+    Rel(hooks, biometric_api, "Uses")
+    Rel(db, local_db, "Reads/Writes")
 ```
 
 **Key Components:**
