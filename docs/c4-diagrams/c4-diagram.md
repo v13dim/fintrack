@@ -57,8 +57,8 @@ C4Container
     Person(user, "User", "Personal finance tracker")
 
     Container_Boundary(mobile, "FinTrack Mobile App") {
-        Container(mobile_app, "React Native App", "React Native 0.83+ with New Architecture", "Provides UI and user interactions")
         ContainerDb(local_db, "Realm Database", "RealmJS by MongoDB", "Stores all application data locally")
+        Container(mobile_app, "React Native App", "React Native 0.83+ with New Architecture", "Provides UI and user interactions")
         Container(secure_storage, "Secure Storage", "Keychain (iOS) / Keystore (Android)", "Stores PIN and sensitive data")
     }
 
@@ -95,26 +95,26 @@ C4Component
 
     Container(mobile_app, "React Native App", "React Native 0.83+", "Main application container")
 
-    Component(screens, "Screens", "React Native", "Screen-level components")
-    Component(components, "UI Components", "React Native", "Reusable presentation components")
     Component(navigation, "Navigation", "React Navigation", "Navigation configuration")
+    Component(screens, "Screens", "React Native", "Screen-level components")
     Component(hooks, "Custom Hooks", "React Hooks", "Business logic hooks")
-    Component(services, "Services", "TypeScript", "Business logic services")
-    Component(store, "State Management", "Redux Toolkit", "Application state")
-    Component(db, "Database Layer", "RealmJS", "Database schemas and queries")
+    Component(components, "UI Components", "React Native", "Reusable presentation components")
     Component(utils, "Utilities", "TypeScript", "Pure utility functions")
-    Component(theme, "Theme", "TypeScript", "Design tokens")
-    Component(constants, "Constants", "TypeScript", "Application constants")
+    System_Ext(biometric_api, "Biometric API", "iOS Face ID / Android")
+    Component(services, "Services", "TypeScript", "Business logic services")
     Component(assets, "Assets", "Static", "Images, fonts, SVG")
+    Component(theme, "Theme", "TypeScript", "Design tokens")
+    Component(db, "Database Layer", "RealmJS", "Database schemas and queries")
+    Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN")
+    Component(constants, "Constants", "TypeScript", "Application constants")
+    ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all data locally")
+    Component(store, "State Management", "Redux Toolkit", "Application state")
     Component(localization, "Localization", "i18n", "Translations")
 
-    ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all data locally")
-    Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN")
-    System_Ext(biometric_api, "Biometric API", "iOS Face ID / Android")
 
     Rel(screens, components, "Uses")
     Rel(screens, hooks, "Uses")
-    Rel(screens, navigation, "Uses")
+    Rel(navigation, screens, "Uses")
     Rel(components, theme, "Uses")
     Rel(components, constants, "Uses")
     Rel(components, utils, "Uses")
