@@ -43,9 +43,13 @@ The application follows a Layered Architecture pattern with four main layers:
 
 ### 3. Data Layer (`store/`, `db/`)
 
-- **State Management** (`store/`): Application state management
+- **State Management** (`store/`): Application state management using **Redux Toolkit**
 
-  - To be decided (see ADR-003)
+  - Redux store for in-memory state (UI state, derived data)
+  - Slices organized by feature (auth, transactions, categories, budgets)
+  - Selectors extracted into separate files for reusability
+  - Typed hooks for type-safe state access
+  - See [ADR-003: State Management](../adr/ADR-003-state-management.md) for details
 
 - **Database** (`db/`): Local database layer using **RealmJS by MongoDB**
   - Object-oriented database for local-first architecture

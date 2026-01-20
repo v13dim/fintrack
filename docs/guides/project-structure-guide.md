@@ -139,10 +139,29 @@ src/
 │   ├── exportService/
 │   └── index.ts          # Service exports
 │
-├── store/                # State management
-│   ├── index.ts          # Store configuration
-│   ├── slices/           # State slices (if using Redux)
-│   └── types.ts          # Store types
+├── store/                # State management (Redux Toolkit)
+│   ├── index.ts          # Store configuration and root reducer
+│   ├── hooks.ts          # Typed hooks (useAppDispatch, useAppSelector)
+│   ├── rootReducer.ts    # Root reducer combining all feature reducers
+│   ├── middleware.ts     # Custom middleware configuration
+│   ├── slices/           # State slices
+│   │   ├── auth/
+│   │   │   ├── authSlice.ts
+│   │   │   ├── auth.types.ts
+│   │   │   └── auth.selectors.ts
+│   │   ├── transactions/
+│   │   │   ├── transactionsSlice.ts
+│   │   │   ├── transactions.types.ts
+│   │   │   └── transactions.selectors.ts
+│   │   ├── categories/
+│   │   │   ├── categoriesSlice.ts
+│   │   │   ├── categories.types.ts
+│   │   │   └── categories.selectors.ts
+│   │   └── budgets/
+│   │       ├── budgetsSlice.ts
+│   │       ├── budgets.types.ts
+│   │       └── budgets.selectors.ts
+│   └── __tests__/        # Store tests
 │
 ├── db/                   # Database layer (if using RealmJS)
 │   ├── __tests__/        # Database tests

@@ -224,8 +224,8 @@ export const Component: FC<IComponentProps> = ({ ...props }) => {
 ## Important Notes
 
 - **Database**: RealmJS - accessed ONLY through services, never directly from components
-- **State Management**: To be decided (see ADR-003)
-- **Navigation**: To be decided (see ADR-006)
+- **State Management**: Redux Toolkit (see ADR-003)
+- **Navigation**: To be decided (see navigation-map)
 - **Offline-first**: All data stored locally, no cloud sync
 - **Security**: PIN/biometric auth, secure local storage
 - **Performance**: Fast transaction entry (<500ms), smooth scrolling (≥55 FPS)
@@ -233,6 +233,6 @@ export const Component: FC<IComponentProps> = ({ ...props }) => {
 ## When in Doubt
 
 1. Check existing code in `src/screens/HelloWorld/` for structure examples
-2. Read ADR documents in `docs/architecture/`
+2. Read ADR documents in `docs/adr/`
 3. Follow the established patterns - consistency is key
 4. When adding new code, match the existing module structure exactly
