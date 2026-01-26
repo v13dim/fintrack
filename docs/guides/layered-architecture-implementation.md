@@ -6,12 +6,12 @@ This document describes the detailed architecture implementation for FinTrack. F
 
 The application follows a Layered Architecture pattern with four main layers:
 
-### 1. Presentation Layer (`components/`, `screens/`, `navigation/`)
+### 1. Presentation Layer (`components/`, `screens/`, `navigation/`, `contexts/`)
 
 - **UI Components** (`components/`): Organized flexibly by type, feature, or common/shared
 
   - UI components are presentation-only with zero dependencies on business logic
-  - Components can only use: other components, theme, constants, utils, assets
+  - Components can only use: other components, theme, constants, utils, assets, contexts
   - Components receive all data and callbacks via props
   - Components cannot use hooks, services, or access the database
   - Container/Presentation pattern: screens are containers, components are presentational
@@ -24,7 +24,14 @@ The application follows a Layered Architecture pattern with four main layers:
   - Pass data and callbacks to components via props
 
 - **Navigation** (`navigation/`): Navigation configuration and routing setup
+
   - Navigation is used by screens, but screens don't depend on navigation internals
+
+- **Contexts** (`contexts/`): React Context providers for cross-cutting concerns
+  - Examples: `ThemeContext`, `AuthContext`
+  - Provide global state and configuration to components and screens
+  - Used for theme switching, authentication state, and other app-wide concerns
+  - Components and screens can consume contexts via `useContext` hook
 
 ### 2. Business Logic Layer (`hooks/`, `services/`)
 
@@ -58,7 +65,7 @@ The application follows a Layered Architecture pattern with four main layers:
   - Automatic persistence and real-time updates
   - Database accessed only through services, never directly from components
 
-### 4. Infrastructure Layer (`utils/`, `theme/`, `constants/`, `assets/`)
+### 4. Infrastructure Layer (`utils/`, `theme/`, `constants/`, `assets/`, `localization/`)
 
 - **Utilities** (`utils/`): Shared utilities and helpers
 
@@ -69,7 +76,7 @@ The application follows a Layered Architecture pattern with four main layers:
 - **Theme** (`theme/`): Theme configuration
 
   - Design tokens (colors, typography, spacing)
-  - Supports theme switching (future)
+  - Supports theme switching (via `ThemeContext`)
 
 - **Constants** (`constants/`): Application constants
 
@@ -77,7 +84,11 @@ The application follows a Layered Architecture pattern with four main layers:
   - No business logic
 
 - **Assets** (`assets/`): Static assets
+
   - Images, fonts, SVG icons
+
+- **Localization** (`localization/`): Internationalization
+  - Translation files and i18n configuration
 
 ## Component Organization
 
@@ -135,9 +146,10 @@ Dependencies point inward: screens → components → hooks/services → db
   - Navigation is used by screens, but screens don't depend on navigation internals
 - **Components** have zero dependencies on other parts of the app
   - Components are pure presentation components
-  - Components can only use: other components, theme, constants, utils, assets (infrastructure layer)
+  - Components can only use: other components, contexts, theme, constants, utils, assets (infrastructure layer)
   - Components cannot use hooks, services, or access the database
   - Components receive all data and callbacks via props
+  - Components can consume contexts (e.g., `ThemeContext`) via `useContext` hook
 - **Hooks** are consumed only by screens
   - Hooks encapsulate business logic and use services
   - Hooks are never used directly by components
@@ -182,8 +194,11 @@ Dependencies point inward: screens → components → hooks/services → db
 
 ### 3. Provider Pattern
 
-- Theme provider, Auth provider
-- Context for cross-cutting concerns
+- Context providers located in `contexts/` directory
+- Examples: `ThemeContext`, `AuthContext`
+- Used for cross-cutting concerns (theme, authentication, etc.)
+- Components and screens consume contexts via `useContext` hook
+- Providers wrap the app at the root level
 
 ### 4. Compound Components
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Budgets</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <div class="header-left">
+        <span class="header-title">Budgets</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon">+</button>
+      </div>
+    </div>
+    <div class="content content-with-header">
+      <div style="font-size: 18px; font-weight: 600;">December 2024</div>
+      
+      <div class="card card-warning" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 32px;">🛒</span>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 18px; font-weight: 600;">Groceries</div>
+            <div style="font-size: 16px; font-weight: 500;">€625 / €750</div>
+            <div class="progress-bar">
+              <div class="progress-fill warning" style="width: 83%;"></div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-secondary);">83%</div>
+          </div>
+        </div>
+        <div class="budget-status warning">⚠️ €125 remaining</div>
+      </div>
+
+      <div class="card" style="background: var(--error-bg); border-color: var(--error-border); display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 32px;">🍽️</span>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 18px; font-weight: 600;">Restaurants</div>
+            <div style="font-size: 16px; font-weight: 500;">€352 / €400</div>
+            <div class="progress-bar">
+              <div class="progress-fill error" style="width: 88%;"></div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-secondary);">88%</div>
+          </div>
+        </div>
+        <div class="budget-status error">🔴 Almost exhausted</div>
+      </div>
+
+      <div class="card card-success" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 32px;">🎬</span>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 18px; font-weight: 600;">Entertainment</div>
+            <div style="font-size: 16px; font-weight: 500;">€84 / €200</div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 42%;"></div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-secondary);">42%</div>
+          </div>
+        </div>
+        <div class="budget-status success">✓ Within budget</div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <a href="#" class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

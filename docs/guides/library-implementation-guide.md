@@ -22,6 +22,7 @@ yarn add victory-native react-native-svg react-native-reanimated react-native-ge
 ```
 
 **Peer Dependencies**:
+
 - `react-native-svg` - Required for rendering SVG graphics
 - `react-native-reanimated` - Required for animations (version 4.x for React Native 0.83+)
 - `react-native-gesture-handler` - Required for gesture handling
@@ -31,11 +32,13 @@ yarn add victory-native react-native-svg react-native-reanimated react-native-ge
 **Important Setup Steps**:
 
 1. **For iOS**, run pod install:
+
 ```bash
 cd ios && pod install
 ```
 
 2. **Configure Babel** - Add Reanimated plugin to `babel.config.js` (must be last):
+
 ```javascript
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
@@ -47,6 +50,7 @@ module.exports = {
 ```
 
 3. **Import Gesture Handler** - Add to the top of `index.js`:
+
 ```javascript
 import 'react-native-gesture-handler';
 ```
@@ -114,12 +118,7 @@ const styles = StyleSheet.create({
 // src/components/charts/LineChart.tsx
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import {
-  VictoryLine,
-  VictoryChart,
-  VictoryAxis,
-  VictoryTheme,
-} from 'victory-native';
+import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory-native';
 
 interface LineChartProps {
   data: Array<{
@@ -129,10 +128,7 @@ interface LineChartProps {
   color?: string;
 }
 
-export const LineChart: React.FC<LineChartProps> = ({
-  data,
-  color = '#2196F3',
-}) => {
+export const LineChart: React.FC<LineChartProps> = ({ data, color = '#2196F3' }) => {
   const screenWidth = Dimensions.get('window').width;
   const chartWidth = screenWidth - 40;
 
@@ -195,9 +191,7 @@ interface CategoryExpenseChartProps {
   }>;
 }
 
-export const CategoryExpenseChart: React.FC<CategoryExpenseChartProps> = ({
-  expenses,
-}) => {
+export const CategoryExpenseChart: React.FC<CategoryExpenseChartProps> = ({ expenses }) => {
   const total = expenses.reduce((sum, item) => sum + item.amount, 0);
 
   const chartData = expenses.map(item => ({
@@ -232,9 +226,7 @@ export const CategoryExpenseChart: React.FC<CategoryExpenseChartProps> = ({
       <View style={styles.legend}>
         {chartData.map((item, index) => (
           <View key={index} style={styles.legendItem}>
-            <View
-              style={[styles.legendColor, { backgroundColor: item.color }]}
-            />
+            <View style={[styles.legendColor, { backgroundColor: item.color }]} />
             <Text style={styles.legendText}>
               {item.x}: ${item.y.toFixed(2)} ({item.percentage}%)
             </Text>
@@ -293,7 +285,7 @@ export const AnalyticsScreen: React.FC = () => {
     <ScrollView>
       <View style={{ padding: 20 }}>
         <CategoryExpenseChart expenses={expensesByCategory} />
-        <LineChart data={monthlyTrends} color="#4CAF50" />
+        <LineChart data={monthlyTrends} color='#4CAF50' />
       </View>
     </ScrollView>
   );
@@ -340,10 +332,7 @@ interface TransactionFormData {
   note?: string;
 }
 
-export const TransactionForm: React.FC<TransactionFormProps> = ({
-  onSubmit,
-  initialData,
-}) => {
+export const TransactionForm: React.FC<TransactionFormProps> = ({ onSubmit, initialData }) => {
   const {
     control,
     handleSubmit,
@@ -367,7 +356,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
     <View style={styles.container}>
       <Controller
         control={control}
-        name="amount"
+        name='amount'
         rules={{
           required: 'Amount is required',
           min: { value: 0.01, message: 'Amount must be greater than 0' },
@@ -376,26 +365,24 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
           <View>
             <TextInput
               style={styles.input}
-              placeholder="Amount"
+              placeholder='Amount'
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="numeric"
+              keyboardType='numeric'
             />
-            {errors.amount && (
-              <Text style={styles.error}>{errors.amount.message}</Text>
-            )}
+            {errors.amount && <Text style={styles.error}>{errors.amount.message}</Text>}
           </View>
         )}
       />
 
       <Controller
         control={control}
-        name="note"
+        name='note'
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={styles.input}
-            placeholder="Note (optional)"
+            placeholder='Note (optional)'
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
@@ -404,7 +391,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         )}
       />
 
-      <Button title="Submit" onPress={handleSubmit(onFormSubmit)} />
+      <Button title='Submit' onPress={handleSubmit(onFormSubmit)} />
     </View>
   );
 };
@@ -439,10 +426,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 const categoryFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Name is required')
-    .min(2, 'Name must be at least 2 characters'),
+  name: z.string().min(1, 'Name is required').min(2, 'Name must be at least 2 characters'),
   icon: z.string().min(1, 'Icon is required'),
   color: z
     .string()
@@ -460,10 +444,7 @@ interface CategoryFormProps {
   initialData?: Partial<CategoryFormData>;
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
-  onSubmit,
-  initialData,
-}) => {
+export const CategoryForm: React.FC<CategoryFormProps> = ({ onSubmit, initialData }) => {
   const {
     control,
     handleSubmit,
@@ -482,43 +463,39 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     <View style={styles.container}>
       <Controller
         control={control}
-        name="name"
+        name='name'
         render={({ field: { onChange, onBlur, value } }) => (
           <View>
             <TextInput
               style={styles.input}
-              placeholder="Category Name"
+              placeholder='Category Name'
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
             />
-            {errors.name && (
-              <Text style={styles.error}>{errors.name.message}</Text>
-            )}
+            {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
           </View>
         )}
       />
 
       <Controller
         control={control}
-        name="color"
+        name='color'
         render={({ field: { onChange, onBlur, value } }) => (
           <View>
             <TextInput
               style={styles.input}
-              placeholder="Color (hex)"
+              placeholder='Color (hex)'
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
             />
-            {errors.color && (
-              <Text style={styles.error}>{errors.color.message}</Text>
-            )}
+            {errors.color && <Text style={styles.error}>{errors.color.message}</Text>}
           </View>
         )}
       />
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Button title='Submit' onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };
@@ -688,11 +665,7 @@ export const SplashScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('assets/images/logo.png')}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <Image source={require('assets/images/logo.png')} style={styles.logo} resizeMode='contain' />
     </View>
   );
 };
@@ -816,11 +789,9 @@ const handleLogout = async () => {
 
 ```typescript
 // ✅ Good - Memoized chart component
-export const CategoryExpenseChart = React.memo<CategoryExpenseChartProps>(
-  ({ expenses }) => {
-    // Chart implementation
-  },
-);
+export const CategoryExpenseChart = React.memo<CategoryExpenseChartProps>(({ expenses }) => {
+  // Chart implementation
+});
 ```
 
 ### Forms
@@ -833,8 +804,8 @@ export const CategoryExpenseChart = React.memo<CategoryExpenseChartProps>(
 ```typescript
 // ✅ Good - Accessible form
 <TextInput
-  accessibilityLabel="Transaction amount"
-  accessibilityHint="Enter the transaction amount in dollars"
+  accessibilityLabel='Transaction amount'
+  accessibilityHint='Enter the transaction amount in dollars'
   // ...
 />
 ```

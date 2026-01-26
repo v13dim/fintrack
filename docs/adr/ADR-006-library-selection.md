@@ -101,6 +101,7 @@ A modern charting library with a focus on performance and customization.
 Victory Native was selected for its comprehensive chart types, high customization, and excellent TypeScript support. While it has a larger bundle size, the flexibility and power justify the trade-off.
 
 **Note**: Victory Native requires peer dependencies:
+
 - `react-native-svg` - for rendering SVG graphics
 - `react-native-reanimated` - for animations
 - `react-native-gesture-handler` - for gesture handling
@@ -136,6 +137,7 @@ React Hook Form is a performant, flexible, and extensible forms library with eas
 - ❌ Less opinionated (more setup)
 
 **Note**: React Hook Form requires peer dependencies for validation:
+
 - `@hookform/resolvers` - for Zod integration
 - `zod` - for schema validation
 

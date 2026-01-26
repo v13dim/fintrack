@@ -25,12 +25,12 @@ An adult (25-45 years old) who wants to understand where their money goes but is
 
 For UX inspiration (don't copy, study the approaches):
 
-| App | What to Look At |
-|-----|-----------------|
-| **Spendee** | Quick entry, visualization |
-| **Money Manager** | Simplicity, categories |
-| **Wallet by BudgetBakers** | Budgets, analytics |
-| **1Money** | Minimalism, speed |
+| App                        | What to Look At            |
+| -------------------------- | -------------------------- |
+| **Spendee**                | Quick entry, visualization |
+| **Money Manager**          | Simplicity, categories     |
+| **Wallet by BudgetBakers** | Budgets, analytics         |
+| **1Money**                 | Minimalism, speed          |
 
 ---
 
@@ -193,6 +193,7 @@ Budget
 ### 4.2 Onboarding (3 screens)
 
 **Screen 1:**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -219,6 +220,7 @@ Budget
 ```
 
 **Screen 2:**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -244,6 +246,7 @@ Budget
 ```
 
 **Screen 3:**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -271,6 +274,7 @@ Budget
 ### 4.3 PIN Setup / Entry
 
 **Setup:**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -299,6 +303,7 @@ Budget
 ```
 
 **Entry (with biometrics):**
+
 ```
 ┌─────────────────────────────┐
 │                             │
@@ -363,6 +368,7 @@ Budget
 ### 4.5 Add Transaction
 
 **Step 1: Amount**
+
 ```
 ┌─────────────────────────────┐
 │  ✕  New Expense             │
@@ -399,6 +405,7 @@ Budget
 ```
 
 **Step 2: Category**
+
 ```
 ┌─────────────────────────────┐
 │  ←   Category               │
@@ -431,6 +438,7 @@ Budget
 ```
 
 **Step 3: Details (optional)**
+
 ```
 ┌─────────────────────────────┐
 │  ←   Details          Save  │
@@ -585,6 +593,7 @@ Budget
 ### 4.9 Budgets
 
 **Budget List:**
+
 ```
 ┌─────────────────────────────┐
 │      Budgets           +    │
@@ -625,6 +634,7 @@ Budget
 ```
 
 **Create Budget:**
+
 ```
 ┌─────────────────────────────┐
 │  ←   New Budget       Save  │
@@ -1375,13 +1385,13 @@ Acceptance Criteria:
 
 ### Performance
 
-| Metric | Requirement |
-|--------|-------------|
-| Cold start | < 2 seconds |
-| Add transaction | < 500ms |
-| Load list (50 items) | < 300ms |
-| Scroll FPS | ≥ 55 FPS |
-| Memory (idle) | < 150MB |
+| Metric               | Requirement |
+| -------------------- | ----------- |
+| Cold start           | < 2 seconds |
+| Add transaction      | < 500ms     |
+| Load list (50 items) | < 300ms     |
+| Scroll FPS           | ≥ 55 FPS    |
+| Memory (idle)        | < 150MB     |
 
 ### Security
 
@@ -1426,10 +1436,10 @@ These features can be added after completing the main scope.
 
 ## 8. Glossary
 
-| Term | Definition |
-|------|------------|
-| Transaction | A record of income or expense |
-| Category | A classifier for grouping transactions |
-| Budget | A spending limit for a category per month |
-| Balance | Difference between income and expenses |
-| FAB | Floating Action Button — the "+" button for adding |
+| Term        | Definition                                         |
+| ----------- | -------------------------------------------------- |
+| Transaction | A record of income or expense                      |
+| Category    | A classifier for grouping transactions             |
+| Budget      | A spending limit for a category per month          |
+| Balance     | Difference between income and expenses             |
+| FAB         | Floating Action Button — the "+" button for adding |

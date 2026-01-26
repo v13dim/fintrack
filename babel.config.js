@@ -10,6 +10,7 @@ module.exports = {
           assets: './src/assets',
           components: './src/components',
           constants: './src/constants',
+          contexts: './src/contexts',
           db: './src/db',
           hooks: './src/hooks',
           localization: './src/localization',

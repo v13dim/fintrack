@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Wireframes Index</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #212121;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #757575;
+      margin-bottom: 40px;
+    }
+    .wireframes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .wireframe-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wireframe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+    .wireframe-card h3 {
+      margin: 0 0 8px 0;
+      color: #212121;
+      font-size: 18px;
+    }
+    .wireframe-card p {
+      margin: 0 0 16px 0;
+      color: #757575;
+      font-size: 14px;
+    }
+    .wireframe-card a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #68829e;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .wireframe-card a:hover {
+      background: #505160;
+    }
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #212121;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <h1>FinTrack Wireframes</h1>
+  <p class="subtitle">HTML mockups of all application screens</p>
+
+  <div class="section">
+    <h2 class="section-title">Onboarding & Security</h2>
+    <div class="wireframes-grid">
+      <div class="wireframe-card">
+        <h3>1. Splash Screen</h3>
+        <p>Initial loading screen with app logo</p>
+        <a href="01-splash.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>2. Onboarding - Screen 1</h3>
+        <p>Introduction to app features</p>
+        <a href="02-onboarding-1.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>3. Onboarding - Screen 2</h3>
+        <p>Budget planning features</p>
+        <a href="02-onboarding-2.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>4. Onboarding - Screen 3</h3>
+        <p>Privacy and security information</p>
+        <a href="02-onboarding-3.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>5. PIN Setup</h3>
+        <p>Create a 4-digit PIN code</p>
+        <a href="03-pin-setup.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>6. PIN Entry</h3>
+        <p>Login with PIN or biometrics</p>
+        <a href="03-pin-entry.html">View →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Main Screens</h2>
+    <div class="wireframes-grid">
+      <div class="wireframe-card">
+        <h3>7. Home Screen</h3>
+        <p>Monthly balance, recent transactions</p>
+        <a href="04-home.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>8. Transaction List</h3>
+        <p>All transactions with filters</p>
+        <a href="06-transaction-list.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>9. Transaction Detail</h3>
+        <p>View and edit transaction details</p>
+        <a href="07-transaction-detail.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>10. Analytics Dashboard</h3>
+        <p>Charts and expense analysis</p>
+        <a href="08-analytics.html">View →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Add Transaction Flow</h2>
+    <div class="wireframes-grid">
+      <div class="wireframe-card">
+        <h3>11. Add Transaction - Amount</h3>
+        <p>Step 1: Enter transaction amount</p>
+        <a href="05-add-transaction-amount.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>12. Add Transaction - Category</h3>
+        <p>Step 2: Select category</p>
+        <a href="05-add-transaction-category.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>13. Add Transaction - Details</h3>
+        <p>Step 3: Add date and note (optional)</p>
+        <a href="05-add-transaction-details.html">View →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Budgets & Categories</h2>
+    <div class="wireframes-grid">
+      <div class="wireframe-card">
+        <h3>14. Budget List</h3>
+        <p>View all budgets with progress</p>
+        <a href="09-budgets-list.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>15. Create Budget</h3>
+        <p>Set monthly budget for category</p>
+        <a href="09-budgets-create.html">View →</a>
+      </div>
+      <div class="wireframe-card">
+        <h3>16. Categories Management</h3>
+        <p>View and manage expense/income categories</p>
+        <a href="10-categories.html">View →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Settings</h2>
+    <div class="wireframes-grid">
+      <div class="wireframe-card">
+        <h3>17. Settings</h3>
+        <p>Security, data, and app settings</p>
+        <a href="11-settings.html">View →</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

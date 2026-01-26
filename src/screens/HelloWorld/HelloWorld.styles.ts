@@ -1,15 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { createStyles } from 'theme';
 
-export const styles = StyleSheet.create({
+export const useHelloWorldStyles = createStyles(({ theme: { colors, typography } }) => ({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.background.secondary,
   },
   text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000000',
+    ...typography.h3,
+    color: colors.text.primary,
   },
-});
+}));

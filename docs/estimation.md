@@ -38,6 +38,7 @@ This document contains the breakdown of FinTrack project into User Stories, thei
 For complete Product Backlog with all User Stories, Story Points, and Priority assignments, see [Product Backlog](./product-backlog.md).
 
 **Quick Summary**:
+
 - **Total User Stories**: 50
 - **Total Story Points**: 191
 - **Total Epics**: 12
@@ -52,17 +53,20 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Target Velocity**: ~40-50 story points per week (full-time)
 
 ### Week 1: Foundation & Infrastructure
+
 **Goal**: Project setup, architecture, and CI/CD
 **Story Points**: 47
 **Duration**: 5 days (full-time)
 
 **Day 1-2: Project Foundation**
+
 - US-001: Project structure setup (5)
 - US-002: ADR documents (8)
 - US-003: C4 diagrams and navigation map (3)
 - US-004: Test utilities setup (5)
 
 **Day 3-5: Infrastructure**
+
 - US-101: CI/CD pipeline (8)
 - US-102: SonarQube integration (5)
 - US-103: Pre-commit hooks (3)
@@ -70,7 +74,8 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-104: Commitlint (2) - if time permits
 - US-106: Fastlane setup (3) - if time permits
 
-**Deliverables**: 
+**Deliverables**:
+
 - Working "Hello World" with New Architecture
 - All ADR documents (ADR-001 to ADR-006)
 - C4 diagrams and navigation map
@@ -80,11 +85,13 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - Sentry with test crash
 
 ### Week 2: Authentication & Transactions Core
+
 **Goal**: Authentication flow and basic transaction CRUD
 **Story Points**: 50
 **Duration**: 5 days (full-time)
 
 **Day 1-2: Authentication**
+
 - US-201: Splash screen (2)
 - US-202: Onboarding (5)
 - US-203: PIN authentication (8)
@@ -93,6 +100,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-205: Auto-lock (3) - if time permits
 
 **Day 3-5: Transactions Core**
+
 - US-310: Realm persistence setup (3)
 - US-301: Create transaction (5)
 - US-302: Transaction list with day grouping (5)
@@ -103,6 +111,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-307: Swipe actions (5)
 
 **Deliverables**:
+
 - Complete authentication flow (PIN required, biometric optional)
 - Secure data storage
 - Onboarding screens
@@ -111,11 +120,13 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - Swipe actions
 
 ### Week 3: Categories, Budgets & Analytics
+
 **Goal**: Category management, budgets, and data visualization
 **Story Points**: 63
 **Duration**: 5 days (full-time)
 
 **Day 1: Categories**
+
 - US-401: Preset categories (3)
 - US-402: Create custom category (5)
 - US-403: Edit category (3)
@@ -123,12 +134,14 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-405: Drag & drop sorting (5)
 
 **Day 2-3: Budgets**
+
 - US-501: Set monthly budget (5)
 - US-502: Budget progress bar (5)
 - US-503: Edit/delete budget (3)
 - US-504: Budget notifications (8)
 
 **Day 4-5: Analytics**
+
 - US-605: Efficient calculations setup (3)
 - US-601: Pie chart by category (5)
 - US-602: Line chart trends (5)
@@ -136,6 +149,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-604: Period comparison (5)
 
 **Deliverables**:
+
 - Complete category management with drag & drop
 - Budget management with progress visualization
 - Budget notifications (if time permits)
@@ -143,23 +157,27 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - Summary statistics
 
 ### Week 4: Polish, Performance & Production Readiness
+
 **Goal**: Data management, performance optimization, accessibility, and security
 **Story Points**: 47
 **Duration**: 5 days (full-time)
 
 **Day 1: Data Management**
+
 - US-701: Export to CSV (5)
 - US-702: Backup to JSON (5)
 - US-703: Restore from JSON (3)
 - US-704: Clear all data (2) - if time permits
 
 **Day 2: Performance**
+
 - US-801: Performance profiling (3)
 - US-802: List optimization (5)
 - US-803: Memoization (3)
 - US-804: Bundle size optimization (2)
 
 **Day 3: Accessibility**
+
 - US-901: Accessibility labels (5)
 - US-903: Touch targets (2)
 - US-904: Color contrast (2)
@@ -167,16 +185,19 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-902: Dynamic type (3) - if time permits
 
 **Day 4: Security & Documentation**
+
 - US-1001: Security audit (5)
 - US-1002: Incident simulation (3)
 
 **Day 5: Final Polish & Buffer**
+
 - Complete any remaining P1 tasks
 - Final testing and bug fixes
 - Documentation completion
 - Buffer for unexpected issues
 
 **Deliverables**:
+
 - Data export/import functionality
 - Performance optimization report
 - Accessibility audit (WCAG Level A)
@@ -185,11 +206,13 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - Final documentation
 
 ### Week 5: Buffer & Finalization (Optional)
+
 **Goal**: Complete remaining tasks, polish, and final review
 **Story Points**: Variable
 **Duration**: 5 days (full-time) - if needed
 
 **Tasks** (if not completed in Week 4):
+
 - US-204: Biometric authentication (5)
 - US-205: Auto-lock (3)
 - US-308: Pull-to-refresh (2)
@@ -200,6 +223,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - US-106: Fastlane setup (3)
 
 **Additional Activities**:
+
 - Comprehensive testing
 - Bug fixes
 - Code review and refactoring
@@ -207,6 +231,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - Final presentation preparation
 
 **Deliverables**:
+
 - All P0 and critical P1 features complete
 - Production-ready application
 - Complete documentation
@@ -221,10 +246,12 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 ### Process Steps
 
 1. **Reference Stories Creation**
+
    - Established reference stories for each point value (1, 2, 3, 5, 8, 13, 21)
    - Used completed similar projects as benchmarks
 
 2. **Story Breakdown**
+
    - Broke down features into user stories following INVEST criteria:
      - **Independent**: Each story can be developed independently
      - **Negotiable**: Details can be discussed and refined
@@ -234,6 +261,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
      - **Testable**: Can be verified with tests
 
 3. **Estimation Process**
+
    - For each user story:
      - Analyzed complexity (UI, business logic, integrations)
      - Considered dependencies (database, state management, navigation)
@@ -248,18 +276,21 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 ### Estimation Rationale
 
 **Why Planning Poker?**
+
 - Encourages thorough analysis of each story
 - Helps identify hidden complexity and dependencies
 - Better for learning and understanding requirements
 - Reduces risk of underestimation
 
 **Why Story Points?**
+
 - Accounts for complexity, not just time
 - Works well for varying task types (UI, logic, integration)
 - Allows velocity tracking over time
 - Reduces pressure compared to hour estimates
 
 **Why Fibonacci?**
+
 - Reflects increasing uncertainty in larger tasks
 - Prevents false precision
 - Encourages breaking down large tasks
@@ -273,7 +304,8 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 
 **Challenge**: Some features (like Authentication) seemed too large to estimate accurately.
 
-**Solution**: 
+**Solution**:
+
 - Broke down into smaller user stories (splash screen, onboarding, PIN, biometrics)
 - Each story became independently estimable
 - Total epic size became sum of stories
@@ -285,6 +317,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Challenge**: Infrastructure tasks (CI/CD, testing setup) are hard to estimate because they're not user-facing features.
 
 **Solution**:
+
 - Created reference stories for infrastructure tasks
 - Compared to similar setup tasks from other projects
 - Used higher estimates to account for unknown issues
@@ -296,6 +329,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Challenge**: React Native 0.83+ with New Architecture, Realm, Redux Toolkit - all new technologies with unknown complexity.
 
 **Solution**:
+
 - Used higher estimates (5-8 points) for first-time integrations
 - Added "spike" stories for research (included in ADR tasks)
 - Adjusted estimates after gaining experience
@@ -307,6 +341,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Challenge**: Too much detail in estimation slows down process, too little leads to inaccurate estimates.
 
 **Solution**:
+
 - Used INVEST criteria to ensure stories are appropriately sized
 - Focused on "what" not "how" in story descriptions
 - Kept estimation sessions time-boxed
@@ -318,6 +353,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Challenge**: Ensuring consistent relative sizing across different types of tasks (UI vs logic vs integration).
 
 **Solution**:
+
 - Created reference stories for each type (UI component, screen, feature, integration)
 - Regularly compared new stories to references
 - Adjusted estimates when inconsistencies found
@@ -329,6 +365,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Challenge**: Original 12-week part-time plan needed to be compressed to 4-5 weeks full-time while maintaining quality.
 
 **Solution**:
+
 - Increased velocity expectations (~45-50 points/week vs 15-20 part-time)
 - Prioritized P0 tasks (144 points) as must-have
 - Made P1 tasks (34 points) conditional on time
@@ -341,21 +378,25 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 ### Key Learnings
 
 1. **Story Points Work Better Than Hours**
+
    - More accurate for complex, uncertain tasks
    - Less pressure on developers
    - Better for long-term planning
 
 2. **Breaking Down is Critical**
+
    - Large stories (>13 points) are hard to estimate accurately
    - Smaller stories are easier to understand and estimate
    - Breaking down reveals hidden complexity
 
 3. **Reference Stories are Essential**
+
    - Provide consistency across estimates
    - Help new team members understand sizing
    - Should be updated as team learns
 
 4. **Infrastructure Takes Time**
+
    - CI/CD, testing setup, tooling often underestimated
    - First-time setup has hidden complexity
    - Add buffer for unknown issues
@@ -368,12 +409,14 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 ### Estimation Accuracy Tracking
 
 **Plan**: Track actual time vs story points after completion to:
+
 - Calculate velocity (story points per week)
 - Identify estimation patterns (consistently over/under)
 - Improve future estimates
 - Adjust reference stories
 
 **Expected Velocity** (Full-time work):
+
 - Week 1: ~40-45 story points (setup and infrastructure)
 - Week 2: ~45-50 story points (core features)
 - Week 3: ~50-55 story points (feature development)
@@ -386,15 +429,17 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 
 The estimation process using Planning Poker with Story Points provided a structured approach to breaking down the FinTrack project. While challenges arose with infrastructure tasks and new technologies, the process of breaking down features into user stories and using relative sizing proved valuable.
 
-The total estimate of **191 story points** across **50 user stories** provides a realistic roadmap for the **4-5 week full-time project timeline**. 
+The total estimate of **191 story points** across **50 user stories** provides a realistic roadmap for the **4-5 week full-time project timeline**.
 
 **Key adjustments for full-time work**:
+
 - Higher velocity (~45-50 story points per week vs 15-20 part-time)
 - More focused development time (less context switching)
 - Ability to tackle larger features in single sessions
 - Week 5 serves as buffer for any remaining tasks or unexpected issues
 
 **Priority focus**:
+
 - **P0 tasks** (144 points) are critical and must be completed
 - **P1 tasks** (34 points) are important but can be deferred if needed
 - **P2 tasks** (13 points) are nice-to-have and can be skipped if time is limited

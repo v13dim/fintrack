@@ -102,6 +102,7 @@ src/
   components/        # All UI components (flexible organization)
   screens/
   navigation/
+  contexts/          # React Context providers (Theme, Auth, etc.)
   hooks/
   services/
   store/

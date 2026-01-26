@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Analytics</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <div class="header-left">
+        <span class="header-title">Analytics</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon">📅</button>
+      </div>
+    </div>
+    <div class="content content-with-header">
+      <div style="display: flex; gap: 8px;">
+        <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--accent-medium); color: white;">Week</button>
+        <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--bg-secondary);">Month</button>
+        <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--bg-secondary);">Year</button>
+        <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--bg-secondary);">All</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="font-size: 18px; font-weight: 600;">Expenses in December</div>
+        <div class="chart-placeholder" style="height: 250px; position: relative;">
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 48px;">📊</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">Pie Chart</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">
+              🛒 32% | 🍽️ 18%<br>
+              🚗 15% | 🎬 12%<br>
+              📱 8% | 📦 15%
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="font-size: 18px; font-weight: 600;">Trends</div>
+        <div class="chart-placeholder" style="height: 180px;">
+          <div style="text-align: center; padding: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 14px; color: var(--text-secondary);">2k€┤</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">1.5k┤</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">1k€┤</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">0.5k┤</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Oct  Nov  Dec</div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="font-size: 18px; font-weight: 600;">Top Categories</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 20px;">🛒</span>
+              <span style="font-size: 16px; font-weight: 500;">Groceries</span>
+            </div>
+            <div style="font-size: 18px; font-weight: 600;">€625</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 32%;"></div>
+          </div>
+          <div style="font-size: 14px; color: var(--text-secondary);">32%</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 20px;">🍽️</span>
+              <span style="font-size: 16px; font-weight: 500;">Restaurants</span>
+            </div>
+            <div style="font-size: 18px; font-weight: 600;">€352</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 18%;"></div>
+          </div>
+          <div style="font-size: 14px; color: var(--text-secondary);">18%</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <a href="#" class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">📊</span>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

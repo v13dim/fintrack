@@ -56,14 +56,14 @@ T-shirt Sizes is a simple estimation technique that uses clothing sizes (XS, S, 
 
 ### Size Mapping
 
-| Size | Description | Typical Duration | Story Points Equivalent |
-|------|-------------|------------------|------------------------|
-| XS   | Very small task | < 2 hours | 1 point |
-| S    | Small task | 2-4 hours | 2 points |
-| M    | Medium task | 4-8 hours | 3-5 points |
-| L    | Large task | 1-2 days | 8 points |
-| XL   | Very large task | 2-5 days | 13 points |
-| XXL  | Epic (needs breakdown) | > 5 days | 21+ points |
+| Size | Description            | Typical Duration | Story Points Equivalent |
+| ---- | ---------------------- | ---------------- | ----------------------- |
+| XS   | Very small task        | < 2 hours        | 1 point                 |
+| S    | Small task             | 2-4 hours        | 2 points                |
+| M    | Medium task            | 4-8 hours        | 3-5 points              |
+| L    | Large task             | 1-2 days         | 8 points                |
+| XL   | Very large task        | 2-5 days         | 13 points               |
+| XXL  | Epic (needs breakdown) | > 5 days         | 21+ points              |
 
 ### Process
 
@@ -141,12 +141,14 @@ Bucket: Medium (5 points)
 **Definition**: Relative unit of measure for estimating the effort required to complete a task.
 
 **Characteristics**:
+
 - **Relative**: Based on comparison with other tasks
 - **Abstract**: Not tied to actual time
 - **Team velocity**: Team's capacity measured in points per sprint
 - **Consistent**: Same task should get same points regardless of who estimates
 
 **Advantages**:
+
 - ✅ Accounts for complexity, uncertainty, and risk, not just time
 - ✅ Works across different skill levels (junior vs senior)
 - ✅ More accurate for long-term planning
@@ -154,6 +156,7 @@ Bucket: Medium (5 points)
 - ✅ Less pressure on developers (no time commitments)
 
 **Disadvantages**:
+
 - ❌ Not intuitive for stakeholders (what is "5 points"?)
 - ❌ Requires calibration period to establish velocity
 - ❌ Harder to convert to deadlines for non-technical stakeholders
@@ -164,18 +167,21 @@ Bucket: Medium (5 points)
 **Definition**: Absolute time estimate in hours or days.
 
 **Characteristics**:
+
 - **Absolute**: Direct time measurement
 - **Concrete**: Easy to understand
 - **Individual**: Based on specific person's speed
 - **Variable**: Same task may take different time for different people
 
 **Advantages**:
+
 - ✅ Easy to understand for everyone
 - ✅ Direct conversion to deadlines
 - ✅ No calibration needed
 - ✅ Clear expectations for stakeholders
 
 **Disadvantages**:
+
 - ❌ Doesn't account for complexity, only time
 - ❌ Varies by individual skill level
 - ❌ Creates pressure and commitments
@@ -184,20 +190,21 @@ Bucket: Medium (5 points)
 
 ### Comparison Table
 
-| Aspect | Story Points | Hours |
-|--------|--------------|-------|
-| **Type** | Relative | Absolute |
-| **Accuracy** | Better for long-term | Better for short-term |
-| **Complexity** | Accounts for complexity | Only time-based |
-| **Team Size** | Works for any size | Individual-based |
-| **Stakeholder Communication** | Requires explanation | Intuitive |
-| **Pressure** | Low | High |
-| **Calibration** | Needed | Not needed |
-| **Flexibility** | High | Low |
+| Aspect                        | Story Points            | Hours                 |
+| ----------------------------- | ----------------------- | --------------------- |
+| **Type**                      | Relative                | Absolute              |
+| **Accuracy**                  | Better for long-term    | Better for short-term |
+| **Complexity**                | Accounts for complexity | Only time-based       |
+| **Team Size**                 | Works for any size      | Individual-based      |
+| **Stakeholder Communication** | Requires explanation    | Intuitive             |
+| **Pressure**                  | Low                     | High                  |
+| **Calibration**               | Needed                  | Not needed            |
+| **Flexibility**               | High                    | Low                   |
 
 ### When to Use Each
 
 **Use Story Points when**:
+
 - Long-term planning (sprints, releases)
 - Team has varying skill levels
 - Tasks have high uncertainty
@@ -205,6 +212,7 @@ Bucket: Medium (5 points)
 - Agile/Scrum methodology
 
 **Use Hours when**:
+
 - Short-term tasks (< 1 day)
 - Fixed deadlines required
 - Stakeholders need concrete timelines
@@ -216,6 +224,7 @@ Bucket: Medium (5 points)
 ### Planning Poker
 
 **Pros**:
+
 - ✅ Encourages team discussion and knowledge sharing
 - ✅ Reduces anchoring bias (simultaneous reveal)
 - ✅ Consensus-based (team ownership)
@@ -224,6 +233,7 @@ Bucket: Medium (5 points)
 - ✅ Improves team understanding of tasks
 
 **Cons**:
+
 - ❌ Time-consuming (can take 1-2 hours for sprint planning)
 - ❌ Requires all team members present
 - ❌ Can lead to analysis paralysis
@@ -231,6 +241,7 @@ Bucket: Medium (5 points)
 - ❌ Requires facilitator
 
 **Best For**:
+
 - Teams new to estimation
 - Complex projects with high uncertainty
 - When team alignment is critical
@@ -239,6 +250,7 @@ Bucket: Medium (5 points)
 ### T-shirt Sizes
 
 **Pros**:
+
 - ✅ Very simple and intuitive
 - ✅ Fast estimation process
 - ✅ Easy for non-technical stakeholders to understand
@@ -247,6 +259,7 @@ Bucket: Medium (5 points)
 - ✅ Works well for high-level estimation
 
 **Cons**:
+
 - ❌ Less precise (only 5-6 levels)
 - ❌ Less discussion (may miss important details)
 - ❌ Harder to track velocity
@@ -254,6 +267,7 @@ Bucket: Medium (5 points)
 - ❌ May not work well for detailed planning
 
 **Best For**:
+
 - Quick estimation sessions
 - High-level roadmap planning
 - Teams new to agile
@@ -263,6 +277,7 @@ Bucket: Medium (5 points)
 ### Bucket System
 
 **Pros**:
+
 - ✅ Faster than Planning Poker
 - ✅ Uses reference stories (consistent sizing)
 - ✅ Good balance of speed and accuracy
@@ -271,6 +286,7 @@ Bucket: Medium (5 points)
 - ✅ Easy to learn
 
 **Cons**:
+
 - ❌ Requires creating and maintaining reference stories
 - ❌ Less discussion than Planning Poker
 - ❌ May not handle unique tasks well
@@ -278,6 +294,7 @@ Bucket: Medium (5 points)
 - ❌ Less precise than Planning Poker
 
 **Best For**:
+
 - Teams with established patterns
 - Similar types of tasks
 - When speed is important but some precision needed
@@ -337,21 +354,25 @@ For a team of 5 developers, I recommend **Planning Poker with Story Points** for
 ### Implementation Strategy
 
 1. **Start with Reference Stories**
+
    - Create 2-3 reference stories for each point value (1, 2, 3, 5, 8, 13)
    - Use completed stories as future references
    - Update references as team learns
 
 2. **Use Fibonacci Sequence**
+
    - 1, 2, 3, 5, 8, 13, 21
    - Reflects uncertainty in larger tasks
    - Prevents false precision
 
 3. **Time-box Estimation Sessions**
+
    - 1-2 hours for sprint planning
    - 30-60 minutes for backlog refinement
    - Set time limits to avoid analysis paralysis
 
 4. **Establish Velocity Baseline**
+
    - Track completed story points for 2-3 sprints
    - Calculate average velocity
    - Use for future sprint planning
@@ -399,19 +420,20 @@ Regular Estimation:
 
 ### Challenges and Mitigations
 
-| Challenge | Mitigation |
-|-----------|------------|
-| Time-consuming | Time-box sessions, use T-shirt sizes for simple tasks |
-| Analysis paralysis | Set time limits, use "spike" for unknown tasks |
-| Inconsistent estimates | Use reference stories, regular calibration |
-| Dominant personalities | Facilitator ensures everyone speaks, blind estimation |
-| Converting to deadlines | Use velocity, provide ranges, not exact dates |
+| Challenge               | Mitigation                                            |
+| ----------------------- | ----------------------------------------------------- |
+| Time-consuming          | Time-box sessions, use T-shirt sizes for simple tasks |
+| Analysis paralysis      | Set time limits, use "spike" for unknown tasks        |
+| Inconsistent estimates  | Use reference stories, regular calibration            |
+| Dominant personalities  | Facilitator ensures everyone speaks, blind estimation |
+| Converting to deadlines | Use velocity, provide ranges, not exact dates         |
 
 ## Conclusion
 
 For a team of 5 developers working on a React Native project, **Planning Poker with Story Points** provides the best balance of accuracy, team alignment, and knowledge sharing. While it requires more time than simpler techniques, the benefits of team discussion, consensus building, and better estimates justify the investment.
 
 The key to success is:
+
 - Consistent application of the technique
 - Regular calibration with reference stories
 - Time-boxed sessions to maintain efficiency

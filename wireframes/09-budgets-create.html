@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Create Budget</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <div class="header-left">
+        <button class="btn-icon">←</button>
+        <span class="header-title">New Budget</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon" style="color: var(--accent-dark-text); font-weight: 600;">Save</button>
+      </div>
+    </div>
+    <div class="content content-with-header">
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <div class="form-select">
+          🛒 Groceries ▼
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Monthly Limit</label>
+        <input type="text" class="form-input" value="€750" placeholder="€0.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notifications</label>
+        <div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 16px;">At 80%</span>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 16px;">At 100%</span>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1;"></div>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-ghost" style="flex: 1;">Cancel</button>
+        <button class="btn btn-primary" style="flex: 2;">Save</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

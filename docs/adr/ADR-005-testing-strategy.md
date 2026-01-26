@@ -163,6 +163,7 @@ All test descriptions must start with "should" to clearly express the expected b
 - ❌ `it('calls onPress when pressed', () => { ... })`
 
 This convention ensures:
+
 - Clear, readable test descriptions
 - Consistent test naming across the codebase
 - Easy to understand what behavior is being tested

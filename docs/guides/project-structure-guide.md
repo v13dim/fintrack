@@ -97,22 +97,12 @@ src/
 │   │   └── index.ts
 │   └── index.ts
 │
-├── hooks/                # Custom React hooks
-│   ├── useTransactions/
-│   │   ├── __tests__/
-│   │   │   └── useTransactions.test.ts
-│   │   ├── __mocks__/
-│   │   │   └── useTransactions.module-mocks.ts
-│   │   ├── useTransactions.ts
-│   │   └── index.ts
-│   ├── useBudgets/
-│   │   ├── __tests__/
-│   │   ├── __mocks__/
-│   │   ├── useBudgets.ts
-│   │   └── index.ts
-│   ├── useCategories/
-│   ├── useAuth/
-│   ├── useTheme/
+├── hooks/                # Custom React hooks (stored directly in hooks folder)
+│   ├── useTransactions.ts
+│   ├── useBudgets.ts
+│   ├── useCategories.ts
+│   ├── useAuth.ts
+│   ├── useTheme.ts
 │   └── index.ts          # Hook exports
 │
 ├── localization/         # Internationalization (i18n)
@@ -190,35 +180,32 @@ src/
 │   └── migrations/       # Database migrations
 │       └── index.ts
 │
-├── utils/                # Utility functions
-│   ├── formatCurrency/
-│   │   ├── __tests__/
-│   │   │   └── formatCurrency.test.ts
-│   │   ├── __mocks__/
-│   │   │   └── formatCurrency.module-mocks.ts
-│   │   ├── formatCurrency.ts
-│   │   └── index.ts
-│   ├── formatDate/
-│   │   ├── __tests__/
-│   │   ├── __mocks__/
-│   │   ├── formatDate.ts
-│   │   └── index.ts
-│   ├── validation/       # Validation utilities
-│   │   ├── transactionValidation/
-│   │   │   ├── __tests__/
-│   │   │   ├── __mocks__/
-│   │   │   ├── transactionValidation.ts
-│   │   │   └── index.ts
-│   │   └── index.ts
+├── utils/                # Utility functions (stored directly in utils folder)
+│   ├── formatCurrency.ts
+│   ├── formatDate.ts
+│   ├── validation.ts     # Validation utilities
 │   └── index.ts          # Utility exports
 │
+├── contexts/             # React Context providers
+│   ├── ThemeContext/
+│   │   ├── __tests__/
+│   │   │   └── ThemeContext.test.tsx
+│   │   ├── __mocks__/
+│   │   │   └── ThemeContext.module-mocks.ts
+│   │   ├── ThemeContext.tsx
+│   │   └── index.ts
+│   └── index.ts          # Context exports
+│
 ├── theme/                # Theme configuration
-│   ├── defaultTheme.ts   # Theme object
-│   ├── colors.ts         # Color palette
-│   ├── typography.ts     # Font styles
-│   ├── spacing.ts        # Spacing scale
-│   ├── index.ts          # Theme exports
-│   └── shadows.ts        # Shadow definitions
+│   ├── lightTheme.ts      # Light theme object
+│   ├── colors.ts          # Color palette
+│   ├── commonColors.ts    # Common colors (theme-agnostic)
+│   ├── typography.ts      # Font styles
+│   ├── spacing.ts         # Spacing scale
+│   ├── shadows.ts         # Shadow definitions
+│   ├── theme.types.ts     # Theme TypeScript types
+│   ├── createStyles.ts    # Style creation utilities (useStyles, createStyles)
+│   └── index.ts           # Theme exports
 │
 ├── testUtils/            # Testing utilities
 │   ├── index.ts          # Test utility exports
@@ -245,7 +232,7 @@ ComponentName/
   ├── __mocks__/              # Component mocks
   │   └── ComponentName.module-mocks.ts
   ├── ComponentName.tsx       # Component implementation
-  ├── ComponentName.styles.ts # Styles (if complex)
+  ├── ComponentName.styles.ts # Styles hook (using createStyles)
   ├── ComponentName.types.ts  # Component-specific types
   └── index.ts                # Export
 ```
@@ -309,35 +296,57 @@ ScreenName/
 - Screens handle navigation and lifecycle
 - Screen-specific components go in `components/` subfolder
 
-### Hooks (`hooks/`)
+### Contexts (`contexts/`)
 
-**Naming:** `useCamelCase`
-
-**Structure per hook:**
+**Structure per context:**
 
 ```
-HookName/
-  ├── __tests__/            # Hook tests
-  │   └── HookName.test.ts
-  ├── __mocks__/            # Hook mocks (if needed)
-  │   └── HookName.module-mocks.ts
-  ├── HookName.ts           # Hook implementation
-  └── index.ts              # Export
+ContextName/
+  ├── __tests__/            # Context tests
+  │   └── ContextName.test.tsx
+  ├── __mocks__/            # Context mocks
+  │   └── ContextName.module-mocks.ts
+  ├── ContextName.tsx       # Context implementation
+  └── index.ts             # Export
 ```
 
 **Examples:**
 
-- `useTransactions/` - Transaction data and operations
-- `useBudgets/` - Budget data and operations
-- `useAuth/` - Authentication state and methods
-- `useTheme/` - Theme access and switching
+- `ThemeContext/` - Theme provider and context
 
 **Guidelines:**
 
-- One hook per folder
+- One context per folder
+- Contexts provide global state and configuration
+- Used for cross-cutting concerns (theme, auth, etc.)
+- Export from `contexts/index.ts` for easy imports
+- Components and hooks can consume contexts
+
+### Hooks (`hooks/`)
+
+**Naming:** `useCamelCase`
+
+**Structure:**
+
+Hooks are stored directly in the `hooks/` folder as individual files:
+
+- `useHookName.ts` - Hook implementation
+- `index.ts` - Hook exports
+
+**Examples:**
+
+- `useTransactions.ts` - Transaction data and operations
+- `useBudgets.ts` - Budget data and operations
+- `useAuth.ts` - Authentication state and methods
+- `useTheme.ts` - Theme access and switching
+
+**Guidelines:**
+
+- One hook per file
 - Hooks encapsulate business logic
 - Hooks can use services and other hooks
-- Export from `index.ts` for easy imports
+- Export from `hooks/index.ts` for easy imports
+- Tests should be in `__tests__/` folder at the hooks level if needed
 
 ### Services (`services/`)
 
@@ -394,31 +403,27 @@ db/
 
 **Naming:** `camelCase`
 
-**Structure per utility:**
+**Structure:**
 
-```
-UtilityName/
-  ├── __tests__/            # Utility tests
-  │   └── UtilityName.test.ts
-  ├── __mocks__/            # Utility mocks (if needed)
-  │   └── UtilityName.module-mocks.ts
-  ├── UtilityName.ts        # Utility implementation
-  └── index.ts              # Export
-```
+Utilities are stored directly in the `utils/` folder as individual files:
+
+- `utilityName.ts` - Utility implementation
+- `index.ts` - Utility exports
 
 **Examples:**
 
-- `formatCurrency/` - Currency formatting
-- `formatDate/` - Date formatting
-- `validation/` - Validation utilities (folder with multiple utilities)
+- `formatCurrency.ts` - Currency formatting
+- `formatDate.ts` - Date formatting
+- `validation.ts` - Validation utilities
 
 **Guidelines:**
 
-- One utility function per folder
+- One utility function per file (or group related utilities in one file)
 - Pure functions only
 - No side effects
 - No dependencies on other app code
 - Can be easily tested in isolation
+- Tests should be in `__tests__/` folder at the utils level if needed
 
 ### Theme (`theme/`)
 
@@ -426,11 +431,15 @@ UtilityName/
 
 ```
 theme/
-  ├── index.ts      # Theme object export
-  ├── colors.ts     # Color definitions
-  ├── typography.ts # Font styles
-  ├── spacing.ts    # Spacing scale
-  └── shadows.ts    # Shadow styles
+  ├── index.ts          # Theme exports
+  ├── lightTheme.ts     # Light theme object
+  ├── colors.ts         # Color palette
+  ├── commonColors.ts   # Common colors (theme-agnostic)
+  ├── typography.ts     # Font styles
+  ├── spacing.ts        # Spacing scale
+  ├── shadows.ts        # Shadow definitions
+  ├── theme.types.ts    # Theme TypeScript types
+  └── createStyles.ts   # Style creation utilities (useStyles, createStyles)
 ```
 
 **Guidelines:**
@@ -438,6 +447,69 @@ theme/
 - Centralized design tokens
 - Used by all components
 - Supports theme switching (future)
+- Use `useTheme()` hook to access theme in components
+- Use `createStyles()` to create style hooks with access to theme, dimensions, and insets
+- Each component should create its own style hook using `createStyles`
+- Define interface for extra data if styles depend on component props/state
+
+**Creating Styles:**
+
+Styles are created using `createStyles` which provides access to:
+
+- `theme` - Current theme object (colors, typography, spacing, shadows)
+- `dimensions` - Screen dimensions (width, height, scale, fontScale)
+- `insets` - Safe area insets (top, right, bottom, left)
+- `extra` - Extra data that affects styles (define interface for extra data)
+
+Example with extra data:
+
+```typescript
+// Component.styles.ts
+import { createStyles } from 'theme';
+
+interface ComponentStylesExtra {
+  isActive: boolean;
+  variant?: 'primary' | 'secondary';
+}
+
+export const useComponentStyles = createStyles(
+  (
+    { theme: { colors, typography, spacing }, dimensions: { width }, insets: { top } },
+    { isActive, variant = 'primary' }: ComponentStylesExtra,
+  ) => ({
+    container: {
+      backgroundColor: isActive ? colors.accent.green : colors.background.primary,
+      padding: spacing.lg,
+      paddingTop: top + spacing.md,
+      width: width,
+    },
+    text: {
+      ...typography.body,
+      color: variant === 'primary' ? colors.text.primary : colors.text.secondary,
+    },
+  }),
+);
+
+// In component:
+const styles = useComponentStyles({ isActive: true, variant: 'primary' });
+```
+
+Example without extra data:
+
+```typescript
+// Component.styles.ts
+import { createStyles } from 'theme';
+
+export const useComponentStyles = createStyles(({ theme: { colors, spacing } }) => ({
+  container: {
+    backgroundColor: colors.background.primary,
+    padding: spacing.lg,
+  },
+}));
+
+// In component:
+const styles = useComponentStyles();
+```
 
 ### Localization (`localization/`)
 
@@ -547,6 +619,9 @@ import { Button } from 'components/common';
 import { FormField } from 'components/forms';
 import { TransactionList } from 'components/lists';
 
+// Contexts
+import { ThemeProvider } from 'contexts/ThemeContext';
+
 // Hooks
 import { useTransactions } from 'hooks';
 
@@ -557,7 +632,7 @@ import { transactionService } from 'services';
 import { formatCurrency } from 'utils';
 
 // Theme
-import { theme } from 'theme';
+import { createStyles } from 'theme';
 
 // Constants
 import { STORAGE_KEYS } from 'constants';
@@ -569,7 +644,7 @@ import { t } from 'localization';
 import { mockCreateReactElement } from 'testUtils';
 
 // 3. Relative imports
-import { styles } from './styles';
+import { useComponentStyles } from './Component.styles';
 import { Transaction } from './types';
 ```
 
@@ -585,6 +660,7 @@ Configure in `tsconfig.json`:
       "assets/*": ["assets/*"],
       "components/*": ["components/*"],
       "constants/*": ["constants/*"],
+      "contexts/*": ["contexts/*"],
       "db/*": ["db/*"],
       "hooks/*": ["hooks/*"],
       "localization/*": ["localization/*"],
@@ -621,12 +697,8 @@ export const Component: FC<IComponentProps> = ({ ...props }) => {
   return <View style={styles.container}>{/* JSX */}</View>;
 };
 
-// 4. Styles (if separate file, import; if inline, define here)
-const styles = StyleSheet.create({
-  container: {
-    // styles
-  },
-});
+// 4. Styles (use createStyles hook)
+const styles = useComponentStyles();
 
 // 5. Exports (if needed)
 export default Component;
@@ -674,7 +746,7 @@ ModuleName/
   │   └── ModuleName.module-mocks.ts (or .tsx)
   ├── ModuleName.tsx (or .ts)      # Implementation
   ├── ModuleName.types.ts           # Types (if separate)
-  ├── ModuleName.styles.ts          # Styles (if separate)
+  ├── ModuleName.styles.ts          # Styles hook using createStyles (if separate)
   └── index.ts                      # Export
 ```
 
@@ -724,7 +796,7 @@ ModuleName/
    - `__tests__/ComponentName.test.tsx` - Test file
    - `__mocks__/ComponentName.module-mocks.ts` - Mock file
    - `ComponentName.tsx` - Component implementation
-   - `ComponentName.styles.ts` (if needed) - Styles
+   - `ComponentName.styles.ts` (if needed) - Styles hook using createStyles
    - `ComponentName.types.ts` (if needed) - Types
    - `index.ts` - Export file
 4. Export from `components/{category}/index.ts` (if category has index file)
@@ -737,7 +809,7 @@ ModuleName/
    - `__tests__/ScreenName.test.tsx` - Test file
    - `__mocks__/ScreenName.module-mocks.ts` - Mock file
    - `ScreenName.tsx` - Screen component
-   - `ScreenName.styles.ts` - Screen styles
+   - `ScreenName.styles.ts` - Screen styles hook using createStyles
    - `ScreenName.types.ts` (if needed) - Screen types
    - `components/` (optional) - Screen-specific components
    - `hooks/` (optional) - Screen-specific hooks
@@ -747,12 +819,8 @@ ModuleName/
 
 ### Adding a New Hook
 
-1. Create folder: `hooks/useHookName/`
-2. Create folder structure:
-   - `__tests__/useHookName.test.ts` - Test file
-   - `__mocks__/useHookName.module-mocks.ts` - Mock file
-   - `useHookName.ts` - Hook implementation
-   - `index.ts` - Export file
+1. Create file: `hooks/useHookName.ts`
+2. Encapsulate business logic
 3. Export from `hooks/index.ts`
 
 ### Adding a New Service
@@ -782,12 +850,8 @@ ModuleName/
 
 ### Adding a New Utility Function
 
-1. Create folder: `utils/utilityName/`
-2. Create folder structure:
-   - `__tests__/utilityName.test.ts` - Test file
-   - `__mocks__/utilityName.module-mocks.ts` - Mock file
-   - `utilityName.ts` - Utility implementation
-   - `index.ts` - Export file
+1. Create file: `utils/utilityName.ts`
+2. Keep functions pure (no side effects)
 3. Export from `utils/index.ts`
 
 ### Adding a New Translation File

@@ -65,6 +65,7 @@ src/
   components/ (organized by type, feature, or common/shared)
   screens/
   navigation/
+  contexts/          # React Context providers (Theme, Auth, etc.)
   hooks/
   services/
   store/
