@@ -12,7 +12,7 @@ Following ADR-001's decision to adopt a Layered Architecture and ADR-002's proje
 - **Hooks**: Custom React hooks with business logic
 - **Services**: Business logic services, data operations
 - **Utils**: Pure utility functions
-- **Redux**: Store, slices, actions, reducers, selectors
+- **Contexts**: React Context providers for global UI state
 - **Database**: Realm operations (through services)
 
 Key requirements and constraints:
@@ -126,14 +126,14 @@ Our testing strategy follows the testing pyramid:
 - **Hooks**: Test logic, state changes, side effects
 - **Services**: Test business logic, data transformations
 - **Utils**: Test pure functions, edge cases
-- **Redux**: Test reducers, actions, selectors
+- **Contexts**: Test context providers and consumers
 - **Target Coverage**: >80% for business logic
 
 ### Integration Tests (Middle)
 
 - **Feature Flows**: Test complete user flows (e.g., create transaction)
 - **Service Integration**: Test services with mocked database
-- **Redux Integration**: Test Redux store with mocked services
+- **Context Integration**: Test context providers with components
 - **Target Coverage**: >60% for features
 
 ### E2E Tests (Top - Few Tests)

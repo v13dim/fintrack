@@ -716,16 +716,14 @@ const styles = StyleSheet.create({
 ```typescript
 // src/utils/appInitialization.ts
 import { getRealm } from 'db';
-import { store } from 'store';
-import { hydrateStore } from 'store/hydration';
 
 export const initializeApp = async (): Promise<void> => {
   try {
     // Initialize database
     const realm = getRealm();
 
-    // Hydrate Redux store from database
-    await hydrateStore();
+    // Realm hooks automatically update components when data changes
+    // No hydration needed - components use useQuery/useObject hooks directly
 
     // Other initialization tasks
     // - Load user settings

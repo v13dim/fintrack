@@ -10,7 +10,7 @@ This guide provides detailed implementation instructions for testing in FinTrack
 - [Component Testing](#component-testing)
 - [Hook Testing](#hook-testing)
 - [Service Testing](#service-testing)
-- [Redux Testing](#redux-testing)
+- [Context Testing](#context-testing)
 - [Utils Testing](#utils-testing)
 - [Integration Testing](#integration-testing)
 - [E2E Testing](#e2e-testing)
@@ -329,49 +329,61 @@ describe('transactionService', () => {
 });
 ```
 
-## Redux Testing
+## Context Testing
 
-### Reducer Test
+### Context Provider Test
 
 ```typescript
-// src/store/slices/transactions/__tests__/transactionsSlice.test.ts
-import {
-  transactionsSlice,
-  addTransaction,
-  removeTransaction,
-} from '../transactionsSlice';
-import { mockTransaction } from 'testUtils/mockData';
+// src/contexts/FiltersContext/__tests__/FiltersContext.test.tsx
+import React from 'react';
+import { render, screen } from '@testing-library/react-native';
+import { FiltersProvider, useFilters } from '../FiltersContext';
 
-describe('transactionsSlice', () => {
-  const initialState = {
-    items: [],
-    loading: false,
-    error: null,
-  };
+const TestComponent = () => {
+  const { filters, setFilters } = useFilters();
+  return (
+    <>
+      <Text testID="filters">{JSON.stringify(filters)}</Text>
+      <Button
+        testID="update-filters"
+        onPress={() => setFilters({ categoryIds: ['1'] })}
+        title="Update"
+      />
+    </>
+  );
+};
 
-  it('should handle addTransaction', () => {
-    const action = addTransaction(mockTransaction);
-    const state = transactionsSlice.reducer(initialState, action);
+describe('FiltersContext', () => {
+  it('should provide filters state', () => {
+    render(
+      <FiltersProvider>
+        <TestComponent />
+      </FiltersProvider>
+    );
 
-    expect(state.items).toHaveLength(1);
-    expect(state.items[0]).toEqual(mockTransaction);
+    const filtersText = screen.getByTestId('filters');
+    expect(filtersText).toBeTruthy();
   });
 
-  it('should handle removeTransaction', () => {
-    const stateWithTransaction = {
-      ...initialState,
-      items: [mockTransaction],
-    };
+  it('should update filters when setFilters is called', () => {
+    render(
+      <FiltersProvider>
+        <TestComponent />
+      </FiltersProvider>
+    );
 
-    const action = removeTransaction(mockTransaction._id.toString());
-    const state = transactionsSlice.reducer(stateWithTransaction, action);
+    const updateButton = screen.getByTestId('update-filters');
+    fireEvent.press(updateButton);
 
-    expect(state.items).toHaveLength(0);
+    const filtersText = screen.getByTestId('filters');
+    expect(JSON.parse(filtersText.props.children)).toEqual({
+      categoryIds: ['1'],
+    });
   });
 });
 ```
 
-### Action Test (Async Thunk)
+### Context Consumer Test
 
 ```typescript
 // src/store/slices/transactions/__tests__/transactionsThunks.test.ts
@@ -407,36 +419,6 @@ describe('fetchTransactions', () => {
 });
 ```
 
-### Selector Test
-
-```typescript
-// src/store/slices/transactions/__tests__/transactionsSelectors.test.ts
-import {
-  selectAllTransactions,
-  selectTransactionsByType,
-} from '../transactions.selectors';
-import { mockTransactions } from 'testUtils/mockData';
-
-describe('transactionsSelectors', () => {
-  const state = {
-    transactions: {
-      items: mockTransactions,
-      loading: false,
-      error: null,
-    },
-  };
-
-  it('should return all transactions when selecting all', () => {
-    const result = selectAllTransactions(state);
-    expect(result).toEqual(mockTransactions);
-  });
-
-  it('should filter transactions by type', () => {
-    const result = selectTransactionsByType(state, 'expense');
-    expect(result).toEqual(mockTransactions.filter(t => t.type === 'expense'));
-  });
-});
-```
 
 ## Utils Testing
 

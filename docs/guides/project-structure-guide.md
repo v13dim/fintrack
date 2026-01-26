@@ -139,29 +139,17 @@ src/
 │   ├── exportService/
 │   └── index.ts          # Service exports
 │
-├── store/                # State management (Redux Toolkit)
-│   ├── index.ts          # Store configuration and root reducer
-│   ├── hooks.ts          # Typed hooks (useAppDispatch, useAppSelector)
-│   ├── rootReducer.ts    # Root reducer combining all feature reducers
-│   ├── middleware.ts     # Custom middleware configuration
-│   ├── slices/           # State slices
-│   │   ├── auth/
-│   │   │   ├── authSlice.ts
-│   │   │   ├── auth.types.ts
-│   │   │   └── auth.selectors.ts
-│   │   ├── transactions/
-│   │   │   ├── transactionsSlice.ts
-│   │   │   ├── transactions.types.ts
-│   │   │   └── transactions.selectors.ts
-│   │   ├── categories/
-│   │   │   ├── categoriesSlice.ts
-│   │   │   ├── categories.types.ts
-│   │   │   └── categories.selectors.ts
-│   │   └── budgets/
-│   │       ├── budgetsSlice.ts
-│   │       ├── budgets.types.ts
-│   │       └── budgets.selectors.ts
-│   └── __tests__/        # Store tests
+├── contexts/             # React Context providers (global UI state)
+│   ├── ThemeContext/     # Theme context (already exists)
+│   │   ├── ThemeContext.tsx
+│   │   └── index.ts
+│   ├── FiltersContext/    # Global filter state
+│   │   ├── FiltersContext.tsx
+│   │   └── index.ts
+│   ├── SettingsContext/   # App settings
+│   │   ├── SettingsContext.tsx
+│   │   └── index.ts
+│   └── index.ts          # Context exports
 │
 ├── db/                   # Database layer (if using RealmJS)
 │   ├── __tests__/        # Database tests
@@ -585,6 +573,7 @@ Configure in `tsconfig.json`:
       "assets/*": ["assets/*"],
       "components/*": ["components/*"],
       "constants/*": ["constants/*"],
+      "contexts/*": ["contexts/*"],
       "db/*": ["db/*"],
       "hooks/*": ["hooks/*"],
       "localization/*": ["localization/*"],

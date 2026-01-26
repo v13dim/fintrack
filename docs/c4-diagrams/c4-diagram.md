@@ -108,7 +108,7 @@ C4Component
     Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN")
     Component(constants, "Constants", "TypeScript", "Application constants")
     ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all data locally")
-    Component(store, "State Management", "Redux Toolkit", "Application state")
+    Component(contexts, "Contexts", "React Context", "Global UI state")
     Component(localization, "Localization", "i18n", "Translations")
 
 
@@ -209,8 +209,9 @@ C4Component
 
 #### State Management
 
-- **Redux Toolkit**: Selected in ADR-003 for state management
-- Store structure with slices for auth, transactions, categories, budgets
+- **React Context**: Used for global UI state (filters, settings)
+- **Realm Hooks**: Used for business data (transactions, categories, budgets)
+- See ADR-003 for details
 
 ---
 

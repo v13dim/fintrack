@@ -18,7 +18,7 @@ This document contains the breakdown of FinTrack project into User Stories, thei
 **Rationale**:
 
 1. **Team Size**: As a solo developer training project, Planning Poker principles help ensure thorough consideration of all aspects
-2. **Complexity**: React Native project with New Architecture, Realm database, Redux, and multiple integrations requires detailed analysis
+2. **Complexity**: React Native project with New Architecture, Realm database, and multiple integrations requires detailed analysis
 3. **Learning Value**: Planning Poker encourages breaking down tasks and considering edge cases, which is valuable for training
 4. **Story Points**: Relative sizing works better than hours for tasks with varying complexity and uncertainty
 5. **Fibonacci Sequence**: Reflects increasing uncertainty in larger tasks (1, 2, 3, 5, 8, 13, 21)
@@ -293,7 +293,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 
 #### 3. **Uncertainty in New Technologies**
 
-**Challenge**: React Native 0.83+ with New Architecture, Realm, Redux Toolkit - all new technologies with unknown complexity.
+**Challenge**: React Native 0.83+ with New Architecture, Realm - new technologies with unknown complexity.
 
 **Solution**:
 - Used higher estimates (5-8 points) for first-time integrations

@@ -186,7 +186,7 @@ RealmJS was selected for the following reasons:
 9. **Developer Experience**: Good documentation, clear patterns, and debugging tools
 10. **Offline-first**: Perfect fit for offline-only data storage requirement
 11. **Query Performance**: Efficient indexed queries for fast filtering and sorting
-12. **Integration with Redux**: Can easily sync with Redux store through services layer
+12. **React Integration**: Built-in React hooks (`useQuery`, `useObject`) provide automatic reactivity
 
 While RealmJS has a learning curve and is less familiar to SQL developers, these trade-offs are acceptable given:
 
