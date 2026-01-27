@@ -2,7 +2,7 @@
 
 This document describes the navigation structure and screen flow for the FinTrack mobile application.
 
-For navigation library selection decision, see [ADR-006: Navigation Library Selection](./ADR-006-navigation-library-selection.md).
+**Navigation Library**: React Navigation (`@react-navigation/native` with `@react-navigation/native-stack` and `@react-navigation/bottom-tabs`) is used for navigation in FinTrack.
 
 ---
 
@@ -362,7 +362,6 @@ Settings Screen
 
 ## References
 
-- [ADR-006: Navigation Library Selection](./ADR-006-navigation-library-selection.md) - Navigation library decision
 - [FinTrack PRD](../../fintrack-prd-en.md) - User flows section
 - [FinTrack Spec](../../fintrack-spec-en.md) - Technical requirements
 - [React Navigation Documentation](https://reactnavigation.org/)
