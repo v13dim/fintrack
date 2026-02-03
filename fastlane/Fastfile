@@ -1,0 +1,36 @@
+# FinTrack - Fastlane configuration (iOS + Android)
+# Run from project root: bundle exec fastlane <platform> <lane>
+# e.g. bundle exec fastlane android build
+#      bundle exec fastlane ios build
+
+default_platform(:android)
+
+platform :android do
+  desc 'Build Android release AAB (for Play Store / Firebase)'
+  lane :build do
+    gradle(
+      project_dir: 'android',
+      task: 'bundleRelease'
+    )
+  end
+
+  desc 'Build Android release APK'
+  lane :build_apk do
+    gradle(
+      project_dir: 'android',
+      task: 'assembleRelease'
+    )
+  end
+end
+
+platform :ios do
+  desc 'Build iOS app (requires signing setup for device/TestFlight)'
+  lane :build do
+    gym(
+      workspace: 'ios/fintrack.xcworkspace',
+      scheme: 'fintrack',
+      export_method: 'development',
+      clean: true
+    )
+  end
+end
