@@ -12,7 +12,7 @@ describe('HelloWorld', () => {
     render(<HelloWorld />);
 
     // The mock replaces Text with testID 'hello-world'
-    const textElement = screen.getByTestId('hello-world-text');
+    const textElement = screen.getByTestId('hello-world');
     expect(textElement).toBeTruthy();
   });
 

@@ -53,6 +53,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Free disk space (Realm + native libs need space)
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android/sdk/ndk-bundle
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo docker image prune --all --force 2>/dev/null || true
+          df -h
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
