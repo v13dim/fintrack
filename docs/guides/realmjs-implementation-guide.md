@@ -9,7 +9,7 @@ This guide provides detailed implementation instructions for using RealmJS in Fi
 - [Realm Instance Configuration](#realm-instance-configuration)
 - [Key Patterns](#key-patterns)
 - [Integration with Services](#integration-with-services)
-- [Integration with Redux](#integration-with-redux)
+- [Integration with React](#integration-with-react)
 - [Migrations](#migrations)
 - [Best Practices](#best-practices)
 - [Testing](#testing)
@@ -452,29 +452,29 @@ export const transactionService = {
 };
 ```
 
-## Integration with Redux
+## Integration with React
 
-Realm database and Redux store work together:
+Realm database works directly with React through hooks:
 
-- **Realm**: Source of truth for persistent data
-- **Redux**: In-memory state for UI and derived data
-- **Services**: Sync between Realm and Redux
+- **Realm**: Source of truth for all persistent data
+- **Realm Hooks**: `useQuery` and `useObject` provide reactive data access
+- **Services**: Handle all database operations (CRUD)
+- **No State Synchronization Needed**: Realm hooks automatically update components when data changes
 
-### Initial Hydration
+### Using Realm Hooks
 
 ```typescript
-// On app startup
-import { store } from 'store';
-import { transactionService } from 'services/transactionService';
-import { setTransactions } from 'store/slices/transactions/transactionsSlice';
+// hooks/useTransactions.ts
+import { useQuery } from '@realm/react';
+import { Transaction } from 'db/schemas/Transaction';
 
-const hydrateStore = () => {
-  const transactions = transactionService.findAll();
-  store.dispatch(setTransactions(Array.from(transactions)));
+export const useTransactions = () => {
+  const transactions = useQuery(Transaction);
+  return transactions;
 };
 ```
 
-### Syncing Updates
+### Automatic Updates
 
 ```typescript
 // In transactionService.create
@@ -486,8 +486,8 @@ export const transactionService = {
       transaction = realm.create<Transaction>('Transaction', data);
     });
 
-    // Sync with Redux
-    store.dispatch(addTransaction(transaction));
+    // No sync needed - Realm hooks automatically update components
+    // Components using useQuery(Transaction) will re-render automatically
 
     return transaction!;
   },

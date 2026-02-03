@@ -12,18 +12,21 @@ Following ADR-001's decision to adopt a Layered Architecture and ADR-002's proje
 - **Hooks**: Custom React hooks with business logic
 - **Services**: Business logic services, data operations
 - **Utils**: Pure utility functions
-- **Redux**: Store, slices, actions, reducers, selectors
+- **Contexts**: React Context providers for global UI state
 - **Database**: Realm operations (through services)
 
 Key requirements and constraints:
 
 - **Platform**: React Native 0.83+ with New Architecture
 - **TypeScript**: Strict mode enabled, full type safety in tests
-- **Test Coverage**: Target >70% overall, >80% for business logic (hooks, services, utils)
+- **Test Coverage**:
+  - Overall target: >70%
+  - Business logic layer (hooks, services, utils): >80%
 - **Test Isolation**: Tests must be isolated, no shared state between tests
-- **Mocking Strategy**: Comprehensive mocking to avoid real dependencies
-- **Performance**: Tests should run quickly (<30s for full suite)
-- **Maintainability**: Tests should be easy to write, read, and maintain
+- **Mocking Strategy**: Comprehensive mocking to avoid real dependencies (except E2E tests)
+- **Performance**:
+  - Unit and Integration tests: <30s for full suite
+  - E2E tests: Separate execution, no time constraint (infrastructure setup required)
 - **Developer Experience**: Clear patterns, good error messages, fast feedback
 
 The testing strategy must support:
@@ -126,14 +129,14 @@ Our testing strategy follows the testing pyramid:
 - **Hooks**: Test logic, state changes, side effects
 - **Services**: Test business logic, data transformations
 - **Utils**: Test pure functions, edge cases
-- **Redux**: Test reducers, actions, selectors
+- **Contexts**: Test context providers and consumers
 - **Target Coverage**: >80% for business logic
 
 ### Integration Tests (Middle)
 
 - **Feature Flows**: Test complete user flows (e.g., create transaction)
 - **Service Integration**: Test services with mocked database
-- **Redux Integration**: Test Redux store with mocked services
+- **Context Integration**: Test context providers with components
 - **Target Coverage**: >60% for features
 
 ### E2E Tests (Top - Few Tests)
@@ -141,32 +144,18 @@ Our testing strategy follows the testing pyramid:
 - **Critical Paths**: Test 3-5 most critical user journeys
 - **Platform**: Use Detox for React Native E2E testing
 - **Target**: 3-5 critical paths
+- **No Mocks**: E2E tests use real implementations (database, services, components) to test end-to-end system behavior
 
 ## Mocking Principles
 
-1. **Mock All Dependencies**: Mock everything except the unit under test
-2. **Co-located Mocks**: Mocks live next to the code they mock
-3. **Shared Test Utils**: Common mocking utilities in `testUtils/`
-4. **Global Mocks**: Platform-level mocks in root `__mocks__/`
-5. **No require/requireActual/requireMock**: Use Jest's automatic mocking
-6. **Type Safety**: Mocks maintain TypeScript types
-7. **Realistic Mocks**: Mocks should behave like real implementations
-
-## Test Naming Convention
-
-All test descriptions must start with "should" to clearly express the expected behavior:
-
-- ✅ `it('should render with title', () => { ... })`
-- ✅ `it('should call onPress when pressed', () => { ... })`
-- ✅ `it('should handle errors gracefully', () => { ... })`
-- ❌ `it('renders with title', () => { ... })`
-- ❌ `it('calls onPress when pressed', () => { ... })`
-
-This convention ensures:
-
-- Clear, readable test descriptions
-- Consistent test naming across the codebase
-- Easy to understand what behavior is being tested
+1. **Mock All Dependencies**: Mock everything except the unit under test (applies to unit and integration tests only)
+2. **E2E Tests**: No mocks - use real implementations to test full system behavior
+3. **Co-located Mocks**: Mocks live next to the code they mock
+4. **Shared Test Utils**: Common mocking utilities in `testUtils/`
+5. **Global Mocks**: Platform-level mocks in root `__mocks__/`
+6. **No require/requireActual/requireMock**: Use Jest's automatic mocking
+7. **Type Safety**: Mocks maintain TypeScript types
+8. **Realistic Mocks**: Mocks should behave like real implementations
 
 ## Exclusions
 
@@ -222,13 +211,17 @@ This decision should be reconsidered if:
 - A better testing strategy emerges that better fits the project's needs
 - Project requirements change significantly (e.g., real-time features, complex integrations)
 
+## Implementation Details
+
+For detailed implementation guidelines (test naming conventions, patterns, examples), see [Testing Strategy Guide](../guides/testing-guide.md).
+
 ## References
 
 - [ADR-001: Architectural Approach](./ADR-001-high-level-architecture.md) - High-level architecture decision
 - [ADR-002: Project Structure](./ADR-002-project-structure.md) - Project structure decision
 - [ADR-003: State Management](./ADR-003-state-management.md) - State management decision
 - [ADR-004: Data Persistence](./ADR-004-data-persistence.md) - Data persistence decision
-- [Testing Strategy Guide](../guides/testing-strategy-guide.md) - Detailed testing implementation guide
+- [Testing Strategy Guide](../guides/testing-guide.md) - Detailed testing implementation guide
 - [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) - Component testing
 - [Jest Documentation](https://jestjs.io/docs/getting-started) - JavaScript testing framework
 - [Detox Documentation](https://wix.github.io/Detox/) - E2E testing for React Native

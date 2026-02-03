@@ -175,7 +175,7 @@ We will adopt **RealmJS by MongoDB** for data persistence in FinTrack.
 
 RealmJS was selected for the following reasons:
 
-1. **Performance**: Excellent performance for object operations, meeting the <500ms transaction entry requirement
+1. **Performance**: Faster than SQLite for object operations, meeting the <500ms transaction entry requirement
 2. **Object-Oriented Model**: Natural fit for TypeScript/JavaScript, aligns with our TypeScript-first approach
 3. **Reactivity**: Built-in reactive queries enable automatic UI updates when data changes, reducing manual state synchronization
 4. **TypeScript Support**: Strong TypeScript support with schema definitions and type inference
@@ -186,7 +186,7 @@ RealmJS was selected for the following reasons:
 9. **Developer Experience**: Good documentation, clear patterns, and debugging tools
 10. **Offline-first**: Perfect fit for offline-only data storage requirement
 11. **Query Performance**: Efficient indexed queries for fast filtering and sorting
-12. **Integration with Redux**: Can easily sync with Redux store through services layer
+12. **React Integration**: Built-in React hooks (`useQuery`, `useObject`) provide automatic reactivity
 
 While RealmJS has a learning curve and is less familiar to SQL developers, these trade-offs are acceptable given:
 

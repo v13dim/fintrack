@@ -17,7 +17,6 @@ module.exports = {
           navigation: './src/navigation',
           screens: './src/screens',
           services: './src/services',
-          store: './src/store',
           testUtils: './src/testUtils',
           theme: './src/theme',
           utils: './src/utils',

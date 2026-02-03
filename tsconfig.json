@@ -14,7 +14,6 @@
       "navigation/*": ["navigation/*"],
       "screens/*": ["screens/*"],
       "services/*": ["services/*"],
-      "store/*": ["store/*"],
       "testUtils/*": ["testUtils/*"],
       "theme/*": ["theme/*"],
       "utils/*": ["utils/*"]

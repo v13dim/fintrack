@@ -108,18 +108,21 @@ C4Component
     Container(secure_storage, "Secure Storage", "Keychain/Keystore", "Stores PIN")
     Component(constants, "Constants", "TypeScript", "Application constants")
     ContainerDb(local_db, "Realm Database", "RealmJS", "Stores all data locally")
-    Component(store, "State Management", "Redux Toolkit", "Application state")
+    Component(contexts, "Contexts", "React Context", "Global UI state")
     Component(localization, "Localization", "i18n", "Translations")
 
 
     Rel(screens, components, "Uses")
     Rel(screens, hooks, "Uses")
+    Rel(screens, contexts, "Uses", "Global UI state (filters, settings)")
     Rel(navigation, screens, "Uses")
     Rel(components, theme, "Uses")
     Rel(components, constants, "Uses")
     Rel(components, utils, "Uses")
     Rel(components, assets, "Uses")
+    Rel(components, contexts, "Uses", "Optional (prefer props)")
     Rel(hooks, services, "Uses")
+    Rel(hooks, contexts, "Uses", "Combine with Realm data")
     Rel(services, db, "Uses")
     Rel(services, secure_storage, "Uses")
     Rel(hooks, biometric_api, "Uses")
@@ -141,7 +144,7 @@ C4Component
 
 ### Data Layer
 
-- **State Management**: Application state (to be decided - see ADR-003)
+- **State Management**: React Context for global UI state, Realm hooks for business data (see ADR-003)
 - **Database Layer**: Realm schemas, models, and queries
 
 ### Infrastructure Layer
@@ -154,63 +157,7 @@ C4Component
 
 ---
 
-## Component Details
-
-### Presentation Layer Components
-
-#### Screens
-
-- `HomeScreen`: Main dashboard with balance, recent transactions
-- `TransactionListScreen`: Full list of transactions with filters
-- `AddTransactionScreen`: Add/edit transaction flow
-- `AnalyticsScreen`: Charts and analytics dashboard
-- `BudgetScreen`: Budget management
-- `CategoryScreen`: Category management
-- `SettingsScreen`: App settings and data management
-- `AuthScreen`: PIN entry and biometric authentication
-- `OnboardingScreen`: First-time user onboarding
-
-#### UI Components
-
-- **Common**: `Button`, `Input`, `Text`, `Card`, `Modal`
-- **Forms**: `FormField`, `FormGroup`, `NumericInput`, `CategoryPicker`
-- **Cards**: `TransactionCard`, `BudgetCard`, `CategoryCard`
-- **Lists**: `TransactionList`, `CategoryList`, `BudgetList`
-- **Charts**: `PieChart`, `LineChart`, `ProgressBar`
-
-### Business Logic Layer Components
-
-#### Custom Hooks
-
-- `useTransactions`: Transaction CRUD operations, filtering, searching
-- `useBudgets`: Budget management, progress calculation, notifications
-- `useCategories`: Category management, sorting, CRUD
-- `useAuth`: Authentication, PIN management, biometric handling
-- `useAnalytics`: Analytics calculations, chart data preparation
-- `useExport`: Data export (CSV, JSON backup)
-
-#### Services
-
-- `transactionService`: Transaction business logic and data operations
-- `categoryService`: Category business logic and data operations
-- `budgetService`: Budget business logic and calculations
-- `authService`: Authentication and security operations
-- `analyticsService`: Analytics calculations and aggregations
-- `exportService`: Data export and import operations
-
-### Data Layer Components
-
-#### Database Layer
-
-- **Schemas**: Realm schema definitions for Transaction, Category, Budget
-- **Models**: TypeScript interfaces and Realm model classes
-- **Queries**: Database query helpers and utilities
-- **Migrations**: Database migration logic
-
-#### State Management
-
-- **Redux Toolkit**: Selected in ADR-003 for state management
-- Store structure with slices for auth, transactions, categories, budgets
+**Note**: For detailed component specifications, see [Layered Architecture Implementation Guide](../guides/layered-architecture-implementation.md).
 
 ---
 
@@ -222,16 +169,16 @@ For detailed data flow diagrams and sequence diagrams of key user flows, see [Da
 
 ## Technology Stack
 
-| Layer                | Technology                                       |
-| -------------------- | ------------------------------------------------ |
-| **Framework**        | React Native 0.83+ with New Architecture         |
-| **Language**         | TypeScript (strict mode)                         |
-| **Database**         | RealmJS by MongoDB                               |
-| **Navigation**       | React Navigation (to be confirmed - see ADR-006) |
-| **State Management** | TBD (see ADR-003)                                |
-| **Testing**          | Jest, React Native Testing Library               |
-| **Crash Reporting**  | Sentry                                           |
-| **CI/CD**            | GitHub Actions                                   |
+| Layer                | Technology                                                                                                              |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Framework**        | React Native 0.83+ with New Architecture                                                                                |
+| **Language**         | TypeScript (strict mode)                                                                                                |
+| **Database**         | RealmJS by MongoDB                                                                                                      |
+| **Navigation**       | React Navigation (`@react-navigation/native` with `@react-navigation/native-stack` and `@react-navigation/bottom-tabs`) |
+| **State Management** | React Context + Realm hooks (`@realm/react`) - see ADR-003                                                              |
+| **Testing**          | Jest, React Native Testing Library                                                                                      |
+| **Crash Reporting**  | Sentry                                                                                                                  |
+| **CI/CD**            | GitHub Actions                                                                                                          |
 
 ---
 
@@ -250,5 +197,6 @@ For detailed data flow diagrams and sequence diagrams of key user flows, see [Da
 
 - [ADR-001: Architectural Approach](../adr/ADR-001-high-level-architecture.md)
 - [ADR-002: Project Structure](../adr/ADR-002-project-structure.md)
+- [ADR-003: State Management](../adr/ADR-003-state-management.md)
 - [Layered Architecture Implementation Guide](../guides/layered-architecture-implementation.md)
 - [C4 Model](https://c4model.com/)

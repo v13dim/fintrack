@@ -5,11 +5,11 @@ This document contains the breakdown of FinTrack project into User Stories, thei
 ## Table of Contents
 
 - [Estimation Technique](#estimation-technique)
-- [User Stories Breakdown](#user-stories-breakdown)
 - [Story Points Summary](#story-points-summary)
 - [Roadmap](#roadmap)
 - [Estimation Process](#estimation-process)
 - [Difficulties and Learnings](#difficulties-and-learnings)
+- [Definition of Done](#definition-of-done)
 
 ## Estimation Technique
 
@@ -18,7 +18,7 @@ This document contains the breakdown of FinTrack project into User Stories, thei
 **Rationale**:
 
 1. **Team Size**: As a solo developer training project, Planning Poker principles help ensure thorough consideration of all aspects
-2. **Complexity**: React Native project with New Architecture, Realm database, Redux, and multiple integrations requires detailed analysis
+2. **Complexity**: React Native project with New Architecture, Realm database, and multiple integrations requires detailed analysis
 3. **Learning Value**: Planning Poker encourages breaking down tasks and considering edge cases, which is valuable for training
 4. **Story Points**: Relative sizing works better than hours for tasks with varying complexity and uncertainty
 5. **Fibonacci Sequence**: Reflects increasing uncertainty in larger tasks (1, 2, 3, 5, 8, 13, 21)
@@ -35,7 +35,7 @@ This document contains the breakdown of FinTrack project into User Stories, thei
 
 ## Product Backlog
 
-For complete Product Backlog with all User Stories, Story Points, and Priority assignments, see [Product Backlog](./product-backlog.md).
+For complete Product Backlog with all User Stories organized by phases, see [Product Backlog](./product-backlog.md).
 
 **Quick Summary**:
 
@@ -45,6 +45,88 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 - **P0 (Critical)**: 144 points (35 stories)
 - **P1 (High)**: 34 points (12 stories)
 - **P2 (Medium)**: 13 points (3 stories)
+
+**Backlog Organization**:
+
+- Stories are organized by phases in separate files for easier tracking
+- Each phase file contains detailed User Stories with acceptance criteria
+- Main backlog file provides overview and links to phase details
+
+## Story Points Summary
+
+### By Phase
+
+| Phase                         | Total Story Points | Epics Count | Timeline         |
+| ----------------------------- | ------------------ | ----------- | ---------------- |
+| Phase 0: Setup & Architecture | 21                 | 1           | Week 1 (Day 1-2) |
+| Phase 1: Infrastructure       | 26                 | 2           | Week 1 (Day 3-5) |
+| Phase 2: Core Features        | 110                | 6           | Week 2-3         |
+| Phase 3: Production Readiness | 34                 | 3           | Week 4           |
+| **Total**                     | **191**            | **12**      | **4-5 weeks**    |
+
+### By Priority
+
+| Priority      | Story Points | Count  | Description                         |
+| ------------- | ------------ | ------ | ----------------------------------- |
+| P0 (Critical) | 144          | 35     | Must-have features for MVP          |
+| P1 (High)     | 34           | 12     | Important features, can be deferred |
+| P2 (Medium)   | 13           | 3      | Nice-to-have features               |
+| **Total**     | **191**      | **50** |                                     |
+
+### By Epic
+
+| Epic                       | Story Points | Priority | Status  |
+| -------------------------- | ------------ | -------- | ------- |
+| Project Foundation         | 21           | P0       | Planned |
+| CI/CD Pipeline             | 13           | P0       | Planned |
+| Quality Tools              | 13           | P0       | Planned |
+| Authentication & Security  | 21           | P0       | Planned |
+| Transactions               | 34           | P0       | Planned |
+| Categories                 | 21           | P0       | Planned |
+| Budgets                    | 21           | P0       | Planned |
+| Analytics                  | 21           | P0       | Planned |
+| Data Management            | 13           | P1       | Planned |
+| Performance & Optimization | 13           | P0       | Planned |
+| Accessibility              | 13           | P0       | Planned |
+| Security & Documentation   | 8            | P0       | Planned |
+
+### Backlog Statistics
+
+**Total Backlog**:
+
+- **Total User Stories**: 50
+- **Total Story Points**: 191
+- **Total Epics**: 12
+- **Average Story Points per Story**: 3.8
+
+**Priority Distribution**:
+
+```
+P0 (Critical): ████████████████████████████████████████████████████ 75% (144 points)
+P1 (High):     ████████████ 18% (34 points)
+P2 (Medium):   ████ 7% (13 points)
+```
+
+**Story Points Distribution**:
+
+```
+1 point:  0 stories (0%)
+2 points: 8 stories (16%)
+3 points: 15 stories (30%)
+5 points: 20 stories (40%)
+8 points: 5 stories (10%)
+13 points: 2 stories (4%)
+21 points: 0 stories (0%)
+```
+
+**Velocity Planning**:
+
+- **Target Velocity**: 45-50 story points per week (full-time)
+- **Week 1**: 47 points (Foundation + Infrastructure)
+- **Week 2**: 50 points (Authentication + Transactions Core)
+- **Week 3**: 63 points (Categories + Budgets + Analytics)
+- **Week 4**: 47 points (Polish + Performance + Production Readiness)
+- **Week 5**: Buffer for remaining tasks
 
 ## Roadmap
 
@@ -77,7 +159,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 **Deliverables**:
 
 - Working "Hello World" with New Architecture
-- All ADR documents (ADR-001 to ADR-006)
+- All ADR documents (ADR-001 to ADR-008)
 - C4 diagrams and navigation map
 - Test infrastructure
 - Working CI/CD pipeline
@@ -326,7 +408,7 @@ For complete Product Backlog with all User Stories, Story Points, and Priority a
 
 #### 3. **Uncertainty in New Technologies**
 
-**Challenge**: React Native 0.83+ with New Architecture, Realm, Redux Toolkit - all new technologies with unknown complexity.
+**Challenge**: React Native 0.83+ with New Architecture, Realm - new technologies with unknown complexity.
 
 **Solution**:
 
@@ -446,8 +528,23 @@ The total estimate of **191 story points** across **50 user stories** provides a
 
 Regular tracking of actual vs estimated will help refine the estimation process and improve accuracy over time.
 
+## Definition of Done
+
+For criteria that must be met for a User Story or task to be considered complete, see [Definition of Done](./definition-of-done.md).
+
+**Quick Checklist**:
+
+- ✅ Unit tests passing
+- ✅ Integration tests (if applicable)
+- ✅ Manual smoke test on iOS + Android
+- ✅ No TypeScript errors
+- ✅ Linter clean
+
+For complete checklist and detailed criteria, see [Definition of Done](./definition-of-done.md).
+
 ## References
 
+- [Definition of Done](./definition-of-done.md) - Completion criteria for User Stories
 - [Estimation Techniques Research](./research/estimation-techniques.md) - Detailed comparison of estimation techniques
 - [Project Specification](../fintrack-spec-en.md) - Full project requirements
 - [Product Requirements Document](../fintrack-prd-en.md) - Product requirements
