@@ -67,9 +67,9 @@ src/
   components/ (Atomic Design: atoms, molecules, organisms)
   screens/
   navigation/
+  contexts/
   hooks/
   services/
-  store/
   db/
   utils/
   theme/
@@ -102,9 +102,9 @@ src/
   components/        # All UI components (flexible organization)
   screens/
   navigation/
+  contexts/          # React Context providers (global UI state)
   hooks/
   services/
-  store/
   db/
   utils/
   theme/

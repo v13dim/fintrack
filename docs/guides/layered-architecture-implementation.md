@@ -30,10 +30,11 @@ The application follows a Layered Architecture pattern with four main layers:
 
 - **Hooks** (`hooks/`): Custom React hooks that encapsulate business logic
 
-  - Examples: `useTransactions`, `useBudgets`, `useAuth`
+  - Examples: `useTransactions`, `useBudgets`, `useAnalytics`
   - Encapsulate business logic in reusable hooks
   - **Consumed only by screens** - components cannot use hooks
-  - Hooks use services for data operations
+  - Hooks use Realm hooks (`useQuery`, `useObject`) for data access
+  - Hooks use services for data operations (CRUD)
 
 - **Services** (`services/`): Business logic services that handle data operations
   - Handle data operations and business rules
@@ -41,11 +42,7 @@ The application follows a Layered Architecture pattern with four main layers:
   - Abstract data access (database, API)
   - Used by hooks (and potentially by other services)
 
-### 3. Data Layer (`store/`, `db/`)
-
-- **State Management** (`store/`): Application state management
-
-  - To be decided (see ADR-003)
+### 3. Data Layer (`db/`)
 
 - **Database** (`db/`): Local database layer using **RealmJS by MongoDB**
   - Object-oriented database for local-first architecture
@@ -128,17 +125,23 @@ Dependencies point inward: screens → components → hooks/services → db
 - **Screens** compose components and use hooks/services
   - Screens are the only layer that can consume hooks
   - Screens handle business logic through hooks
+  - Screens can use Context for global UI state
   - Navigation is used by screens, but screens don't depend on navigation internals
 - **Components** have zero dependencies on other parts of the app
   - Components are pure presentation components
-  - Components can only use: other components, theme, constants, utils, assets (infrastructure layer)
+  - Components can only use: other components, contexts, theme, constants, utils, assets (infrastructure layer)
   - Components cannot use hooks, services, or access the database
   - Components receive all data and callbacks via props
+  - Components can consume Context for global UI state (e.g., ThemeContext)
 - **Hooks** are consumed only by screens
-  - Hooks encapsulate business logic and use services
+  - Hooks encapsulate business logic and use Realm hooks (`useQuery`, `useObject`)
+  - Hooks use services for data operations (CRUD)
   - Hooks are never used directly by components
 - **Services** are used by hooks (and potentially by other services)
   - Database layer (`db/`) is accessed through services, not directly from components or hooks
+- **Contexts** provide global UI state
+  - Used for state shared across unrelated screens (filters, settings)
+  - Never used for business data (use Realm hooks instead)
 - **Utils** are shared utilities with no dependencies
 
 ### 4. Testability
@@ -158,7 +161,7 @@ Dependencies point inward: screens → components → hooks/services → db
 - **Framework**: React Native 0.83+ with New Architecture
 - **Language**: TypeScript (strict mode)
 - **Database**: RealmJS by MongoDB (local-first, object database)
-- **State Management**: To be decided (see ADR-003)
+- **State Management**: React Context + Realm hooks (see ADR-003)
 - **Navigation**: To be decided (see ADR-006)
 - **Testing**: Jest, React Native Testing Library
 
@@ -178,8 +181,11 @@ Dependencies point inward: screens → components → hooks/services → db
 
 ### 3. Provider Pattern
 
-- Theme provider, Auth provider
-- Context for cross-cutting concerns
+- Context providers located in `contexts/` directory
+- Examples: `ThemeContext`, `FiltersContext`, `SettingsContext`
+- Used for global UI state shared across unrelated screens
+- Never used for business data (use Realm hooks instead)
+- Providers wrap the app at the root level
 
 ### 4. Compound Components
 

@@ -139,10 +139,17 @@ src/
 │   ├── exportService/
 │   └── index.ts          # Service exports
 │
-├── store/                # State management
-│   ├── index.ts          # Store configuration
-│   ├── slices/           # State slices (if using Redux)
-│   └── types.ts          # Store types
+├── contexts/             # React Context providers (global UI state)
+│   ├── ThemeContext/     # Theme context (already exists)
+│   │   ├── ThemeContext.tsx
+│   │   └── index.ts
+│   ├── FiltersContext/    # Global filter state
+│   │   ├── FiltersContext.tsx
+│   │   └── index.ts
+│   ├── SettingsContext/   # App settings
+│   │   ├── SettingsContext.tsx
+│   │   └── index.ts
+│   └── index.ts          # Context exports
 │
 ├── db/                   # Database layer (if using RealmJS)
 │   ├── __tests__/        # Database tests
@@ -566,6 +573,7 @@ Configure in `tsconfig.json`:
       "assets/*": ["assets/*"],
       "components/*": ["components/*"],
       "constants/*": ["constants/*"],
+      "contexts/*": ["contexts/*"],
       "db/*": ["db/*"],
       "hooks/*": ["hooks/*"],
       "localization/*": ["localization/*"],
