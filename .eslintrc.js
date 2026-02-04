@@ -100,6 +100,8 @@ module.exports = {
       'error',
       {
         groups: [
+          // 0. Mock files first (must load before tested modules)
+          ['^.*__mocks__.*$'],
           // 1. External dependencies (React, React Native, third-party)
           [
             '^react$',

@@ -1,6 +1,12 @@
 module.exports = {
   preset: 'react-native',
   setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    'index\\.(ts|tsx|js|jsx)$',
+    '/testUtils/',
+    '/assets/',
+  ],
   coverageThreshold: {
     global: {
       branches: 70,
@@ -15,17 +21,18 @@ module.exports = {
       lines: 80,
       statements: 80,
     },
-    'src/services/**/*.ts': {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
-    },
-    'src/utils/**/*.ts': {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
-    },
+    // TODO: Add coverage for services and utils when they are implemented
+    // 'src/services/**/*.ts': {
+    //   branches: 80,
+    //   functions: 80,
+    //   lines: 80,
+    //   statements: 80,
+    // },
+    // 'src/utils/**/*.ts': {
+    //   branches: 80,
+    //   functions: 80,
+    //   lines: 80,
+    //   statements: 80,
+    // },
   },
 };
