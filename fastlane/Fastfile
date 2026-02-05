@@ -3,6 +3,9 @@
 # e.g. bundle exec fastlane android build
 #      bundle exec fastlane ios build
 
+# Project root (parent of fastlane/); needed because Fastlane may run with CWD = fastlane/ in CI
+PROJECT_ROOT = File.expand_path('..', File.dirname(__FILE__))
+
 default_platform(:android)
 
 platform :android do
@@ -35,9 +38,10 @@ end
 platform :ios do
   desc 'Build iOS for simulator (CI / local, no signing)'
   lane :build_simulator do
-    sh('cd ios && bundle exec pod install')
+    ios_dir = File.join(PROJECT_ROOT, 'ios')
+    sh("cd '#{ios_dir}' && bundle exec pod install")
     sh(
-      'cd ios && xcodebuild build ' \
+      "cd '#{ios_dir}' && xcodebuild build " \
       '-workspace fintrack.xcworkspace ' \
       '-scheme fintrack ' \
       '-sdk iphonesimulator ' \
