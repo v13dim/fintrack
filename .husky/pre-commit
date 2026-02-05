@@ -2,6 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run type-check
-npm run lint:fix
-npm run format
+npx lint-staged
 npm run test:coverage

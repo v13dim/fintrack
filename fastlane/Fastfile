@@ -6,6 +6,15 @@
 default_platform(:android)
 
 platform :android do
+  desc 'Build Android debug APK (CI / local verification)'
+  lane :build_debug do
+    gradle(
+      project_dir: 'android',
+      task: 'assembleDebug',
+      flags: '--no-daemon'
+    )
+  end
+
   desc 'Build Android release AAB (for Play Store / Firebase)'
   lane :build do
     gradle(
@@ -24,6 +33,20 @@ platform :android do
 end
 
 platform :ios do
+  desc 'Build iOS for simulator (CI / local, no signing)'
+  lane :build_simulator do
+    sh('cd ios && bundle exec pod install')
+    sh(
+      'cd ios && xcodebuild build ' \
+      '-workspace fintrack.xcworkspace ' \
+      '-scheme fintrack ' \
+      '-sdk iphonesimulator ' \
+      "-destination 'generic/platform=iOS Simulator' " \
+      '-configuration Debug ' \
+      'CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO'
+    )
+  end
+
   desc 'Build iOS app (requires signing setup for device/TestFlight)'
   lane :build do
     gym(

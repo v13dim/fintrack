@@ -15,6 +15,7 @@ module.exports = {
     'react-native',
     'import',
     'simple-import-sort',
+    'prettier',
   ],
   extends: [
     '@react-native',
@@ -22,7 +23,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react-native/all',
-    'prettier',
+    'plugin:prettier/recommended',
   ],
   settings: {
     react: {
