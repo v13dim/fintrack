@@ -187,18 +187,18 @@ Import the `.p12` into the keychain on the runner and provide the profile to the
 
 ### Firebase App Distribution (Android only)
 
-| Secret                         | Description                                                                                                                                                                                                 |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Secret                          | Description                                                                                                                                                                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `FIREBASE_SERVICE_ACCOUNT_JSON` | **Full JSON content** of the service account key from Google Cloud Console (role: **Firebase App Distribution Admin**). The release workflow writes it to a temp file and sets `GOOGLE_APPLICATION_CREDENTIALS` for the Fastlane plugin. |
 
 Optional vars:
 
 | Var / env                 | Description                                                                    |
 | ------------------------- | ------------------------------------------------------------------------------ |
-| `FIREBASE_APP_ID_ANDROID` | Firebase Android app ID (default in Fastfile from `google-services.json`).   |
+| `FIREBASE_APP_ID_ANDROID` | Firebase Android app ID (default in Fastfile from `google-services.json`).     |
 | `FIREBASE_TESTERS`        | Comma-separated emails to invite (e.g. `a@x.com,b@x.com`).                     |
 | `FIREBASE_GROUPS`         | Comma-separated group aliases (create in Firebase Console → App Distribution). |
-| `FIREBASE_RELEASE_NOTES`  | Optional release notes; default is a timestamp.                               |
+| `FIREBASE_RELEASE_NOTES`  | Optional release notes; default is a timestamp.                                |
 
 **Lane:** from project root run `bundle exec fastlane android distribute` (builds AAB and uploads).
 
