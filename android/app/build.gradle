@@ -103,11 +103,12 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
         }
         releaseDev {
             applicationIdSuffix ".dev"
+            // Use 'release' variant of dependencies that don't publish releaseDev (e.g. RN native modules)
+            matchingFallbacks = ["release"]
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
@@ -115,6 +116,8 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         releaseProd {
+            // Use 'release' variant of dependencies that don't publish releaseProd (e.g. RN native modules)
+            matchingFallbacks = ["release"]
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
