@@ -28,6 +28,8 @@ build/
 .idea
 .gradle
 local.properties
+# Firebase (contains API key; use google-services.json.example as template, inject in CI from secret)
+android/app/google-services.json
 *.iml
 *.hprof
 .cxx/

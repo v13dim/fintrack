@@ -147,7 +147,7 @@ FinTrack uses [Firebase App Distribution](https://firebase.google.com/docs/app-d
 ### One-time setup
 
 1. **Firebase project and Android app**  
-   The project already has an Android app registered (`android/app/google-services.json`). The Firebase App ID is in that file (or in [Firebase Console → Project Settings → General](https://console.firebase.google.com/project/_/settings/general/)).
+   `android/app/google-services.json` is not in the repo (it is in `.gitignore`; it contains the Firebase API key). Use `android/app/google-services.json.example` as a structure reference. **Local:** download the real file from [Firebase Console → Project Settings → General → Your apps → Android](https://console.firebase.google.com/project/_/settings/general/) and save it as `android/app/google-services.json`. **CI:** the workflow creates this file from the secret `ANDROID_GOOGLE_SERVICES_JSON_BASE64` (see [CI Secrets](#firebase-app-distribution-android-only)).
 
 2. **Authentication**
    - **CI (recommended):** In [Google Cloud Console → IAM → Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), create a service account, grant it **Firebase App Distribution Admin**, create a JSON key. Add the **full JSON content** as GitHub Secret `FIREBASE_SERVICE_ACCOUNT_JSON`. The release workflow writes it to a temp file and sets `GOOGLE_APPLICATION_CREDENTIALS` for the Fastlane plugin.
@@ -187,9 +187,10 @@ Import the `.p12` into the keychain on the runner and provide the profile to the
 
 ### Firebase App Distribution (Android only)
 
-| Secret                          | Description                                                                                                                                                                                                                              |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FIREBASE_SERVICE_ACCOUNT_JSON` | **Full JSON content** of the service account key from Google Cloud Console (role: **Firebase App Distribution Admin**). The release workflow writes it to a temp file and sets `GOOGLE_APPLICATION_CREDENTIALS` for the Fastlane plugin. |
+| Secret                                | Description                                                                                                                                                                                                                              |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FIREBASE_SERVICE_ACCOUNT_JSON`       | **Full JSON content** of the service account key from Google Cloud Console (role: **Firebase App Distribution Admin**). The release workflow writes it to a temp file and sets `GOOGLE_APPLICATION_CREDENTIALS` for the Fastlane plugin. |
+| `ANDROID_GOOGLE_SERVICES_JSON_BASE64` | Content of `android/app/google-services.json` (from Firebase Console), **base64-encoded**. The workflow decodes it to `android/app/google-services.json` before the build. Do not commit the file (it is in `.gitignore`).               |
 
 Optional vars:
 
@@ -200,9 +201,9 @@ Optional vars:
 | `FIREBASE_GROUPS`         | Comma-separated group aliases (create in Firebase Console → App Distribution). |
 | `FIREBASE_RELEASE_NOTES`  | Optional release notes; default is a timestamp.                                |
 
-**Lane:** from project root run `bundle exec fastlane android distribute` (builds AAB and uploads).
+**Lane:** from project root run `bundle exec fastlane android distribute` (builds APK and uploads).
 
-**CI:** The PR workflow (`.github/workflows/pr.yml`) builds the Android release AAB and uploads it to Firebase on every PR. Set the GitHub Secret **`FIREBASE_SERVICE_ACCOUNT_JSON`** to the full JSON key content.
+**CI:** The PR workflow (`.github/workflows/pr.yml`) builds the Android release APK and uploads it to Firebase on every PR. Set the GitHub Secrets **`FIREBASE_SERVICE_ACCOUNT_JSON`** and **`ANDROID_GOOGLE_SERVICES_JSON_BASE64`** (base64-encoded `google-services.json`).
 
 ### Sentry (source maps and debug symbols)
 
@@ -216,7 +217,7 @@ The PR workflow (`.github/workflows/pr.yml`) creates `ios/sentry.properties` and
 
 ## Security and Rotation
 
-- **Never commit** keystores, `.p12` files, provisioning profiles, or passwords.
+- **Never commit** keystores, `.p12` files, provisioning profiles, passwords, or `android/app/google-services.json` (use the secret in CI and the example file for structure).
 - **Restrict secrets in CI**: Use signing secrets only in the main/release workflow and only for the jobs that need them (e.g. release build + Firebase upload).
 - **Backup**: Keep a secure backup of the Android release keystore and the iOS Distribution certificate; losing them can block store updates.
 - **Rotation**: If a key or certificate is compromised, create a new one in the respective portal (Play Console / Apple Developer), update CI secrets, and follow store procedures for key/certificate rotation.

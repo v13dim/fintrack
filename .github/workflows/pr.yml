@@ -136,6 +136,16 @@ jobs:
             [ -n "$SENTRY_AUTH_TOKEN" ] && echo "auth.token=$SENTRY_AUTH_TOKEN"
           } > android/sentry.properties
 
+      - name: Prepare google-services.json (Android)
+        env:
+          ANDROID_GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.ANDROID_GOOGLE_SERVICES_JSON_BASE64 }}
+        run: |
+          if [ -z "$ANDROID_GOOGLE_SERVICES_JSON_BASE64" ]; then
+            echo "::error::Set ANDROID_GOOGLE_SERVICES_JSON_BASE64 in repo Secrets (see docs/guides/certificate-management-guide.md)"
+            exit 1
+          fi
+          echo "$ANDROID_GOOGLE_SERVICES_JSON_BASE64" | base64 -d > android/app/google-services.json
+
       - name: Build Android releaseDev and distribute to Firebase
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
