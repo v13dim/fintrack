@@ -30,11 +30,19 @@ platform :android do
     )
   end
 
-  desc 'Build Android releaseDev AAB (CI / Firebase App Distribution)'
+  desc 'Build Android releaseDev AAB (CI / Firebase App Distribution with Google Play link)'
   lane :build_release_dev do
     gradle(
       project_dir: 'android',
       task: 'bundleReleaseDev'
+    )
+  end
+
+  desc 'Build Android releaseDev APK (CI / Firebase App Distribution without Google Play)'
+  lane :build_release_dev_apk do
+    gradle(
+      project_dir: 'android',
+      task: 'assembleReleaseDev'
     )
   end
 
@@ -46,15 +54,15 @@ platform :android do
     )
   end
 
-  desc 'Upload Android releaseDev to Firebase App Distribution (builds AAB then uploads)'
+  desc 'Upload Android releaseDev to Firebase App Distribution (builds APK then uploads)'
   lane :distribute do
-    build_release_dev
+    build_release_dev_apk
     firebase_app_distribution(
       app: FIREBASE_APP_ID_ANDROID,
       firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
       service_credentials_file: ENV['GOOGLE_APPLICATION_CREDENTIALS'],
-      android_artifact_type: 'AAB',
-      android_artifact_path: File.join(PROJECT_ROOT, 'android', 'app', 'build', 'outputs', 'bundle', 'releaseDev', 'app-releaseDev.aab'),
+      android_artifact_type: 'APK',
+      android_artifact_path: File.join(PROJECT_ROOT, 'android', 'app', 'build', 'outputs', 'apk', 'releaseDev', 'app-releaseDev.apk'),
       release_notes: ENV['FIREBASE_RELEASE_NOTES'] || "FinTrack build #{Time.now.utc.strftime('%Y-%m-%d %H:%M')} UTC",
       testers: ENV['FIREBASE_TESTERS'],
       groups: ENV['FIREBASE_GROUPS'],
