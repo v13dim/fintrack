@@ -8,6 +8,7 @@ This guide describes how FinTrack manages signing certificates and keystores for
 - [Fastlane Setup](#fastlane-setup)
 - [Android Keystore](#android-keystore)
 - [iOS Certificates and Profiles](#ios-certificates-and-profiles)
+- [Firebase App Distribution](#firebase-app-distribution)
 - [CI Secrets](#ci-secrets)
 - [Security and Rotation](#security-and-rotation)
 - [References](#references)
@@ -139,6 +140,26 @@ Required when you need to distribute iOS builds (e.g. TestFlight, Firebase App D
 - Store the Distribution certificate (exported as `.p12`) and the Ad Hoc (or App Store) provisioning profile in GitHub Secrets.
 - In the workflow (macOS runner): import the `.p12` into the keychain and set the profile path; then run `bundle exec fastlane ios build` so `gym` can sign the IPA.
 
+## Firebase App Distribution
+
+FinTrack uses [Firebase App Distribution](https://firebase.google.com/docs/app-distribution) to ship **Android** builds to testers (iOS builds are not distributed). The Fastlane plugin `fastlane-plugin-firebase_app_distribution` is configured in `fastlane/Pluginfile`.
+
+### One-time setup
+
+1. **Firebase project and Android app**  
+   The project already has an Android app registered (`android/app/google-services.json`). The Firebase App ID is in that file (or in [Firebase Console → Project Settings → General](https://console.firebase.google.com/project/_/settings/general/)).
+
+2. **Authentication**
+   - **CI (recommended):** In [Google Cloud Console → IAM → Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts), create a service account, grant it **Firebase App Distribution Admin**, create a JSON key. Add the **full JSON content** as GitHub Secret `FIREBASE_SERVICE_ACCOUNT_JSON`. The release workflow writes it to a temp file and sets `GOOGLE_APPLICATION_CREDENTIALS` for the Fastlane plugin.
+   - **Local (optional):** Either set `GOOGLE_APPLICATION_CREDENTIALS` to the path of the service account JSON, or run `firebase login:ci` and set `FIREBASE_CLI_TOKEN` to the printed token.
+
+### Running distribution
+
+From the **project root**: `bundle exec fastlane android distribute`  
+Builds the release AAB and uploads it to Firebase App Distribution. Optionally set `FIREBASE_TESTERS` (comma-separated emails) or `FIREBASE_GROUPS` (group aliases).
+
+Secrets and variables are listed in [CI Secrets](#ci-secrets) (Firebase subsection).
+
 ## CI Secrets
 
 Use GitHub Actions secrets (or your CI’s secret store) for all sensitive data.
@@ -164,13 +185,34 @@ In the workflow: decode the keystore to a file (e.g. in `android/app/` or a temp
 
 Import the `.p12` into the keychain on the runner and provide the profile to the build step.
 
-### Firebase App Distribution (when used)
+### Firebase App Distribution (Android only)
 
-| Secret name                                            | Description                                                      |
-| ------------------------------------------------------ | ---------------------------------------------------------------- |
-| `FIREBASE_CI_TOKEN` or `FIREBASE_SERVICE_ACCOUNT_JSON` | Token or service account JSON for Firebase CLI / Fastlane plugin |
+| Secret                         | Description                                                                                                                                                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FIREBASE_SERVICE_ACCOUNT_JSON` | **Full JSON content** of the service account key from Google Cloud Console (role: **Firebase App Distribution Admin**). The release workflow writes it to a temp file and sets `GOOGLE_APPLICATION_CREDENTIALS` for the Fastlane plugin. |
 
-Use these only in jobs that upload to Firebase; do not log or expose them.
+Optional vars:
+
+| Var / env                 | Description                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| `FIREBASE_APP_ID_ANDROID` | Firebase Android app ID (default in Fastfile from `google-services.json`).   |
+| `FIREBASE_TESTERS`        | Comma-separated emails to invite (e.g. `a@x.com,b@x.com`).                     |
+| `FIREBASE_GROUPS`         | Comma-separated group aliases (create in Firebase Console → App Distribution). |
+| `FIREBASE_RELEASE_NOTES`  | Optional release notes; default is a timestamp.                               |
+
+**Lane:** from project root run `bundle exec fastlane android distribute` (builds AAB and uploads).
+
+**CI:** The PR workflow (`.github/workflows/pr.yml`) builds the Android release AAB and uploads it to Firebase on every PR. Set the GitHub Secret **`FIREBASE_SERVICE_ACCOUNT_JSON`** to the full JSON key content.
+
+### Sentry (source maps and debug symbols)
+
+| Secret / Var           | Description                                                                                                                                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SENTRY_AUTH_TOKEN`    | Auth token for uploading source maps and debug symbols (create in [Sentry → Settings → Auth Tokens](https://sentry.io/settings/account/api/auth-tokens/) with `project:releases`, `org:read`). |
+| `SENTRY_ORG` (var)     | Optional. Sentry organization slug (default in workflow: `v13dim`).                                                                                                                            |
+| `SENTRY_PROJECT` (var) | Optional. Sentry project slug (default in workflow: `fintrack`).                                                                                                                               |
+
+The PR workflow (`.github/workflows/pr.yml`) creates `ios/sentry.properties` and `android/sentry.properties` from these before each build so the Sentry Gradle plugin and Xcode build phase can upload artifacts. Do not commit `sentry.properties` (they are in `.gitignore`).
 
 ## Security and Rotation
 
@@ -183,6 +225,7 @@ Use these only in jobs that upload to Firebase; do not log or expose them.
 ## References
 
 - [ADR-007: CI/CD Platform](../adr/ADR-007-ci-cd-platform.md)
+- [ADR-009: Crash Reporting](../adr/ADR-009-crash-reporting.md)
 - [CI/CD Best Practices for Mobile](../research/ci-cd-best-practices-mobile.md)
 - [React Native: Signed APK (Android)](https://reactnative.dev/docs/signed-apk-android)
 - [Fastlane documentation](https://docs.fastlane.tools/)

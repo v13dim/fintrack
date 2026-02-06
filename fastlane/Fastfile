@@ -1,10 +1,14 @@
 # FinTrack - Fastlane configuration (iOS + Android)
 # Run from project root: bundle exec fastlane <platform> <lane>
 # e.g. bundle exec fastlane android build
+#      bundle exec fastlane android distribute
 #      bundle exec fastlane ios build
 
 # Project root (parent of fastlane/); needed because Fastlane may run with CWD = fastlane/ in CI
 PROJECT_ROOT = File.expand_path('..', File.dirname(__FILE__))
+
+# Firebase App ID (Android) from google-services.json; override with env FIREBASE_APP_ID_ANDROID
+FIREBASE_APP_ID_ANDROID = ENV['FIREBASE_APP_ID_ANDROID'] || '1:544730757447:android:12004fc2188098dd113462'
 
 default_platform(:android)
 
@@ -26,11 +30,35 @@ platform :android do
     )
   end
 
+  desc 'Build Android releaseDev AAB (CI / Firebase App Distribution)'
+  lane :build_release_dev do
+    gradle(
+      project_dir: 'android',
+      task: 'bundleReleaseDev'
+    )
+  end
+
   desc 'Build Android release APK'
   lane :build_apk do
     gradle(
       project_dir: 'android',
       task: 'assembleRelease'
+    )
+  end
+
+  desc 'Upload Android releaseDev to Firebase App Distribution (builds AAB then uploads)'
+  lane :distribute do
+    build_release_dev
+    firebase_app_distribution(
+      app: FIREBASE_APP_ID_ANDROID,
+      firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
+      service_credentials_file: ENV['GOOGLE_APPLICATION_CREDENTIALS'],
+      android_artifact_type: 'AAB',
+      android_artifact_path: File.join(PROJECT_ROOT, 'android', 'app', 'build', 'outputs', 'bundle', 'releaseDev', 'app-releaseDev.aab'),
+      release_notes: ENV['FIREBASE_RELEASE_NOTES'] || "FinTrack build #{Time.now.utc.strftime('%Y-%m-%d %H:%M')} UTC",
+      testers: ENV['FIREBASE_TESTERS'],
+      groups: ENV['FIREBASE_GROUPS'],
+      debug: ENV['FIREBASE_DEBUG'] == 'true'
     )
   end
 end

@@ -63,6 +63,7 @@ jobs:
     name: Android Build
     runs-on: ubuntu-latest
     needs: quality
+    environment: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -121,13 +122,54 @@ jobs:
         with:
           packages: 'tools platform-tools platforms;android-36 build-tools;36.0.0'
 
-      - name: Build Android (debug)
-        run: bundle exec fastlane android build_debug
+      - name: Prepare Sentry (Android)
+        env:
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          mkdir -p android
+          {
+            echo "defaults.org=${SENTRY_ORG}"
+            echo "defaults.project=${SENTRY_PROJECT}"
+            echo "defaults.url=https://sentry.io/"
+            [ -n "$SENTRY_AUTH_TOKEN" ] && echo "auth.token=$SENTRY_AUTH_TOKEN"
+          } > android/sentry.properties
+
+      - name: Build Android releaseDev and distribute to Firebase
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_APP_ID_ANDROID: ${{ vars.FIREBASE_APP_ID_ANDROID }}
+          FIREBASE_TESTERS: ${{ vars.FIREBASE_TESTERS }}
+          FIREBASE_GROUPS: ${{ vars.FIREBASE_GROUPS }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT_JSON" ]; then
+            echo "::error::Set FIREBASE_SERVICE_ACCOUNT_JSON in repo Secrets (see docs/guides/certificate-management-guide.md)"
+            exit 1
+          fi
+          if [ -z "$ANDROID_KEYSTORE_PASSWORD" ] || [ -z "$ANDROID_KEY_ALIAS" ] || [ -z "$ANDROID_KEY_PASSWORD" ]; then
+            echo "::error::Set ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD in repo Secrets (see docs/guides/certificate-management-guide.md)"
+            exit 1
+          fi
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "::error::Set ANDROID_KEYSTORE_BASE64 in repo Secrets (see docs/guides/certificate-management-guide.md)"
+            exit 1
+          fi
+          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > /tmp/firebase-sa.json
+          export GOOGLE_APPLICATION_CREDENTIALS=/tmp/firebase-sa.json
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > /tmp/fintrack-release.keystore
+          export ANDROID_KEYSTORE_PATH=/tmp/fintrack-release.keystore
+          bundle exec fastlane android distribute
 
   ios-build:
     name: iOS Build
     runs-on: macos-26
     needs: quality
+    environment: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -167,6 +209,20 @@ jobs:
           key: pods-${{ hashFiles('ios/Podfile.lock') }}
           restore-keys: |
             pods-
+
+      - name: Prepare Sentry (iOS)
+        env:
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          mkdir -p ios
+          {
+            echo "defaults.org=${SENTRY_ORG}"
+            echo "defaults.project=${SENTRY_PROJECT}"
+            echo "defaults.url=https://sentry.io/"
+            [ -n "$SENTRY_AUTH_TOKEN" ] && echo "auth.token=$SENTRY_AUTH_TOKEN"
+          } > ios/sentry.properties
 
       - name: Build iOS (simulator)
         run: bundle exec fastlane ios build_simulator
