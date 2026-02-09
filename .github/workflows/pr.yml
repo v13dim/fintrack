@@ -146,9 +146,19 @@ jobs:
           fi
           echo "$ANDROID_GOOGLE_SERVICES_JSON_BASE64" | base64 -d > android/app/google-services.json
 
+      - name: Get version from package.json
+        id: version
+        run: echo "versionName=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Bump Android version
+        uses: chkfung/android-version-actions@v1.2.2
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{ github.run_number }}
+          versionName: ${{ steps.version.outputs.versionName }}
+
       - name: Build Android releaseDev and distribute to Firebase
         env:
-          VERSION_CODE: ${{ github.run_number }}
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
