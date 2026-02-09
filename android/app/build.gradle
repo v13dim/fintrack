@@ -96,7 +96,14 @@ def getVersionNameFromPackageJson() {
 }
 def getVersionCode() {
     def code = System.getenv("VERSION_CODE")
-    return code != null && code != "" ? code.toInteger() : 1
+    if (code == null || code.toString().trim() == "") return 1
+    try {
+        def num = code.toString().trim().toInteger()
+        // Sentry CLI treats negative --dist as a flag; versionCode must be >= 1
+        return num >= 1 ? num : 1
+    } catch (Exception e) {
+        return 1
+    }
 }
 
 apply from: new File(["node", "--print", "require.resolve('@sentry/react-native/package.json')"].execute().text.trim(), "../sentry.gradle")
