@@ -73,6 +73,32 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+/** Version name from package.json; versionCode from env VERSION_CODE (set in CI, e.g. github.run_number), default 1 locally. */
+def getVersionNameFromPackageJson() {
+    def packageJsonFile = file("$rootDir/../../package.json")
+    if (!packageJsonFile.exists()) return "1.0.0"
+    try {
+        def slurperClass = null
+        try {
+            slurperClass = groovy.json.JsonSlurper
+        } catch (Throwable ignored) {
+            // Fallback for builds that don't preload groovy.json.*
+            def groovyClassLoader = this.class.classLoader
+            groovyClassLoader.loadClass('groovy.json.JsonSlurper')
+            slurperClass = groovyClassLoader.loadClass('groovy.json.JsonSlurper')
+        }
+        def jsonSlurper = slurperClass.newInstance()
+        def json = jsonSlurper.parseText(packageJsonFile.text)
+        return json.version ?: "1.0.0"
+    } catch (Exception e) {
+        return "1.0.0"
+    }
+}
+def getVersionCode() {
+    def code = System.getenv("VERSION_CODE")
+    return code != null && code != "" ? code.toInteger() : 1
+}
+
 apply from: new File(["node", "--print", "require.resolve('@sentry/react-native/package.json')"].execute().text.trim(), "../sentry.gradle")
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -84,8 +110,8 @@ android {
         applicationId "com.fintrack"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionNameFromPackageJson()
         manifestPlaceholders = [usesCleartextTraffic: "true"]
     }
     signingConfigs {
