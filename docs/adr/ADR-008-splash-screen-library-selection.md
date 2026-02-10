@@ -66,21 +66,21 @@ Implementing splash screen manually using React Native components.
 
 ## Evaluation Matrix
 
-| Criterion                 | react-native-bootsplash | react-native-splash-screen | Custom Implementation |
-| ------------------------- | ----------------------- | -------------------------- | --------------------- |
-| **License**               | MIT ✅                  | MIT ✅                     | N/A                   |
-| **Last Release**          | 2 months ✅             | 6 months ⚠️                | N/A                   |
-| **GitHub Stars**          | 3.2k ✅                 | 2.1k ✅                    | N/A                   |
-| **Bundle Size**           | ~10kb ✅                | ~8kb ✅                    | Depends on implementation ⚠️ |
-| **TypeScript Support**    | Good ✅                 | Limited ⚠️                 | Full control ✅       |
-| **New Arch Support**      | Yes ✅                  | Partial ⚠️                 | Yes ✅                |
-| **Documentation**         | Good ✅                 | Basic ⚠️                   | N/A                   |
-| **Performance**           | Excellent ✅            | Good ✅                    | Depends ⚠️            |
-| **Customization**         | Good ✅                 | Limited ⚠️                 | Full ✅               |
-| **Setup Complexity**      | Medium ⚠️               | Low ✅                     | High ❌               |
-| **Maintenance**           | Active ✅               | Less Active ⚠️             | Self ✅               |
+| Criterion                 | react-native-bootsplash | react-native-splash-screen | Custom Implementation              |
+| ------------------------- | ----------------------- | -------------------------- | ---------------------------------- |
+| **License**               | MIT ✅                  | MIT ✅                     | N/A                                |
+| **Last Release**          | 2 months ✅             | 6 months ⚠️                | N/A                                |
+| **GitHub Stars**          | 3.2k ✅                 | 2.1k ✅                    | N/A                                |
+| **Bundle Size**           | ~10kb ✅                | ~8kb ✅                    | Depends on implementation ⚠️       |
+| **TypeScript Support**    | Good ✅                 | Limited ⚠️                 | Full control ✅                    |
+| **New Arch Support**      | Yes ✅                  | Partial ⚠️                 | Yes ✅                             |
+| **Documentation**         | Good ✅                 | Basic ⚠️                   | N/A                                |
+| **Performance**           | Excellent ✅            | Good ✅                    | Depends ⚠️                         |
+| **Customization**         | Good ✅                 | Limited ⚠️                 | Full ✅                            |
+| **Setup Complexity**      | Medium ⚠️               | Low ✅                     | High ❌                            |
+| **Maintenance**           | Active ✅               | Less Active ⚠️             | Self ✅                            |
 | **Native Implementation** | Yes ✅                  | Yes ✅                     | Required for full functionality ⚠️ |
-| **Decision**              | ✅ **Selected**         | ❌                         | ❌                    |
+| **Decision**              | ✅ **Selected**         | ❌                         | ❌                                 |
 
 ## Decision
 

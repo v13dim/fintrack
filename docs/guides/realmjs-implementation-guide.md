@@ -302,10 +302,7 @@ export const transactionService = {
     return realm.objects<Transaction>('Transaction').sorted('date', true);
   },
 
-  findByDateRange: (
-    startDate: Date,
-    endDate: Date,
-  ): Realm.Results<Transaction> => {
+  findByDateRange: (startDate: Date, endDate: Date): Realm.Results<Transaction> => {
     const realm = getRealm();
     return realm
       .objects<Transaction>('Transaction')
@@ -323,10 +320,7 @@ export const transactionService = {
 
   update: (id: string, data: Partial<Transaction>): void => {
     const realm = getRealm();
-    const transaction = realm.objectForPrimaryKey<Transaction>(
-      'Transaction',
-      id,
-    );
+    const transaction = realm.objectForPrimaryKey<Transaction>('Transaction', id);
     if (transaction) {
       realm.write(() => {
         Object.assign(transaction, data);
@@ -336,10 +330,7 @@ export const transactionService = {
 
   delete: (id: string): void => {
     const realm = getRealm();
-    const transaction = realm.objectForPrimaryKey<Transaction>(
-      'Transaction',
-      id,
-    );
+    const transaction = realm.objectForPrimaryKey<Transaction>('Transaction', id);
     if (transaction) {
       realm.write(() => {
         realm.delete(transaction);
@@ -364,9 +355,7 @@ export type { Transaction, Category, Budget, UserSettings };
 
 // Helper types for creating/updating
 export type CreateTransactionData = Omit<Transaction, '_id' | 'createdAt'>;
-export type UpdateTransactionData = Partial<
-  Omit<Transaction, '_id' | 'createdAt'>
->;
+export type UpdateTransactionData = Partial<Omit<Transaction, '_id' | 'createdAt'>>;
 ```
 
 ### 6. Transactions (Atomic Operations)
@@ -400,9 +389,7 @@ export const useTransactions = () => {
   const realm = getRealm();
 
   useEffect(() => {
-    const results = realm
-      .objects<Transaction>('Transaction')
-      .sorted('date', true);
+    const results = realm.objects<Transaction>('Transaction').sorted('date', true);
 
     // Subscribe to changes
     const subscription = results.addListener(updatedResults => {
@@ -456,18 +443,10 @@ export const transactionService = {
   },
 
   // Business logic operations
-  getTotalByCategory: (
-    categoryId: string,
-    startDate: Date,
-    endDate: Date,
-  ): number => {
+  getTotalByCategory: (categoryId: string, startDate: Date, endDate: Date): number => {
     /* ... */
   },
-  getTotalByType: (
-    type: 'income' | 'expense',
-    startDate: Date,
-    endDate: Date,
-  ): number => {
+  getTotalByType: (type: 'income' | 'expense', startDate: Date, endDate: Date): number => {
     /* ... */
   },
 };
@@ -718,10 +697,7 @@ describe('transactionService', () => {
     transactionService.create(data);
 
     expect(mockRealm.write).toHaveBeenCalled();
-    expect(mockRealm.create).toHaveBeenCalledWith(
-      'Transaction',
-      expect.objectContaining(data),
-    );
+    expect(mockRealm.create).toHaveBeenCalledWith('Transaction', expect.objectContaining(data));
   });
 });
 ```

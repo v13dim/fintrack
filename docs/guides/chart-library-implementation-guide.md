@@ -22,6 +22,7 @@ yarn add victory-native react-native-svg react-native-reanimated react-native-ge
 ```
 
 **Peer Dependencies**:
+
 - `react-native-svg` - Required for rendering SVG graphics
 - `react-native-reanimated` - Required for animations (version 4.x for React Native 0.83+)
 - `react-native-gesture-handler` - Required for gesture handling
@@ -31,11 +32,13 @@ yarn add victory-native react-native-svg react-native-reanimated react-native-ge
 **Important Setup Steps**:
 
 1. **For iOS**, run pod install:
+
 ```bash
 cd ios && pod install
 ```
 
 2. **Configure Babel** - Add Reanimated plugin to `babel.config.js` (must be last):
+
 ```javascript
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
@@ -47,6 +50,7 @@ module.exports = {
 ```
 
 3. **Import Gesture Handler** - Add to the top of `index.js`:
+
 ```javascript
 import 'react-native-gesture-handler';
 ```
@@ -114,12 +118,7 @@ const styles = StyleSheet.create({
 // src/components/charts/LineChart.tsx
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import {
-  VictoryLine,
-  VictoryChart,
-  VictoryAxis,
-  VictoryTheme,
-} from 'victory-native';
+import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory-native';
 
 interface LineChartProps {
   data: Array<{
@@ -129,10 +128,7 @@ interface LineChartProps {
   color?: string;
 }
 
-export const LineChart: React.FC<LineChartProps> = ({
-  data,
-  color = '#2196F3',
-}) => {
+export const LineChart: React.FC<LineChartProps> = ({ data, color = '#2196F3' }) => {
   const screenWidth = Dimensions.get('window').width;
   const chartWidth = screenWidth - 40;
 
@@ -195,9 +191,7 @@ interface CategoryExpenseChartProps {
   }>;
 }
 
-export const CategoryExpenseChart: React.FC<CategoryExpenseChartProps> = ({
-  expenses,
-}) => {
+export const CategoryExpenseChart: React.FC<CategoryExpenseChartProps> = ({ expenses }) => {
   const total = expenses.reduce((sum, item) => sum + item.amount, 0);
 
   const chartData = expenses.map(item => ({
@@ -232,9 +226,7 @@ export const CategoryExpenseChart: React.FC<CategoryExpenseChartProps> = ({
       <View style={styles.legend}>
         {chartData.map((item, index) => (
           <View key={index} style={styles.legendItem}>
-            <View
-              style={[styles.legendColor, { backgroundColor: item.color }]}
-            />
+            <View style={[styles.legendColor, { backgroundColor: item.color }]} />
             <Text style={styles.legendText}>
               {item.x}: ${item.y.toFixed(2)} ({item.percentage}%)
             </Text>
@@ -293,7 +285,7 @@ export const AnalyticsScreen: React.FC = () => {
     <ScrollView>
       <View style={{ padding: 20 }}>
         <CategoryExpenseChart expenses={expensesByCategory} />
-        <LineChart data={monthlyTrends} color="#4CAF50" />
+        <LineChart data={monthlyTrends} color='#4CAF50' />
       </View>
     </ScrollView>
   );
@@ -309,11 +301,9 @@ export const AnalyticsScreen: React.FC = () => {
 
 ```typescript
 // ✅ Good - Memoized chart component
-export const CategoryExpenseChart = React.memo<CategoryExpenseChartProps>(
-  ({ expenses }) => {
-    // Chart implementation
-  },
-);
+export const CategoryExpenseChart = React.memo<CategoryExpenseChartProps>(({ expenses }) => {
+  // Chart implementation
+});
 ```
 
 ## References

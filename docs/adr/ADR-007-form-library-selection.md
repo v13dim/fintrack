@@ -43,6 +43,7 @@ React Hook Form is a performant, flexible, and extensible forms library with eas
 - ❌ Less opinionated (more setup)
 
 **Note**: React Hook Form supports multiple validation approaches:
+
 - Built-in validation rules (no dependencies required)
 - Zod schema validation (requires `@hookform/resolvers` and `zod` peer dependencies)
 - Custom validation functions (no dependencies required)
@@ -125,8 +126,8 @@ While React Hook Form requires understanding of uncontrolled components (or Cont
 | Risk                    | Impact | Mitigation                                                          |
 | ----------------------- | ------ | ------------------------------------------------------------------- |
 | Learning curve          | Low    | Documentation, examples, code reviews, training sessions            |
-| Setup complexity        | Low    | Create reusable form patterns, utilities, and examples               |
-| Validation dependencies | Low    | Use built-in or custom validation when dependencies are not desired  |
+| Setup complexity        | Low    | Create reusable form patterns, utilities, and examples              |
+| Validation dependencies | Low    | Use built-in or custom validation when dependencies are not desired |
 | Library maintenance     | Low    | Monitor library updates, have migration plan, consider alternatives |
 
 ## When to Revisit

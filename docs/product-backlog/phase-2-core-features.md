@@ -1,6 +1,6 @@
 # Phase 2: Core Features
 
-**Total Story Points**: 110  
+**Total Story Points**: 112  
 **Timeline**: Week 2-3  
 **Priority**: Mix of P0, P1, P2
 
@@ -15,6 +15,7 @@
 As a user, I need a splash screen on app launch, so I see branding while app initializes.
 
 **Acceptance Criteria:**
+
 - Given the app launches
 - When the app initializes
 - Then splash screen displays with branding
@@ -29,6 +30,7 @@ As a user, I need a splash screen on app launch, so I see branding while app ini
 As a new user, I need onboarding screens (3 screens) explaining app features, so I understand how to use the app.
 
 **Acceptance Criteria:**
+
 - Given I launch the app for the first time
 - When the app loads
 - Then I see the first onboarding screen with description and illustration
@@ -56,6 +58,7 @@ As a user, I need PIN authentication to secure my data, so my financial informat
 **Acceptance Criteria:**
 
 **PIN Creation:**
+
 - Given I'm on the PIN creation screen
 - When I enter 4 digits
 - Then I see a prompt to repeat the PIN
@@ -70,6 +73,7 @@ As a user, I need PIN authentication to secure my data, so my financial informat
 - And I return to the first entry
 
 **PIN Login:**
+
 - Given I open the app (not first time)
 - When the app loads
 - Then I see the PIN entry screen
@@ -96,6 +100,7 @@ As a user, I need PIN authentication to secure my data, so my financial informat
 As a user, I need biometric authentication (Face ID/Touch ID) option, so I can access the app quickly and securely.
 
 **Acceptance Criteria:**
+
 - Given biometrics is enabled in settings
 - When I open the app
 - Then biometric prompt appears automatically
@@ -117,6 +122,7 @@ As a user, I need biometric authentication (Face ID/Touch ID) option, so I can a
 As a user, I need auto-lock functionality after inactivity, so my data remains secure.
 
 **Acceptance Criteria:**
+
 - Given I'm in the app
 - When I minimize the app for more than X minutes (configurable)
 - Then upon return PIN/biometric is required
@@ -135,6 +141,7 @@ As a user, I need auto-lock functionality after inactivity, so my data remains s
 As a developer, I need secure storage for sensitive data (encrypted Realm), so user data is protected.
 
 **Acceptance Criteria:**
+
 - Given sensitive data needs to be stored
 - When data is stored
 - Then it's encrypted using Realm encryption
@@ -155,6 +162,7 @@ As a user, I need to create a transaction (income/expense) with amount, category
 **Acceptance Criteria:**
 
 **Add Expense:**
+
 - Given I'm on the home screen
 - When I tap the FAB (+)
 - Then the add screen opens in "Expense" mode
@@ -175,6 +183,7 @@ As a user, I need to create a transaction (income/expense) with amount, category
 - And then save
 
 **Add Income:**
+
 - Given I'm on the add transaction screen
 - When I switch to "Income" tab
 - Then categories change to income categories
@@ -194,6 +203,7 @@ As a user, I need to create a transaction (income/expense) with amount, category
 As a user, I need to view a list of all transactions grouped by day, so I can see my spending history.
 
 **Acceptance Criteria:**
+
 - Given I'm on the home screen
 - When the screen loads
 - Then I see transactions grouped by day
@@ -217,6 +227,7 @@ As a user, I need to view a list of all transactions grouped by day, so I can se
 As a user, I need to edit a transaction, so I can correct mistakes.
 
 **Acceptance Criteria:**
+
 - Given I'm viewing a transaction
 - When I tap "Edit"
 - Then the edit screen opens with current data
@@ -239,6 +250,7 @@ As a user, I need to edit a transaction, so I can correct mistakes.
 As a user, I need to delete a transaction with confirmation, so I can remove incorrect entries.
 
 **Acceptance Criteria:**
+
 - Given I'm viewing a transaction
 - When I tap the delete icon
 - Then a confirmation appears "Delete transaction?"
@@ -262,6 +274,7 @@ As a user, I need to delete a transaction with confirmation, so I can remove inc
 As a user, I need to filter transactions by type (income/expense), category, and date range, so I can find specific transactions.
 
 **Acceptance Criteria:**
+
 - Given I'm on the all transactions screen
 - When I select "Expenses only" filter
 - Then only expenses show in the list
@@ -283,6 +296,7 @@ As a user, I need to filter transactions by type (income/expense), category, and
 As a user, I need to search transactions by note or amount, so I can quickly find entries.
 
 **Acceptance Criteria:**
+
 - Given I'm on the all transactions screen
 - When I tap the search icon
 - Then a search field appears
@@ -304,6 +318,7 @@ As a user, I need to search transactions by note or amount, so I can quickly fin
 As a user, I need swipe actions (edit/delete) on transaction list items, so I can quickly manage transactions.
 
 **Acceptance Criteria:**
+
 - Given I'm in the transaction list
 - When I swipe a transaction right
 - Then edit button appears
@@ -321,6 +336,7 @@ As a user, I need swipe actions (edit/delete) on transaction list items, so I ca
 As a user, I need pull-to-refresh on transaction list, so I can reload data.
 
 **Acceptance Criteria:**
+
 - Given I'm on the transaction list screen
 - When I pull down
 - Then the list refreshes
@@ -335,6 +351,7 @@ As a user, I need pull-to-refresh on transaction list, so I can reload data.
 As a user, I need infinite scroll for transaction list, so I can view large datasets efficiently.
 
 **Acceptance Criteria:**
+
 - Given there are many transactions
 - When I scroll near the bottom
 - Then older transactions load automatically
@@ -349,6 +366,7 @@ As a user, I need infinite scroll for transaction list, so I can view large data
 As a developer, I need transaction data persisted in Realm database, so data survives app restarts.
 
 **Acceptance Criteria:**
+
 - Given I create a transaction
 - When I close and reopen the app
 - Then the transaction is still present
@@ -367,12 +385,14 @@ As a developer, I need transaction data persisted in Realm database, so data sur
 As a user, I need preset categories (expenses and income) with icons and colors, so I can quickly categorize transactions.
 
 **Acceptance Criteria:**
+
 - Given I'm in settings
 - When I open "Categories"
 - Then I see a list of categories split into Expenses and Income
 - And each category shows icon, name, color
 
 **Preset Expense Categories:**
+
 - Groceries 🛒 (#4CAF50)
 - Transport 🚗 (#2196F3)
 - Entertainment 🎬 (#9C27B0)
@@ -385,6 +405,7 @@ As a user, I need preset categories (expenses and income) with icons and colors,
 - Other 📦 (#607D8B)
 
 **Preset Income Categories:**
+
 - Salary 💰 (#4CAF50)
 - Freelance 💻 (#2196F3)
 - Gifts 🎁 (#E91E63)
@@ -399,6 +420,7 @@ As a user, I need preset categories (expenses and income) with icons and colors,
 As a user, I need to create custom categories with name, icon, color, and type, so I can personalize my categories.
 
 **Acceptance Criteria:**
+
 - Given I'm on the categories screen
 - When I tap "+"
 - Then the creation screen opens
@@ -420,6 +442,7 @@ As a user, I need to create custom categories with name, icon, color, and type, 
 As a user, I need to edit custom categories, so I can update category details.
 
 **Acceptance Criteria:**
+
 - Given I'm on the categories screen
 - When I tap on a category
 - Then the edit screen opens
@@ -438,6 +461,7 @@ As a user, I need to edit custom categories, so I can update category details.
 As a user, I need to delete custom categories (with transaction reassignment), so I can manage my category list.
 
 **Acceptance Criteria:**
+
 - Given I'm editing a category
 - When I tap "Delete"
 - Then a warning appears
@@ -460,6 +484,7 @@ As a user, I need to delete custom categories (with transaction reassignment), s
 As a user, I need to reorder categories by drag & drop, so I can prioritize frequently used categories.
 
 **Acceptance Criteria:**
+
 - Given I'm on the categories screen
 - When I hold the drag handle (≡) on a category
 - Then I can drag it up or down
@@ -482,6 +507,7 @@ As a user, I need to reorder categories by drag & drop, so I can prioritize freq
 As a user, I need to set a monthly budget for a category, so I can control my spending.
 
 **Acceptance Criteria:**
+
 - Given I'm on the budgets screen
 - When I tap "+"
 - Then the budget creation screen opens
@@ -503,6 +529,7 @@ As a user, I need to set a monthly budget for a category, so I can control my sp
 As a user, I need to view budget progress with a progress bar, so I can see how much I've spent.
 
 **Acceptance Criteria:**
+
 - Given I have a budget for a category
 - When I view the budgets list
 - Then I see: spent / limit, percentage, progress bar
@@ -527,6 +554,7 @@ As a user, I need to edit or delete a budget, so I can adjust my spending limits
 **Acceptance Criteria:**
 
 **Edit Budget:**
+
 - Given I'm on the budgets screen
 - When I tap on a budget
 - Then the edit screen opens
@@ -537,6 +565,7 @@ As a user, I need to edit or delete a budget, so I can adjust my spending limits
 - And progress recalculates
 
 **Delete Budget:**
+
 - Given I'm editing a budget
 - When I tap "Delete"
 - Then confirmation appears
@@ -554,6 +583,7 @@ As a user, I need to edit or delete a budget, so I can adjust my spending limits
 As a user, I need notifications when budget reaches 80% and 100%, so I'm aware of my spending.
 
 **Acceptance Criteria:**
+
 - Given I have a budget with notifications enabled
 - When I add a transaction and total reaches 80%
 - Then I receive push notification "Budget for [category] is 80% spent"
@@ -575,6 +605,7 @@ As a user, I need notifications when budget reaches 80% and 100%, so I'm aware o
 As a user, I need a pie chart showing expenses by category, so I can see spending distribution.
 
 **Acceptance Criteria:**
+
 - Given I'm on the analytics screen
 - When the screen loads
 - Then I see a pie chart with expense distribution
@@ -592,6 +623,7 @@ As a user, I need a pie chart showing expenses by category, so I can see spendin
 As a user, I need a line chart showing spending trends over time, so I can track spending patterns.
 
 **Acceptance Criteria:**
+
 - Given I'm on the analytics screen
 - When I scroll to the "Trends" section
 - Then I see a line/bar chart by month
@@ -609,6 +641,7 @@ As a user, I need a line chart showing spending trends over time, so I can track
 As a user, I need summary cards showing total income, expenses, and balance, so I have a quick overview.
 
 **Acceptance Criteria:**
+
 - Given I'm on the analytics screen
 - When the screen loads
 - Then I see summary cards showing:
@@ -625,6 +658,7 @@ As a user, I need summary cards showing total income, expenses, and balance, so 
 As a user, I need comparison with previous period (month/week), so I can see spending changes.
 
 **Acceptance Criteria:**
+
 - Given I'm on the analytics screen
 - When I view the summary
 - Then I see comparison with previous period
@@ -640,6 +674,7 @@ As a user, I need comparison with previous period (month/week), so I can see spe
 As a developer, I need analytics data calculated efficiently from transactions, so charts load quickly.
 
 **Acceptance Criteria:**
+
 - Given I'm on the analytics screen
 - When the screen loads
 - Then charts load within performance requirements (<300ms)
@@ -649,7 +684,7 @@ As a developer, I need analytics data calculated efficiently from transactions, 
 
 ## EPIC: Data Management
 
-**Total: 13 points**
+**Total: 15 points**
 
 ### US-701: Export to CSV
 
@@ -658,6 +693,7 @@ As a developer, I need analytics data calculated efficiently from transactions, 
 As a user, I need to export transactions to CSV, so I can analyze data in spreadsheet applications.
 
 **Acceptance Criteria:**
+
 - Given I'm in settings
 - When I select "Export to CSV"
 - Then a file is generated with all transactions
@@ -668,6 +704,7 @@ As a user, I need to export transactions to CSV, so I can analyze data in spread
 - And I can save the file or send it
 
 **CSV Format:**
+
 ```
 date,type,category,amount,note
 2024-12-15,expense,Groceries,54.00,Lidl
@@ -682,6 +719,7 @@ date,type,category,amount,note
 As a user, I need to backup all data to JSON file, so I can restore data if needed.
 
 **Acceptance Criteria:**
+
 - Given I'm in settings
 - When I select "Create Backup"
 - Then a JSON file is generated with all data
@@ -691,6 +729,7 @@ As a user, I need to backup all data to JSON file, so I can restore data if need
 - Then share sheet opens for saving
 
 **JSON contains:**
+
 - all transactions
 - all categories (including custom)
 - all budgets
@@ -706,6 +745,7 @@ As a user, I need to backup all data to JSON file, so I can restore data if need
 As a user, I need to restore data from JSON backup, so I can recover my data.
 
 **Acceptance Criteria:**
+
 - Given I'm in settings
 - When I select "Restore"
 - Then file picker opens
@@ -728,6 +768,7 @@ As a user, I need to restore data from JSON backup, so I can recover my data.
 As a user, I need to clear all data with confirmation, so I can reset the app.
 
 **Acceptance Criteria:**
+
 - Given I'm in settings
 - When I select "Delete All Data"
 - Then a warning appears
@@ -741,6 +782,21 @@ As a user, I need to clear all data with confirmation, so I can reset the app.
 - Given I didn't enter confirmation
 - When I tap "Cancel"
 - Then nothing is deleted
+
+---
+
+### US-705: Jest Coverage for Services and Utils
+
+**Story Points**: 2 | **Priority**: P1
+
+As a developer, I need Jest coverage thresholds enabled for `src/services` and `src/utils`, so business logic and utilities are covered by tests.
+
+**Acceptance Criteria:**
+
+- Given services and/or utils are implemented in the codebase
+- When Jest runs with coverage
+- Then `jest.config.js` includes coverage thresholds for `src/services/**/*.ts` and `src/utils/**/*.ts` (e.g. 80% branches, functions, lines, statements)
+- And the related TODO in `jest.config.js` is resolved (uncommented and linked to this story)
 
 ---
 

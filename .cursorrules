@@ -39,17 +39,18 @@ FinTrack is a React Native personal finance tracking mobile application. It uses
   - Or by feature: `transactions/`, `budgets/`, `categories/`
   - Or mix as needed for discoverability
 - **`src/screens/`** - Screen components (compose components)
-- **`src/hooks/`** - Custom React hooks (business logic)
+- **`src/hooks/`** - Custom React hooks (business logic, stored directly in hooks folder)
 - **`src/services/`** - Business logic services (data operations)
 - **`src/db/`** - Database layer (Realm schemas, models, migrations)
 - **`src/navigation/`** - Navigation configuration
-- **`src/utils/`** - Pure utility functions
-- **`src/theme/`** - Design tokens (colors, typography, spacing)
+- **`src/utils/`** - Pure utility functions (stored directly in utils folder)
+- **`src/contexts/`** - React Context providers (e.g., ThemeContext)
+- **`src/theme/`** - Design tokens (colors, typography, spacing, shadows, createStyles)
 - **`src/constants/`** - Application constants
 - **`src/assets/`** - Static assets (fonts, images, SVG)
 - **`src/localization/`** - i18n translations
 - **`src/testUtils/`** - Testing utilities
-- **`docs/architecture/`** - ADR documents (read ADR-001 and ADR-002 for details)
+- **`docs/adr/`** - ADR documents (read ADR-001 and ADR-002 for details)
 
 ### Module Structure Pattern
 
@@ -83,12 +84,12 @@ ModuleName/
 
 1. External dependencies (React, React Native, third-party)
 2. Internal absolute imports (by layer, alphabetical):
-   - Navigation → Components → Hooks → Services → Utils → Theme → Constants → Localization
+   - Navigation → Components → Contexts → Hooks → Services → Utils → Theme → Constants → Localization
 3. Relative imports
 
 **Use path aliases** (configured in `tsconfig.json`):
 
-- `components/*`, `hooks/*`, `services/*`, `utils/*`, `screens/*`, etc.
+- `components/*`, `contexts/*`, `hooks/*`, `services/*`, `utils/*`, `screens/*`, etc.
 
 ### Code Formatting
 
@@ -103,7 +104,7 @@ ModuleName/
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { Button } from 'components/common';
-import { styles } from './styles';
+import { useComponentStyles } from './Component.styles';
 
 // 2. Types/Interfaces
 interface IComponentProps {
@@ -112,9 +113,55 @@ interface IComponentProps {
 
 // 3. Component
 export const Component: FC<IComponentProps> = ({ ...props }) => {
+  const styles = useComponentStyles();
   // logic
   return <View style={styles.container}>{/* JSX */}</View>;
 };
+```
+
+### Styles Structure
+
+Styles are created using `createStyles` from `theme`:
+
+```typescript
+// Component.styles.ts
+import { TextStyle, ViewStyle } from 'react-native';
+import { createStyles } from 'theme';
+
+interface ComponentStyles {
+  container: ViewStyle;
+  text: TextStyle;
+}
+
+export const useComponentStyles = createStyles<ComponentStyles>(
+  ({ theme, dimensions, insets }) => ({
+    container: {
+      backgroundColor: theme.colors.background.primary,
+      padding: theme.spacing.lg,
+      paddingTop: insets.top + theme.spacing.md,
+    },
+    text: {
+      ...theme.typography.body,
+      color: theme.colors.text.primary,
+    },
+  }),
+);
+
+// With extra data:
+interface ComponentStylesExtra {
+  isActive: boolean;
+}
+
+export const useComponentStyles = createStyles<
+  ComponentStyles,
+  ComponentStylesExtra
+>(({ theme }, { isActive }) => ({
+  container: {
+    backgroundColor: isActive
+      ? theme.colors.accent.green
+      : theme.colors.background.primary,
+  },
+}));
 ```
 
 ## Component Organization Rules
@@ -164,9 +211,11 @@ export const Component: FC<IComponentProps> = ({ ...props }) => {
 - ✅ Place business logic in hooks/services, not components
 - ✅ Access database only through services
 - ✅ Use theme constants for colors/spacing
+- ✅ Use `createStyles` from `theme` to create style hooks
+- ✅ Each component should have its own style hook (e.g., `useComponentStyles`)
 - ✅ Use localization for all user-facing text
 - ✅ Follow the module structure pattern (tests, mocks, implementation)
-- ✅ Read ADR documents in `docs/architecture/` for architectural decisions
+- ✅ Read ADR documents in `docs/adr/` for architectural decisions
 - ✅ Prioritize component discoverability and logical grouping
 
 ### DON'T:
@@ -177,6 +226,7 @@ export const Component: FC<IComponentProps> = ({ ...props }) => {
 - ❌ Skip writing tests
 - ❌ Hardcode strings (use localization)
 - ❌ Hardcode colors/spacing (use theme)
+- ❌ Use StyleSheet.create directly (use createStyles instead)
 - ❌ Create files outside the established structure
 - ❌ Mix concerns (UI + business logic + data access)
 - ❌ Overthink component organization - start simple, refactor as patterns emerge
@@ -209,10 +259,9 @@ export const Component: FC<IComponentProps> = ({ ...props }) => {
 
 **Adding a new hook:**
 
-1. Create folder: `hooks/useHookName/`
-2. Follow module structure pattern
-3. Encapsulate business logic
-4. Export from `hooks/index.ts`
+1. Create file: `hooks/useHookName.ts`
+2. Encapsulate business logic
+3. Export from `hooks/index.ts`
 
 **Adding a new service:**
 

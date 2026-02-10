@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <div class="header-left">
+        <button class="btn-icon">◀</button>
+        <span class="header-title">December 2024</span>
+        <button class="btn-icon">▶</button>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon">⚙️</button>
+      </div>
+    </div>
+    <div class="content">
+      <!-- Segment 1: Monthly Balance -->
+      <div class="balance-segment">
+        <div style="color: var(--color-white); display: flex; flex-direction: column; gap: 16px;">
+          <div style="font-size: 14px; opacity: 0.9;">Monthly Balance</div>
+          <div style="font-size: 36px; font-weight: 600;">+ €1,245.30</div>
+          <div style="display: flex; justify-content: space-around; padding-top: 16px; border-top: 1px solid #FFFFFF4D; gap: 0;">
+            <div style="text-align: center; display: flex; flex-direction: column; gap: 4px;">
+              <div style="font-size: 12px; opacity: 0.8;">↑ income</div>
+              <div style="font-size: 18px; font-weight: 600;">€3,200</div>
+            </div>
+            <div style="text-align: center; display: flex; flex-direction: column; gap: 4px;">
+              <div style="font-size: 12px; opacity: 0.8;">↓ expenses</div>
+              <div style="font-size: 18px; font-weight: 600;">€1,954</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Segment 2: Transactions List -->
+      <div class="transactions-segment">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Today, December 15</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">🛒</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Groceries</div>
+                </div>
+              </div>
+              <div class="transaction-amount expense">-€54</div>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">🍽️</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Restaurants</div>
+                </div>
+              </div>
+              <div class="transaction-amount expense">-€32</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Yesterday, December 14</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">💰</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Salary</div>
+                </div>
+              </div>
+              <div class="transaction-amount income">+€3,200</div>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">🚗</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Transport</div>
+                </div>
+              </div>
+              <div class="transaction-amount expense">-€15</div>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">📱</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Phone</div>
+                </div>
+              </div>
+              <div class="transaction-amount expense">-€25</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional transactions for scrolling demo -->
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">December 13</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">🎬</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Entertainment</div>
+                </div>
+              </div>
+              <div class="transaction-amount expense">-€28</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">December 12</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">💊</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Health</div>
+                </div>
+              </div>
+              <div class="transaction-amount expense">-€45</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="fab">+</button>
+    <div class="bottom-nav">
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -5,6 +5,7 @@ This document defines the criteria that must be met for a User Story or task to 
 ## Purpose
 
 The Definition of Done ensures:
+
 - **Consistency**: All tasks meet the same quality standards
 - **Transparency**: Clear understanding of what "done" means
 - **Quality**: Prevents incomplete work from being marked as finished
@@ -116,6 +117,7 @@ For refactoring tasks, the following additional criteria apply:
 ### Story Level (User Story)
 
 A User Story is **Done** when:
+
 - All checklist items above are met
 - Feature is fully implemented and tested
 - Feature works on both iOS and Android
@@ -124,6 +126,7 @@ A User Story is **Done** when:
 ### Sprint Level
 
 A Sprint is **Done** when:
+
 - All User Stories in the sprint meet Definition of Done
 - Sprint goals are achieved
 - No critical bugs remain
@@ -132,6 +135,7 @@ A Sprint is **Done** when:
 ### Release Level
 
 A Release is **Done** when:
+
 - All P0 User Stories completed
 - All critical bugs fixed
 - Performance requirements met
@@ -142,6 +146,7 @@ A Release is **Done** when:
 ## Exceptions
 
 In exceptional circumstances, a task may be marked as **Done** with exceptions if:
+
 - Exception is documented with rationale
 - Exception is approved by team/project lead
 - Plan exists to address exception in future sprint

@@ -1,0 +1,96 @@
+# Dependencies
+node_modules/
+**/Pods/
+vendor/
+
+# Build outputs
+build/
+dist/
+*.jsbundle
+.bundle/
+
+# Generated files
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+.gradle/
+local.properties
+*.iml
+*.hprof
+.cxx/
+*.keystore
+!debug.keystore
+
+# iOS
+*.xcuserdata
+*.xcworkspace
+*.xcodeproj
+Pods/
+*.framework
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+*.xcscmblueprint
+*.xcscheme
+!default.xcscheme
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Lock files
+package-lock.json
+yarn.lock
+Podfile.lock
+Gemfile.lock
+
+# Metro
+.metro-health-check*
+
+# Testing
+/coverage
+
+# Misc
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

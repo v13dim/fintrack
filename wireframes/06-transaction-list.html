@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Transaction List</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <div class="header-left">
+        <button class="btn-icon">←</button>
+        <span class="header-title">All Transactions</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon">🔍</button>
+      </div>
+    </div>
+    <div class="content content-with-header">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; gap: 8px;">
+          <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--accent-medium); color: white;">All</button>
+          <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--bg-secondary);">Expns</button>
+          <button class="btn" style="flex: 1; padding: 8px; font-size: 14px; background: var(--bg-secondary);">Inc</button>
+        </div>
+        <div class="form-select" style="font-size: 14px; padding: 10px 16px;">
+          All categories ▼
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 16px; font-weight: 600;">December 2024</div>
+          <div style="font-size: 18px; font-weight: 600; color: var(--error);">-€1,954</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Dec 15</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="transaction-item">
+            <div class="transaction-item-content" style="display: flex; align-items: center; gap: 12px;">
+              <span class="transaction-icon">🛒</span>
+              <div class="transaction-info">
+                <div class="transaction-category">Groceries</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="transaction-amount expense">-€54</div>
+              <span style="color: var(--text-secondary);">→</span>
+            </div>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-item-content" style="display: flex; align-items: center; gap: 12px;">
+              <span class="transaction-icon">🍽️</span>
+              <div class="transaction-info">
+                <div class="transaction-category">Restaurants</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="transaction-amount expense">-€32</div>
+              <span style="color: var(--text-secondary);">→</span>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Dec 14</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">💰</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Salary</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="transaction-amount income">+€3,200</div>
+                <span style="color: var(--text-secondary);">→</span>
+              </div>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">🚗</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Transport</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="transaction-amount expense">-€15</div>
+                <span style="color: var(--text-secondary);">→</span>
+              </div>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-item-content">
+                <span class="transaction-icon">📱</span>
+                <div class="transaction-info">
+                  <div class="transaction-category">Phone</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="transaction-amount expense">-€25</div>
+                <span style="color: var(--text-secondary);">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Dec 13</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="transaction-item">
+            <div class="transaction-item-content" style="display: flex; align-items: center; gap: 12px;">
+              <span class="transaction-icon">🎬</span>
+              <div class="transaction-info">
+                <div class="transaction-category">Cinema</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="transaction-amount expense">-€28</div>
+              <span style="color: var(--text-secondary);">→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="loading">Loading...</div>
+    </div>
+    </div>
+    <div class="bottom-nav">
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span>Analytics</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

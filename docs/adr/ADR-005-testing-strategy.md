@@ -162,7 +162,7 @@ Our testing strategy follows the testing pyramid:
 We do not test:
 
 - `src/assets/` - Static assets (images, fonts, SVG)
-- Global configuration files (e.g., `index.js`, `App.tsx` root)
+- Global configuration files (e.g., `index.js`,)
 - Third-party library internals
 - Generated code
 

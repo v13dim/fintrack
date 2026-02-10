@@ -74,14 +74,15 @@ export const useTransactions = () => {
 export const useTransactionsByType = (type: 'income' | 'expense') => {
   const transactions = useQuery(
     Transaction,
-    (collection) => collection.filtered('type == $0', type),
-    [type]
+    collection => collection.filtered('type == $0', type),
+    [type],
   );
   return transactions;
 };
 ```
 
 **Key Points:**
+
 - Realm hooks automatically update components when data changes
 - No need to manually sync or refresh
 - Use filtered queries for performance
@@ -116,16 +117,9 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const clearFilters = () => setFilters({});
 
   // Memoize context value to prevent unnecessary re-renders
-  const value = useMemo(
-    () => ({ filters, setFilters, clearFilters }),
-    [filters]
-  );
+  const value = useMemo(() => ({ filters, setFilters, clearFilters }), [filters]);
 
-  return (
-    <FiltersContext.Provider value={value}>
-      {children}
-    </FiltersContext.Provider>
-  );
+  return <FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>;
 };
 
 export const useFilters = (): FiltersContextValue => {
@@ -138,6 +132,7 @@ export const useFilters = (): FiltersContextValue => {
 ```
 
 **Key Points:**
+
 - Split contexts by concern (Filters, Settings, Theme)
 - Memoize context values to prevent re-renders
 - Only use Context for state that needs to be shared across unrelated screens
@@ -158,6 +153,7 @@ const [state, dispatch] = useReducer(formReducer, initialState);
 ```
 
 **Key Points:**
+
 - Use `useState` for simple state
 - Use `useReducer` for complex state with multiple actions
 - Keep state as local as possible
@@ -177,15 +173,11 @@ export const useAnalytics = () => {
   const transactions = useQuery(Transaction);
 
   const totalExpenses = useMemo(() => {
-    return transactions
-      .filtered('type == "expense"')
-      .sum('amount') as number;
+    return transactions.filtered('type == "expense"').sum('amount') as number;
   }, [transactions]);
 
   const totalIncome = useMemo(() => {
-    return transactions
-      .filtered('type == "income"')
-      .sum('amount') as number;
+    return transactions.filtered('type == "income"').sum('amount') as number;
   }, [transactions]);
 
   const balance = useMemo(() => {
@@ -197,6 +189,7 @@ export const useAnalytics = () => {
 ```
 
 **Key Points:**
+
 - Compute values on render, don't store as state
 - Use `useMemo` for expensive calculations
 - Dependencies should include all values used in computation
@@ -211,19 +204,19 @@ For multi-step forms, use React Navigation params or Context.
 ```typescript
 // Step 1: AmountInputScreen
 const handleNext = () => {
-  navigation.navigate('CategorySelection', { 
-    amount, 
-    type: 'expense' 
+  navigation.navigate('CategorySelection', {
+    amount,
+    type: 'expense',
   });
 };
 
 // Step 2: CategorySelectionScreen
 const { amount, type } = route.params;
 const handleNext = () => {
-  navigation.navigate('TransactionDetails', { 
-    amount, 
-    type, 
-    categoryId 
+  navigation.navigate('TransactionDetails', {
+    amount,
+    type,
+    categoryId,
   });
 };
 ```
@@ -277,24 +270,25 @@ export const TransactionFormProvider = ({ children }) => {
 
 ### When to Use Each Approach
 
-| Use Case | Solution | Example |
-|----------|----------|---------|
-| Transactions list | Realm `useQuery` | `const transactions = useQuery(Transaction)` |
-| Single transaction | Realm `useObject` | `const transaction = useObject(Transaction, id)` |
-| Global filters | Context | `const { filters } = useFilters()` |
-| App settings | Context | `const { settings } = useSettings()` |
-| Modal visibility | Local state | `const [isOpen, setIsOpen] = useState(false)` |
-| Form inputs | Local state | `const [value, setValue] = useState('')` |
-| Analytics totals | `useMemo` | `const total = useMemo(() => sum(data), [data])` |
-| Filtered transactions | Realm query | `useQuery(Transaction, (c) => c.filtered('type == $0', type))` |
+| Use Case              | Solution          | Example                                                        |
+| --------------------- | ----------------- | -------------------------------------------------------------- |
+| Transactions list     | Realm `useQuery`  | `const transactions = useQuery(Transaction)`                   |
+| Single transaction    | Realm `useObject` | `const transaction = useObject(Transaction, id)`               |
+| Global filters        | Context           | `const { filters } = useFilters()`                             |
+| App settings          | Context           | `const { settings } = useSettings()`                           |
+| Modal visibility      | Local state       | `const [isOpen, setIsOpen] = useState(false)`                  |
+| Form inputs           | Local state       | `const [value, setValue] = useState('')`                       |
+| Analytics totals      | `useMemo`         | `const total = useMemo(() => sum(data), [data])`               |
+| Filtered transactions | Realm query       | `useQuery(Transaction, (c) => c.filtered('type == $0', type))` |
 
 ### Performance Optimization
 
 1. **Split Contexts**: Don't put all global state in one context
+
    ```typescript
    // ❌ Bad: One large context
    <AppContext.Provider value={{ filters, settings, theme, ... }}>
-   
+
    // ✅ Good: Split by concern
    <FiltersProvider>
      <SettingsProvider>
@@ -302,24 +296,20 @@ export const TransactionFormProvider = ({ children }) => {
    ```
 
 2. **Memoize Context Values**: Prevent unnecessary re-renders
+
    ```typescript
-   const value = useMemo(
-     () => ({ filters, setFilters }),
-     [filters]
-   );
+   const value = useMemo(() => ({ filters, setFilters }), [filters]);
    ```
 
 3. **Use Filtered Queries**: Filter at database level, not in JavaScript
+
    ```typescript
    // ❌ Bad: Filter in JavaScript
    const all = useQuery(Transaction);
    const filtered = all.filter(t => t.type === 'expense');
-   
+
    // ✅ Good: Filter in Realm query
-   const filtered = useQuery(
-     Transaction,
-     (collection) => collection.filtered('type == "expense"')
-   );
+   const filtered = useQuery(Transaction, collection => collection.filtered('type == "expense"'));
    ```
 
 4. **Memoize Expensive Computations**: Use `useMemo` for derived values
@@ -376,15 +366,15 @@ export const useFilteredTransactions = () => {
 
   const filtered = useMemo(() => {
     let result = allTransactions;
-    
+
     if (filters.transactionType && filters.transactionType !== 'all') {
       result = result.filtered('type == $0', filters.transactionType);
     }
-    
+
     if (filters.categoryIds?.length) {
       result = result.filtered('category._id IN $0', filters.categoryIds);
     }
-    
+
     return result;
   }, [allTransactions, filters]);
 

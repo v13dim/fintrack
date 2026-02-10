@@ -105,6 +105,7 @@ Victory Native was selected for the following reasons:
 While Victory Native has a larger bundle size (~200kb) and steeper learning curve, the flexibility, power, and comprehensive feature set justify the trade-off for a financial tracking application that requires rich data visualization.
 
 **Note**: Victory Native requires peer dependencies:
+
 - `react-native-svg` - for rendering SVG graphics
 - `react-native-reanimated` - for animations
 - `react-native-gesture-handler` - for gesture handling
@@ -133,12 +134,12 @@ While Victory Native has a larger bundle size (~200kb) and steeper learning curv
 
 ### Risks and Mitigations
 
-| Risk                  | Impact | Mitigation                                                          |
-| --------------------- | ------ | ------------------------------------------------------------------- |
-| Bundle size increase  | Medium | Monitor bundle size, use code splitting, optimize imports           |
-| Learning curve        | Low    | Documentation, examples, code reviews, training sessions            |
-| Dependency conflicts  | Low    | Regular dependency updates, compatibility testing                   |
-| Library maintenance   | Low    | Monitor library updates, have migration plan, consider alternatives |
+| Risk                 | Impact | Mitigation                                                          |
+| -------------------- | ------ | ------------------------------------------------------------------- |
+| Bundle size increase | Medium | Monitor bundle size, use code splitting, optimize imports           |
+| Learning curve       | Low    | Documentation, examples, code reviews, training sessions            |
+| Dependency conflicts | Low    | Regular dependency updates, compatibility testing                   |
+| Library maintenance  | Low    | Monitor library updates, have migration plan, consider alternatives |
 
 ## When to Revisit
 

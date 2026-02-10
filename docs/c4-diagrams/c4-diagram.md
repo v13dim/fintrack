@@ -169,16 +169,16 @@ For detailed data flow diagrams and sequence diagrams of key user flows, see [Da
 
 ## Technology Stack
 
-| Layer                | Technology                                       |
-| -------------------- | ------------------------------------------------ |
-| **Framework**        | React Native 0.83+ with New Architecture         |
-| **Language**         | TypeScript (strict mode)                         |
-| **Database**         | RealmJS by MongoDB                               |
+| Layer                | Technology                                                                                                              |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Framework**        | React Native 0.83+ with New Architecture                                                                                |
+| **Language**         | TypeScript (strict mode)                                                                                                |
+| **Database**         | RealmJS by MongoDB                                                                                                      |
 | **Navigation**       | React Navigation (`@react-navigation/native` with `@react-navigation/native-stack` and `@react-navigation/bottom-tabs`) |
-| **State Management** | React Context + Realm hooks (`@realm/react`) - see ADR-003 |
-| **Testing**          | Jest, React Native Testing Library               |
-| **Crash Reporting**  | Sentry                                           |
-| **CI/CD**            | GitHub Actions                                   |
+| **State Management** | React Context + Realm hooks (`@realm/react`) - see ADR-003                                                              |
+| **Testing**          | Jest, React Native Testing Library                                                                                      |
+| **Crash Reporting**  | Sentry                                                                                                                  |
+| **CI/CD**            | GitHub Actions                                                                                                          |
 
 ---
 

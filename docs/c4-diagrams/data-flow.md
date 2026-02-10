@@ -336,14 +336,14 @@ sequenceDiagram
 
 ### Common Error Types
 
-| Error Type | Source | User Action | Recovery |
-|------------|--------|-------------|----------|
-| **Validation Error** | Form validation | Show field-specific error | Fix input and retry |
-| **Database Error** | Realm operations | Show generic error message | Retry operation |
-| **Network Error** | N/A (offline-first) | N/A | N/A |
-| **Authentication Error** | PIN/Biometric | Show error, allow retry | Re-enter credentials |
-| **Storage Error** | File system | Show error message | Check storage space |
-| **Critical Error** | System failure | Show critical error | Contact support or restart app |
+| Error Type               | Source              | User Action                | Recovery                       |
+| ------------------------ | ------------------- | -------------------------- | ------------------------------ |
+| **Validation Error**     | Form validation     | Show field-specific error  | Fix input and retry            |
+| **Database Error**       | Realm operations    | Show generic error message | Retry operation                |
+| **Network Error**        | N/A (offline-first) | N/A                        | N/A                            |
+| **Authentication Error** | PIN/Biometric       | Show error, allow retry    | Re-enter credentials           |
+| **Storage Error**        | File system         | Show error message         | Check storage space            |
+| **Critical Error**       | System failure      | Show critical error        | Contact support or restart app |
 
 ---
 
@@ -362,7 +362,7 @@ sequenceDiagram
 
     User->>Screen: Attempt authentication
     Screen->>Hook: authenticate(credentials)
-    
+
     alt Biometric Authentication
         Hook->>Biometric: Request authentication
         alt Success
@@ -442,7 +442,7 @@ sequenceDiagram
     Screen->>Hook: Call hook method
     Hook->>Service: Perform database operation
     Service->>DB: Execute operation
-    
+
     alt Operation Success
         DB-->>Service: Success
         Service-->>Hook: Success result
@@ -511,7 +511,7 @@ sequenceDiagram
     App->>Timer: Start session timer (5 minutes)
     App->>Screen: AppState: background
     Screen->>Screen: Save current state
-    
+
     alt Timer Expires (5 minutes)
         Timer->>AuthService: Session expired
         AuthService->>AuthService: Clear session
@@ -684,9 +684,9 @@ sequenceDiagram
     AuthService-->>App: No PIN found (new install)
     App->>App: Show onboarding → PIN setup
     App-->>User: Create PIN
-    
+
     Note over User,FileSystem: User should create backup before reinstall
-    
+
     User->>App: Reinstall app
     App->>AuthService: Check for existing PIN
     AuthService-->>App: No PIN found (reinstall)

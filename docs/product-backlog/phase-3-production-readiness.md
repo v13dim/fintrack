@@ -1,6 +1,6 @@
 # Phase 3: Production Readiness
 
-**Total Story Points**: 34  
+**Total Story Points**: 36  
 **Timeline**: Week 4  
 **Priority**: Mix of P0, P1
 
@@ -15,6 +15,7 @@
 As a developer, I need to profile app performance using Flipper, so I can identify bottlenecks.
 
 **Acceptance Criteria:**
+
 - Given I'm profiling the app
 - When I use Flipper performance tools
 - Then I can identify performance bottlenecks
@@ -30,6 +31,7 @@ As a developer, I need to profile app performance using Flipper, so I can identi
 As a developer, I need to optimize transaction list (FlashList vs FlatList), so scrolling is smooth.
 
 **Acceptance Criteria:**
+
 - Given I'm viewing the transaction list
 - When I scroll through many transactions
 - Then scrolling maintains ≥55 FPS
@@ -45,6 +47,7 @@ As a developer, I need to optimize transaction list (FlashList vs FlatList), so 
 As a developer, I need to add memoization where needed, so unnecessary re-renders are prevented.
 
 **Acceptance Criteria:**
+
 - Given components with expensive calculations
 - When I add memoization (React.memo, useMemo, useCallback)
 - Then unnecessary re-renders are prevented
@@ -59,6 +62,7 @@ As a developer, I need to add memoization where needed, so unnecessary re-render
 As a developer, I need to analyze and optimize bundle size, so app loads quickly.
 
 **Acceptance Criteria:**
+
 - Given the app is built
 - When I analyze bundle size
 - Then bundle size is within acceptable limits
@@ -78,6 +82,7 @@ As a developer, I need to analyze and optimize bundle size, so app loads quickly
 As a user with disabilities, I need accessibility labels, roles, and hints on all interactive elements, so screen readers can navigate the app.
 
 **Acceptance Criteria:**
+
 - Given all interactive elements
 - When I test with screen reader
 - Then all elements have accessibility labels
@@ -93,6 +98,7 @@ As a user with disabilities, I need accessibility labels, roles, and hints on al
 As a user, I need dynamic type support and font scaling, so I can adjust text size.
 
 **Acceptance Criteria:**
+
 - Given I'm in system settings
 - When I change text size
 - Then app text scales appropriately
@@ -108,6 +114,7 @@ As a user, I need dynamic type support and font scaling, so I can adjust text si
 As a user, I need touch targets ≥44x44 pixels, so I can easily tap buttons.
 
 **Acceptance Criteria:**
+
 - Given all interactive elements
 - When I measure touch targets
 - Then all buttons and interactive elements are ≥44x44 pixels
@@ -122,6 +129,7 @@ As a user, I need touch targets ≥44x44 pixels, so I can easily tap buttons.
 As a user, I need color contrast ≥4.5:1, so text is readable.
 
 **Acceptance Criteria:**
+
 - Given all text in the app
 - When I measure color contrast
 - Then all text meets WCAG Level A contrast ratio (≥4.5:1)
@@ -136,6 +144,7 @@ As a user, I need color contrast ≥4.5:1, so text is readable.
 As a developer, I need to test with VoiceOver (iOS) and TalkBack (Android), so accessibility works correctly.
 
 **Acceptance Criteria:**
+
 - Given I'm testing on iOS
 - When I use VoiceOver
 - Then all features are accessible
@@ -150,7 +159,7 @@ As a developer, I need to test with VoiceOver (iOS) and TalkBack (Android), so a
 
 ## EPIC: Security & Documentation
 
-**Total: 8 points**
+**Total: 10 points**
 
 ### US-1001: Security Audit
 
@@ -159,6 +168,7 @@ As a developer, I need to test with VoiceOver (iOS) and TalkBack (Android), so a
 As a developer, I need security audit completed (secure storage, no data in logs, ProGuard/R8), so app is secure.
 
 **Acceptance Criteria:**
+
 - Given the app is ready for production
 - When I perform security audit
 - Then PIN is stored securely (Keychain/Keystore), not plaintext
@@ -176,12 +186,29 @@ As a developer, I need security audit completed (secure storage, no data in logs
 As a developer, I need incident simulation document (triage, mitigation, postmortem), so I understand incident response.
 
 **Acceptance Criteria:**
+
 - Given an incident occurs
 - When I follow the incident response process
 - Then I can triage the issue
 - And I can mitigate the impact
 - And I can document postmortem
 - And I can prevent similar incidents
+
+---
+
+### US-1003: Enable iOS build in main branch CI
+
+**Story Points**: 2 | **Priority**: P1
+
+As a developer, I need the iOS build job enabled in the main branch workflow once an Apple Developer account is available, so iOS builds and distribution run in CI.
+
+**Acceptance Criteria:**
+
+- Given we have an Apple Developer account and credentials configured in GitHub
+- When the main branch workflow runs
+- Then the commented `ios-build` job in `.github/workflows/main.yml` is uncommented and active
+- And any related TODO in the workflow references this story (US-1003)
+- And iOS build (e.g. simulator or distribution) runs successfully in CI when credentials are set
 
 ---
 

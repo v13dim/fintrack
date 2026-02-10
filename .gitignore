@@ -28,12 +28,19 @@ build/
 .idea
 .gradle
 local.properties
+# Firebase (contains API key; use google-services.json.example as template, inject in CI from secret)
+android/app/google-services.json
 *.iml
 *.hprof
 .cxx/
 *.keystore
 !debug.keystore
 .kotlin/
+
+# Environment (secrets; use .env.example as template)
+.env
+.env.local
+.env.*.local
 
 # node.js
 #
@@ -73,3 +80,6 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Sentry
+sentry.properties

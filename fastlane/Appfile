@@ -1,0 +1,9 @@
+# FinTrack - Appfile (shared app identifiers for Fastlane)
+# See: https://docs.fastlane.tools/advanced/#appfile
+
+# iOS (uncomment when Apple Developer is set up)
+# app_identifier("com.fintrack")
+# apple_id("your-apple-id@example.com")
+# team_id("YOUR_TEAM_ID")
+
+# Android uses applicationId from android/app/build.gradle (com.fintrack)

@@ -100,10 +100,7 @@ Helper for creating mock React elements:
 // src/testUtils/mockCreateReactElement.ts
 import { createElement, ElementType } from 'react';
 
-export const mockCreateReactElement = (
-  component: string,
-  props: Record<string, any> = {},
-) => {
+export const mockCreateReactElement = (component: string, props: Record<string, any> = {}) => {
   return createElement(component as ElementType, props);
 };
 ```
@@ -153,14 +150,14 @@ describe('Button', () => {
   });
 
   it('should render with title', () => {
-    render(<Button title="Click me" onPress={mockOnPress} />);
+    render(<Button title='Click me' onPress={mockOnPress} />);
 
     const button = screen.getByTestId('button');
     expect(button).toBeTruthy();
   });
 
   it('should call onPress when pressed', () => {
-    render(<Button title="Click me" onPress={mockOnPress} />);
+    render(<Button title='Click me' onPress={mockOnPress} />);
 
     const button = screen.getByTestId('button');
     fireEvent.press(button);
@@ -169,15 +166,13 @@ describe('Button', () => {
   });
 
   it('should render disabled state', () => {
-    render(<Button title="Click me" onPress={mockOnPress} disabled />);
+    render(<Button title='Click me' onPress={mockOnPress} disabled />);
 
     const button = screen.getByTestId('button');
     expect(button.props.disabled).toBe(true);
   });
 });
 ```
-
-
 
 ## Hook Testing
 
@@ -203,9 +198,7 @@ describe('useTransactions', () => {
       { id: '2', amount: 200, type: 'income' },
     ];
 
-    (transactionService.findAll as jest.Mock).mockResolvedValue(
-      mockTransactions,
-    );
+    (transactionService.findAll as jest.Mock).mockResolvedValue(mockTransactions);
 
     const { result, waitForNextUpdate } = renderHook(() => useTransactions());
 
@@ -281,10 +274,7 @@ describe('transactionService', () => {
       const result = transactionService.create(data);
 
       expect(mockRealm.write).toHaveBeenCalledTimes(1);
-      expect(mockRealm.create).toHaveBeenCalledWith(
-        'Transaction',
-        expect.objectContaining(data),
-      );
+      expect(mockRealm.create).toHaveBeenCalledWith('Transaction', expect.objectContaining(data));
       expect(result).toEqual(createdTransaction);
     });
   });
@@ -343,11 +333,11 @@ const TestComponent = () => {
   const { filters, setFilters } = useFilters();
   return (
     <>
-      <Text testID="filters">{JSON.stringify(filters)}</Text>
+      <Text testID='filters'>{JSON.stringify(filters)}</Text>
       <Button
-        testID="update-filters"
+        testID='update-filters'
         onPress={() => setFilters({ categoryIds: ['1'] })}
-        title="Update"
+        title='Update'
       />
     </>
   );
@@ -358,7 +348,7 @@ describe('FiltersContext', () => {
     render(
       <FiltersProvider>
         <TestComponent />
-      </FiltersProvider>
+      </FiltersProvider>,
     );
 
     const filtersText = screen.getByTestId('filters');
@@ -369,7 +359,7 @@ describe('FiltersContext', () => {
     render(
       <FiltersProvider>
         <TestComponent />
-      </FiltersProvider>
+      </FiltersProvider>,
     );
 
     const updateButton = screen.getByTestId('update-filters');
@@ -399,9 +389,7 @@ describe('fetchTransactions', () => {
   });
 
   it('should fetch transactions successfully', async () => {
-    (transactionService.findAll as jest.Mock).mockResolvedValue(
-      mockTransactions,
-    );
+    (transactionService.findAll as jest.Mock).mockResolvedValue(mockTransactions);
 
     const dispatch = jest.fn();
     const getState = jest.fn();
@@ -418,7 +406,6 @@ describe('fetchTransactions', () => {
   });
 });
 ```
-
 
 ## Utils Testing
 
@@ -478,9 +465,7 @@ describe('Transaction Flow Integration', () => {
     };
 
     (transactionService.create as jest.Mock).mockResolvedValue(mockTransaction);
-    (transactionService.findAll as jest.Mock).mockResolvedValue([
-      mockTransaction,
-    ]);
+    (transactionService.findAll as jest.Mock).mockResolvedValue([mockTransaction]);
 
     const { store } = renderWithProviders(
       <>

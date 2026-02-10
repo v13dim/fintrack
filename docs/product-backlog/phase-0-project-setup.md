@@ -15,6 +15,7 @@
 As a developer, I need project structure set up with TypeScript, React Native 0.83+, and New Architecture enabled, so I can start development.
 
 **Acceptance Criteria:**
+
 - Given the project is initialized
 - When I check the project structure
 - Then React Native 0.83+ is configured
@@ -32,6 +33,7 @@ As a developer, I need project structure set up with TypeScript, React Native 0.
 As a developer, I need ADR documents for architecture, project structure, state management, data persistence, testing, and library selection, so decisions are documented.
 
 **Acceptance Criteria:**
+
 - Given architectural decisions need to be made
 - When I create ADR documents
 - Then ADR-001 (High-level Architecture) is complete
@@ -53,6 +55,7 @@ As a developer, I need ADR documents for architecture, project structure, state 
 As a developer, I need C4 diagrams and navigation map created, so system architecture is clear.
 
 **Acceptance Criteria:**
+
 - Given the system architecture needs documentation
 - When I create diagrams
 - Then C4 Context Diagram is complete
@@ -71,6 +74,7 @@ As a developer, I need C4 diagrams and navigation map created, so system archite
 As a developer, I need test utilities and mocking infrastructure set up, so I can write tests efficiently.
 
 **Acceptance Criteria:**
+
 - Given I need to write tests
 - When I set up test infrastructure
 - Then Jest is configured

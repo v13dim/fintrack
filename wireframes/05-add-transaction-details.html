@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - Add Transaction - Details</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <div class="header-left">
+        <button class="btn-icon">←</button>
+        <span class="header-title">Details</span>
+      </div>
+    </div>
+    <div class="content content-with-header">
+      <div style="text-align: center; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 32px;">🛒</div>
+        <div style="font-size: 18px; font-weight: 500;">Groceries</div>
+        <div class="amount-display" style="font-size: 32px;">€54.00</div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <div class="date-group">
+          <span class="date-icon">📅</span>
+          <span class="date-text">December 15, 2024</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Note</label>
+        <textarea class="note-input" placeholder="Lidl, weekly shopping"></textarea>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="btn btn-primary btn-full">Save</button>
+        <button class="btn btn-ghost btn-full">
+          Save without note
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

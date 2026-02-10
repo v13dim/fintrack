@@ -15,6 +15,7 @@
 As a developer, I need GitHub Actions CI/CD pipeline configured with lint, type check, unit tests, and build steps, so code quality is maintained.
 
 **Acceptance Criteria:**
+
 - Given code is pushed to repository
 - When CI/CD pipeline runs
 - Then ESLint check passes
@@ -34,6 +35,7 @@ As a developer, I need GitHub Actions CI/CD pipeline configured with lint, type 
 As a developer, I need SonarQube integration with Quality Gate passing, so code quality metrics are tracked.
 
 **Acceptance Criteria:**
+
 - Given code is analyzed
 - When SonarQube analysis runs
 - Then Quality Gate passes
@@ -55,6 +57,7 @@ As a developer, I need SonarQube integration with Quality Gate passing, so code 
 As a developer, I need pre-commit hooks (husky/lefthook) configured with ESLint and Prettier, so code is formatted before commit.
 
 **Acceptance Criteria:**
+
 - Given I'm committing code
 - When I run git commit
 - Then ESLint runs automatically
@@ -71,6 +74,7 @@ As a developer, I need pre-commit hooks (husky/lefthook) configured with ESLint 
 As a developer, I need commitlint configured for conventional commits, so commit history is clean.
 
 **Acceptance Criteria:**
+
 - Given I'm committing code
 - When I write commit message
 - Then commit message follows conventional commits format
@@ -86,6 +90,7 @@ As a developer, I need commitlint configured for conventional commits, so commit
 As a developer, I need Sentry integration for crash reporting and performance monitoring, so issues are tracked.
 
 **Acceptance Criteria:**
+
 - Given the app runs
 - When an error occurs
 - Then error is reported to Sentry
@@ -102,6 +107,7 @@ As a developer, I need Sentry integration for crash reporting and performance mo
 As a developer, I need Fastlane setup for certificate management and deployment, so releases are automated.
 
 **Acceptance Criteria:**
+
 - Given I need to deploy the app
 - When I use Fastlane
 - Then certificates are managed automatically

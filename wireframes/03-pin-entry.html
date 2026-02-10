@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack - PIN Entry</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mobile-container">
+    <div class="content" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 20px;">
+      <div style="text-align: center; flex-shrink: 0; display: flex; flex-direction: column; gap: 40px;">
+        <h2 style="font-size: 24px; font-weight: 600;">Enter PIN</h2>
+        <div class="pin-display">
+          <div class="pin-dot filled"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+          <div class="pin-dot"></div>
+        </div>
+      </div>
+      <div style="flex-shrink: 0; width: 100%;">
+        <div class="pin-pad">
+          <button class="pin-key">1</button>
+          <button class="pin-key">2</button>
+          <button class="pin-key">3</button>
+          <button class="pin-key">4</button>
+          <button class="pin-key">5</button>
+          <button class="pin-key">6</button>
+          <button class="pin-key">7</button>
+          <button class="pin-key">8</button>
+          <button class="pin-key">9</button>
+          <button class="pin-key" style="font-size: 20px;">🔐</button>
+          <button class="pin-key">0</button>
+          <button class="pin-key">⌫</button>
+        </div>
+        <p style="text-align: center; font-size: 14px; color: var(--text-secondary);">Face ID</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
