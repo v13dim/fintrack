@@ -1,6 +1,6 @@
 # Phase 2: Core Features
 
-**Total Story Points**: 110  
+**Total Story Points**: 112  
 **Timeline**: Week 2-3  
 **Priority**: Mix of P0, P1, P2
 
@@ -684,7 +684,7 @@ As a developer, I need analytics data calculated efficiently from transactions, 
 
 ## EPIC: Data Management
 
-**Total: 13 points**
+**Total: 15 points**
 
 ### US-701: Export to CSV
 
@@ -782,6 +782,21 @@ As a user, I need to clear all data with confirmation, so I can reset the app.
 - Given I didn't enter confirmation
 - When I tap "Cancel"
 - Then nothing is deleted
+
+---
+
+### US-705: Jest Coverage for Services and Utils
+
+**Story Points**: 2 | **Priority**: P1
+
+As a developer, I need Jest coverage thresholds enabled for `src/services` and `src/utils`, so business logic and utilities are covered by tests.
+
+**Acceptance Criteria:**
+
+- Given services and/or utils are implemented in the codebase
+- When Jest runs with coverage
+- Then `jest.config.js` includes coverage thresholds for `src/services/**/*.ts` and `src/utils/**/*.ts` (e.g. 80% branches, functions, lines, statements)
+- And the related TODO in `jest.config.js` is resolved (uncommented and linked to this story)
 
 ---
 

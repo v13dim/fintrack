@@ -1,6 +1,6 @@
 # Phase 3: Production Readiness
 
-**Total Story Points**: 34  
+**Total Story Points**: 36  
 **Timeline**: Week 4  
 **Priority**: Mix of P0, P1
 
@@ -159,7 +159,7 @@ As a developer, I need to test with VoiceOver (iOS) and TalkBack (Android), so a
 
 ## EPIC: Security & Documentation
 
-**Total: 8 points**
+**Total: 10 points**
 
 ### US-1001: Security Audit
 
@@ -193,6 +193,22 @@ As a developer, I need incident simulation document (triage, mitigation, postmor
 - And I can mitigate the impact
 - And I can document postmortem
 - And I can prevent similar incidents
+
+---
+
+### US-1003: Enable iOS build in main branch CI
+
+**Story Points**: 2 | **Priority**: P1
+
+As a developer, I need the iOS build job enabled in the main branch workflow once an Apple Developer account is available, so iOS builds and distribution run in CI.
+
+**Acceptance Criteria:**
+
+- Given we have an Apple Developer account and credentials configured in GitHub
+- When the main branch workflow runs
+- Then the commented `ios-build` job in `.github/workflows/main.yml` is uncommented and active
+- And any related TODO in the workflow references this story (US-1003)
+- And iOS build (e.g. simulator or distribution) runs successfully in CI when credentials are set
 
 ---
 

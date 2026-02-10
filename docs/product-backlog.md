@@ -48,7 +48,7 @@ See [Phase 1 Details](./product-backlog/phase-1-infrastructure.md) for complete 
 
 ## Phase 2: Core Features
 
-**Total Story Points**: 110  
+**Total Story Points**: 112  
 **Timeline**: Week 2-3  
 **Priority**: Mix of P0, P1, P2
 
@@ -105,10 +105,11 @@ See [Phase 2 Details](./product-backlog/phase-2-core-features.md) for complete U
 - US-702: Backup to JSON (5 points) - P1
 - US-703: Restore from JSON (3 points) - P1
 - US-704: Clear all data (2 points) - P2
+- US-705: Jest coverage for services and utils (2 points) - P1
 
 ## Phase 3: Production Readiness
 
-**Total Story Points**: 34  
+**Total Story Points**: 36  
 **Timeline**: Week 4  
 **Priority**: Mix of P0, P1
 
@@ -133,6 +134,7 @@ See [Phase 3 Details](./product-backlog/phase-3-production-readiness.md) for com
 
 - US-1001: Security audit (5 points)
 - US-1002: Incident simulation (3 points) - P1
+- US-1003: Enable iOS build in main branch CI (2 points) - P1
 
 ## References
 

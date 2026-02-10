@@ -21,7 +21,7 @@ module.exports = {
       lines: 80,
       statements: 80,
     },
-    // TODO: Add coverage for services and utils when they are implemented
+    // TODO(US-705): Add coverage for services and utils when they are implemented
     // 'src/services/**/*.ts': {
     //   branches: 80,
     //   functions: 80,

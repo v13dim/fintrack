@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Mock react-native-safe-area-context
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: jest.fn(() => ({
     top: 0,
