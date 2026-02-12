@@ -26,11 +26,9 @@ export const PinCreateScreen: FC = () => {
           errorMessage={pin.errorMessage}
         />
       </View>
-      <FullScreenLoader
-        visible={pin.isLoading}
-        message={t('pin.loading')}
-        testID='pin-create-loader'
-      />
+      {pin.isLoading ? (
+        <FullScreenLoader message={t('pin.loading')} testID='pin-create-loader' />
+      ) : null}
     </GradientBackground>
   );
 };

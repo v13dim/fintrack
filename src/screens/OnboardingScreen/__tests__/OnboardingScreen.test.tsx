@@ -1,7 +1,7 @@
 import { mockReplace } from '../__mocks__/OnboardingScreen.module-mocks';
 
 import React from 'react';
-import { act, fireEvent, screen, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, screen } from '@testing-library/react-native';
 
 import { OnboardingStorageService } from 'services';
 
@@ -14,7 +14,6 @@ const PIN_CREATE_SCREEN = 'PinCreate';
 describe('OnboardingScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mocked(OnboardingStorageService.setOnboardingCompleted).mockResolvedValue(undefined);
   });
 
   it('should render first step with title from localization', () => {
@@ -46,30 +45,32 @@ describe('OnboardingScreen', () => {
   });
 
   it('should call setOnboardingCompleted and replace with PinCreate when Skip is pressed', async () => {
+    jest.mocked(OnboardingStorageService.setOnboardingCompleted).mockResolvedValue(undefined);
     renderWithTheme(<OnboardingScreen />);
 
     await act(async () => {
       fireEvent.press(screen.getByTestId('onboarding-skip'));
+      await Promise.resolve();
+      await Promise.resolve();
     });
 
     expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
-    await waitFor(() => {
-      expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
-    });
+    expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
   });
 
   it('should call setOnboardingCompleted and replace with PinCreate when Get Started is pressed', async () => {
+    jest.mocked(OnboardingStorageService.setOnboardingCompleted).mockResolvedValue(undefined);
     renderWithTheme(<OnboardingScreen />);
 
     fireEvent.press(screen.getByTestId('onboarding-next'));
     fireEvent.press(screen.getByTestId('onboarding-next'));
     await act(async () => {
       fireEvent.press(screen.getByTestId('onboarding-get-started'));
+      await Promise.resolve();
+      await Promise.resolve();
     });
 
     expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
-    await waitFor(() => {
-      expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
-    });
+    expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
   });
 });

@@ -29,11 +29,12 @@ export const PinLoginScreen: FC = () => {
           showBiometricPlaceholder
         />
       </View>
-      <FullScreenLoader
-        visible={pin.isCheckingBiometric || pin.isLoading}
-        message={pin.isCheckingBiometric ? t('pin.login.biometricPrompt') : t('pin.loading')}
-        testID='pin-login-loader'
-      />
+      {pin.isCheckingBiometric || pin.isLoading ? (
+        <FullScreenLoader
+          message={pin.isCheckingBiometric ? t('pin.login.biometricPrompt') : t('pin.loading')}
+          testID='pin-login-loader'
+        />
+      ) : null}
     </GradientBackground>
   );
 };

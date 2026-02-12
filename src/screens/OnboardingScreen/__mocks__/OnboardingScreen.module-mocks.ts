@@ -52,7 +52,7 @@ jest.mock('react-i18next', () => ({
 
 jest.mock('services', () => ({
   OnboardingStorageService: {
-    setOnboardingCompleted: jest.fn(),
+    setOnboardingCompleted: jest.fn(() => Promise.resolve()),
   },
 }));
 

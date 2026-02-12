@@ -110,7 +110,6 @@ describe('useBiometricCheckOnMount', () => {
 
     const { unmount } = renderHook(() => useBiometricCheckOnMount(onSuccess));
 
-    await flushMicrotasksInAct();
     unmount();
     await flushMicrotasksInAct();
 

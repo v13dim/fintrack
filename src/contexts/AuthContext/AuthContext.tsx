@@ -8,8 +8,6 @@ import React, {
   useState,
 } from 'react';
 
-import { setAuthSession } from 'services';
-
 export interface IAuthContextValue {
   isAuthenticated: boolean;
   signIn: () => void;
@@ -28,23 +26,16 @@ export const useAuth = () => {
 
 export interface IAuthProviderProps {
   children: ReactNode;
-  /** Restored from storage on app init so isAuthenticated survives remounts. */
-  initialIsAuthenticated?: boolean;
 }
 
-export const AuthProvider: FC<IAuthProviderProps> = ({
-  children,
-  initialIsAuthenticated = false,
-}) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated);
+export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const signIn = useCallback(() => {
-    setAuthSession(true);
     setIsAuthenticated(true);
   }, []);
 
   const signOut = useCallback(() => {
-    setAuthSession(false);
     setIsAuthenticated(false);
   }, []);
 

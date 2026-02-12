@@ -1,6 +1,16 @@
 import React from 'react';
+import { View as MockView } from 'react-native';
 
 import { mockCreateReactElement } from 'testUtils/mockCreateReactElement';
+
+jest.mock('react-native-reanimated', () => ({
+  __esModule: true,
+  default: { View: MockView },
+  useSharedValue: (initial: number) => ({ value: initial }),
+  useAnimatedStyle: (fn: () => object) => (typeof fn === 'function' ? fn() : {}),
+  withTiming: (toValue: number) => toValue,
+  withSpring: (toValue: number) => toValue,
+}));
 
 const asyncStorageMock: Record<string, string> = {};
 

@@ -36,17 +36,20 @@ interface INavSwitcherProps {
   hasPin: boolean;
 }
 
-const AppStateLockHandler: FC = () => {
-  const { signOut } = useAuth();
+interface IAppStateLockHandlerProps {
+  signOut: () => void;
+}
+
+const AppStateLockHandler: FC<IAppStateLockHandlerProps> = ({ signOut }) => {
   useAppStateLock(signOut);
   return null;
 };
 
 const NavSwitcher: FC<INavSwitcherProps> = ({ isFirstLaunch, hasPin }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, signOut } = useAuth();
   return isAuthenticated ? (
     <>
-      <AppStateLockHandler />
+      <AppStateLockHandler signOut={signOut} />
       <AppNavigator />
     </>
   ) : (
@@ -56,7 +59,7 @@ const NavSwitcher: FC<INavSwitcherProps> = ({ isFirstLaunch, hasPin }) => {
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-  const { isReady, isFirstLaunch, hasPin, hasSession } = useAppInit();
+  const { isReady, isFirstLaunch, hasPin } = useAppInit();
 
   useEffect(() => {
     if (isReady) {
@@ -70,7 +73,7 @@ function App() {
         <AppErrorBoundary>
           <Suspense fallback={<AppSuspenseFallback />}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-            <AuthProvider initialIsAuthenticated={hasSession}>
+            <AuthProvider>
               {isReady ? (
                 <NavigationContainer>
                   <NavSwitcher isFirstLaunch={isFirstLaunch} hasPin={hasPin} />

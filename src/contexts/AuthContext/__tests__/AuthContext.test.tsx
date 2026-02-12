@@ -3,10 +3,6 @@ import { act, renderHook } from '@testing-library/react-native';
 
 import { AuthProvider, useAuth } from '../AuthContext';
 
-jest.mock('services', () => ({
-  setAuthSession: jest.fn(),
-}));
-
 describe('AuthContext', () => {
   it('should provide isAuthenticated false by default', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -44,15 +40,6 @@ describe('AuthContext', () => {
     });
 
     expect(result.current.isAuthenticated).toBe(false);
-  });
-
-  it('should use initialIsAuthenticated when provided', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <AuthProvider initialIsAuthenticated={true}>{children}</AuthProvider>
-    );
-    const { result } = renderHook(() => useAuth(), { wrapper });
-
-    expect(result.current.isAuthenticated).toBe(true);
   });
 
   it('should throw when useAuth is used outside AuthProvider', () => {
