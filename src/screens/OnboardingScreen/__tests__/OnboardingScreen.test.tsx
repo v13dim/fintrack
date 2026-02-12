@@ -1,7 +1,7 @@
 import { mockReplace } from '../__mocks__/OnboardingScreen.module-mocks';
 
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react-native';
+import { fireEvent, screen, waitFor } from '@testing-library/react-native';
 
 import { OnboardingStorageService } from 'services';
 
@@ -14,6 +14,7 @@ const PIN_CREATE_SCREEN = 'PinCreate';
 describe('OnboardingScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.mocked(OnboardingStorageService.setOnboardingCompleted).mockResolvedValue(undefined);
   });
 
   it('should render first step with title from localization', () => {
@@ -44,23 +45,27 @@ describe('OnboardingScreen', () => {
     expect(screen.queryByTestId('onboarding-next')).toBeNull();
   });
 
-  it('should call setOnboardingCompleted and replace with PinCreate when Skip is pressed', () => {
+  it('should call setOnboardingCompleted and replace with PinCreate when Skip is pressed', async () => {
     renderWithTheme(<OnboardingScreen />);
 
     fireEvent.press(screen.getByTestId('onboarding-skip'));
 
-    expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
-    expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
+    await waitFor(() => {
+      expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
+      expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
+    });
   });
 
-  it('should call setOnboardingCompleted and replace with PinCreate when Get Started is pressed', () => {
+  it('should call setOnboardingCompleted and replace with PinCreate when Get Started is pressed', async () => {
     renderWithTheme(<OnboardingScreen />);
 
     fireEvent.press(screen.getByTestId('onboarding-next'));
     fireEvent.press(screen.getByTestId('onboarding-next'));
     fireEvent.press(screen.getByTestId('onboarding-get-started'));
 
-    expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
-    expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
+    await waitFor(() => {
+      expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
+      expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
+    });
   });
 });

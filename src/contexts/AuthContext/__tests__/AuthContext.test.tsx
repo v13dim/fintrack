@@ -1,9 +1,13 @@
 import React from 'react';
 import { act, renderHook } from '@testing-library/react-native';
 
-import { AuthProvider, useAuth } from '../AuthContext';
+import { __resetAuthSessionForTests, AuthProvider, useAuth } from '../AuthContext';
 
 describe('AuthContext', () => {
+  beforeEach(() => {
+    __resetAuthSessionForTests();
+  });
+
   it('should provide isAuthenticated false by default', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <AuthProvider>{children}</AuthProvider>
@@ -44,5 +48,20 @@ describe('AuthContext', () => {
 
   it('should throw when useAuth is used outside AuthProvider', () => {
     expect(() => renderHook(() => useAuth())).toThrow('useAuth must be used within AuthProvider');
+  });
+
+  it('should restore isAuthenticated from session after AuthProvider remount', () => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <AuthProvider>{children}</AuthProvider>
+    );
+    const { result, unmount } = renderHook(() => useAuth(), { wrapper });
+
+    act(() => result.current.signIn());
+    expect(result.current.isAuthenticated).toBe(true);
+
+    unmount();
+
+    const { result: resultAfterRemount } = renderHook(() => useAuth(), { wrapper });
+    expect(resultAfterRemount.current.isAuthenticated).toBe(true);
   });
 });

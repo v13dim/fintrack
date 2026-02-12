@@ -29,9 +29,19 @@ export const OnboardingScreen: FC = () => {
   const translateX = useSharedValue(0);
   const { width: screenWidth } = Dimensions.get('window');
 
-  const goToPinCreate = () => {
-    OnboardingStorageService.setOnboardingCompleted(true);
-    navigation.replace(AuthStackScreens.PinCreate);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const goToPinCreate = async () => {
+    if (isSaving) return;
+    setIsSaving(true);
+    try {
+      await OnboardingStorageService.setOnboardingCompleted(true);
+      navigation.replace(AuthStackScreens.PinCreate);
+    } catch {
+      navigation.replace(AuthStackScreens.PinCreate);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleNext = () => {
@@ -88,13 +98,23 @@ export const OnboardingScreen: FC = () => {
               <Button.Primary fullWidth onPress={handleNext} testID='onboarding-next'>
                 {t('onboarding.next')}
               </Button.Primary>
-              <Button.Ghost fullWidth onPress={goToPinCreate} testID='onboarding-skip'>
+              <Button.Ghost
+                fullWidth
+                onPress={goToPinCreate}
+                testID='onboarding-skip'
+                disabled={isSaving}
+              >
                 {t('onboarding.skip')}
               </Button.Ghost>
             </>
           ) : (
             <>
-              <Button.Primary fullWidth onPress={handleNext} testID='onboarding-get-started'>
+              <Button.Primary
+                fullWidth
+                onPress={handleNext}
+                testID='onboarding-get-started'
+                disabled={isSaving}
+              >
                 {t('onboarding.getStarted')}
               </Button.Primary>
               <View style={styles.btnPlaceholder} />

@@ -28,14 +28,24 @@ export interface IAuthProviderProps {
   children: ReactNode;
 }
 
+/** Survives AuthProvider remount (e.g. after Error Boundary retry); reset on process death. */
+let sessionActive = false;
+
+/** Reset session state for tests. Not part of public API. */
+export function __resetAuthSessionForTests(): void {
+  sessionActive = false;
+}
+
 export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => sessionActive);
 
   const signIn = useCallback(() => {
+    sessionActive = true;
     setIsAuthenticated(true);
   }, []);
 
   const signOut = useCallback(() => {
+    sessionActive = false;
     setIsAuthenticated(false);
   }, []);
 
