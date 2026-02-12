@@ -48,7 +48,7 @@ See [Phase 1 Details](./product-backlog/phase-1-infrastructure.md) for complete 
 
 ## Phase 2: Core Features
 
-**Total Story Points**: 112  
+**Total Story Points**: 117  
 **Timeline**: Week 2-3  
 **Priority**: Mix of P0, P1, P2
 
@@ -101,6 +101,7 @@ See [Phase 2 Details](./product-backlog/phase-2-core-features.md) for complete U
 
 ### EPIC: Data Management
 
+- US-207: Settings screen (5 points) - P1
 - US-701: Export to CSV (5 points) - P1
 - US-702: Backup to JSON (5 points) - P1
 - US-703: Restore from JSON (3 points) - P1

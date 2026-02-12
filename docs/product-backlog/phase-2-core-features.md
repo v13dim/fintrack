@@ -1,6 +1,6 @@
 # Phase 2: Core Features
 
-**Total Story Points**: 112  
+**Total Story Points**: 117  
 **Timeline**: Week 2-3  
 **Priority**: Mix of P0, P1, P2
 
@@ -684,7 +684,57 @@ As a developer, I need analytics data calculated efficiently from transactions, 
 
 ## EPIC: Data Management
 
-**Total: 15 points**
+**Total: 20 points**
+
+### US-207: Settings Screen
+
+**Story Points**: 5 | **Priority**: P1
+
+As a user, I need a Settings screen to manage app and security options, so I can enable biometric login, configure auto-lock, and access data management (export, backup, etc.).
+
+**Context:** US-204 (Biometric authentication) implements the flow at app open (prompt → Home or PIN). The choice «use biometric login» is persisted in secure storage but has no UI until this story. US-205 (Auto-lock) and US-701–US-704 refer to «Given I'm in settings»; this story delivers the screen they depend on.
+
+**Acceptance Criteria:**
+
+**Settings screen**
+
+- Given I'm on the Home screen
+- When I open the Settings tab (or navigate to Settings)
+- Then I see the Settings screen with at least a «Security» section
+
+**Biometric login toggle (completes US-204)**
+
+- Given I'm on the Settings screen
+- When I see the «Security» (or «Biometric») section
+- Then I see a switch «Вход по биометрии» / «Use Face ID / Touch ID» (or similar, from `biometric.enable`)
+
+- Given the device supports Face ID / Touch ID / fingerprint
+- When I turn the switch ON
+- Then the app calls `BiometricAuthService.enableBiometric()` (or equivalent)
+- And the choice is stored in secure storage (Keychain), not in plain text
+- And on next app open the biometric prompt is shown (US-204 flow)
+
+- Given biometric login is enabled
+- When I turn the switch OFF
+- Then the app calls `BiometricAuthService.disableBiometric()` (or equivalent)
+- And on next app open the PIN entry screen is shown without attempting biometric
+
+- Given the device has no biometric hardware or it is unavailable
+- When I'm on the Settings screen
+- Then the biometric switch is either hidden or disabled with an explanation (e.g. `biometric.unavailable`)
+
+**Auto-lock (placeholder for US-205)**
+
+- Given I'm on the Settings screen
+- When the «Security» section is implemented
+- Then a placeholder or link for «Auto-lock» (US-205) may be present; configuration of auto-lock time is part of US-205
+
+**Technical notes**
+
+- Use `BiometricAuthService.isBiometricAvailable()` and `BiometricAuthService.isBiometricEnabled()` to control visibility/state of the toggle.
+- Use existing localization keys: `biometric.enable`, `biometric.unavailable`, `biometric.failed`, and `settings.*` as needed.
+
+---
 
 ### US-701: Export to CSV
 

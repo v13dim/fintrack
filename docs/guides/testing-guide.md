@@ -94,16 +94,50 @@ jest.mock('react-native', () => ({
 
 ### mockCreateReactElement
 
-Helper for creating mock React elements:
+**Location:** `src/testUtils/mockCreateReactElement.ts`
+
+**Purpose:** Creates a React **element** (e.g. `createElement('View', props)`) for use inside Jest mock **components**. It does not create a component (function/class).
+
+**When to use:**
+
+- Inside a mock that implements a **component**: the mock must be a function that receives props and **returns** the result of `mockCreateReactElement`. Then when the app renders `<MockedComponent />`, React gets a valid component type.
+
+**Correct usage:**
 
 ```typescript
-// src/testUtils/mockCreateReactElement.ts
-import { createElement, ElementType } from 'react';
+// Mock a native component: assign a function that returns an element
+jest.mock('react-native', () => ({
+  View: (props: Record<string, unknown>) => mockCreateReactElement('View', props),
+  Text: (props: Record<string, unknown>) =>
+    mockCreateReactElement('Text', { ...props, testID: props.testID || 'text' }),
+}));
 
-export const mockCreateReactElement = (component: string, props: Record<string, any> = {}) => {
-  return createElement(component as ElementType, props);
-};
+// Mock a wrapper component used as <GradientBackground>...</GradientBackground>
+jest.mock('components/common/GradientBackground', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    GradientBackground: (props: { children?: unknown }) => React.createElement(View, props),
+  };
+});
 ```
+
+**Incorrect usage (causes "Element type is invalid"):**
+
+Do **not** assign the **element** directly to something that is used as a JSX component. React expects a component (function or class), not an element.
+
+```typescript
+// BAD: GradientBackground is used as <GradientBackground />, so it must be a component
+jest.mock('components/common/GradientBackground', () => ({
+  GradientBackground: mockCreateReactElement('View', { testID: 'gradient' }),
+}));
+```
+
+**Summary:** Use `mockCreateReactElement` only as the **return value** of a mock component function. For modules whose default or named export is used as JSX (e.g. `<GradientBackground />`), the mock must export a **function** that returns an element (e.g. `(props) => React.createElement(View, props)`), not the element itself.
+
+**Modules with native dependencies (e.g. Skia):** If a component under test (or any import from `components/`) pulls in a module that uses native code (e.g. `@shopify/react-native-skia`), that module must be mocked in the test’s co-located `__mocks__` or in a Jest setup so the test does not load the real native module.
+
+See also: [ADR-005 Mocking Principles](../adr/ADR-005-testing-strategy.md#mocking-principles).
 
 ### Mock Data
 
