@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import * as bcrypt from 'bcryptjs';
 
@@ -15,6 +16,17 @@ import {
 initBcryptRandomFallback();
 
 const KEYCHAIN_USERNAME = 'fintrack';
+
+/** Options for Keychain writes so reads do not require per-use auth (avoids UserNotAuthenticatedException on Android). */
+function keychainSetOptions(service: string): Parameters<typeof Keychain.setGenericPassword>[2] {
+  return {
+    service,
+    accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+    ...(Platform.OS === 'android' && {
+      storage: Keychain.STORAGE_TYPE.AES_GCM_NO_AUTH,
+    }),
+  };
+}
 
 /** Salt rounds for bcrypt (balance between security and performance). */
 const BCRYPT_ROUNDS = 10;
@@ -36,16 +48,19 @@ export class SecureStorageService {
         return result.password;
       }
       return null;
-    } catch {
+    } catch (e) {
+      console.warn('[SecureStorage] getPinHash failed for', KEYCHAIN_SERVICE_PIN_HASH, e);
       return null;
     }
   }
 
   static async setPinHash(hash: string): Promise<void> {
     try {
-      await Keychain.setGenericPassword(KEYCHAIN_USERNAME, hash, {
-        service: KEYCHAIN_SERVICE_PIN_HASH,
-      });
+      await Keychain.setGenericPassword(
+        KEYCHAIN_USERNAME,
+        hash,
+        keychainSetOptions(KEYCHAIN_SERVICE_PIN_HASH),
+      );
     } catch {
       // Fail silently; caller can retry
     }
@@ -90,16 +105,23 @@ export class SecureStorageService {
         if (Number.isInteger(n) && n >= 0) return Math.min(n, 3);
       }
       return 0;
-    } catch {
+    } catch (e) {
+      console.warn(
+        '[SecureStorage] getPinFailedAttempts failed for',
+        KEYCHAIN_SERVICE_PIN_FAILED_ATTEMPTS,
+        e,
+      );
       return 0;
     }
   }
 
   static async setPinFailedAttempts(count: number): Promise<void> {
     try {
-      await Keychain.setGenericPassword(KEYCHAIN_USERNAME, String(count), {
-        service: KEYCHAIN_SERVICE_PIN_FAILED_ATTEMPTS,
-      });
+      await Keychain.setGenericPassword(
+        KEYCHAIN_USERNAME,
+        String(count),
+        keychainSetOptions(KEYCHAIN_SERVICE_PIN_FAILED_ATTEMPTS),
+      );
     } catch {
       // Ignore
     }
@@ -116,7 +138,12 @@ export class SecureStorageService {
         if (Number.isInteger(ts)) return ts;
       }
       return null;
-    } catch {
+    } catch (e) {
+      console.warn(
+        '[SecureStorage] getPinLockoutUntil failed for',
+        KEYCHAIN_SERVICE_PIN_LOCKOUT_UNTIL,
+        e,
+      );
       return null;
     }
   }
@@ -126,9 +153,11 @@ export class SecureStorageService {
       if (timestampMs == null) {
         await Keychain.resetGenericPassword({ service: KEYCHAIN_SERVICE_PIN_LOCKOUT_UNTIL });
       } else {
-        await Keychain.setGenericPassword(KEYCHAIN_USERNAME, String(timestampMs), {
-          service: KEYCHAIN_SERVICE_PIN_LOCKOUT_UNTIL,
-        });
+        await Keychain.setGenericPassword(
+          KEYCHAIN_USERNAME,
+          String(timestampMs),
+          keychainSetOptions(KEYCHAIN_SERVICE_PIN_LOCKOUT_UNTIL),
+        );
       }
     } catch {
       // Ignore
@@ -162,7 +191,12 @@ export class SecureStorageService {
         return null;
       }
       return this.hexToArrayBuffer(password);
-    } catch {
+    } catch (e) {
+      console.warn(
+        '[SecureStorage] getRealmEncryptionKey failed for',
+        KEYCHAIN_SERVICE_REALM_KEY,
+        e,
+      );
       return null;
     }
   }
@@ -173,9 +207,11 @@ export class SecureStorageService {
     }
     try {
       const hex = this.arrayBufferToHex(key);
-      await Keychain.setGenericPassword(KEYCHAIN_USERNAME, hex, {
-        service: KEYCHAIN_SERVICE_REALM_KEY,
-      });
+      await Keychain.setGenericPassword(
+        KEYCHAIN_USERNAME,
+        hex,
+        keychainSetOptions(KEYCHAIN_SERVICE_REALM_KEY),
+      );
     } catch {
       throw new Error('Failed to store Realm encryption key');
     }
@@ -207,7 +243,12 @@ export class SecureStorageService {
         service: KEYCHAIN_SERVICE_BIOMETRIC_ENABLED,
       });
       return result !== false && result.password === '1';
-    } catch {
+    } catch (e) {
+      console.warn(
+        '[SecureStorage] getBiometricEnabled failed for',
+        KEYCHAIN_SERVICE_BIOMETRIC_ENABLED,
+        e,
+      );
       return false;
     }
   }
@@ -215,9 +256,11 @@ export class SecureStorageService {
   static async setBiometricEnabled(enabled: boolean): Promise<void> {
     try {
       if (enabled) {
-        await Keychain.setGenericPassword(KEYCHAIN_USERNAME, '1', {
-          service: KEYCHAIN_SERVICE_BIOMETRIC_ENABLED,
-        });
+        await Keychain.setGenericPassword(
+          KEYCHAIN_USERNAME,
+          '1',
+          keychainSetOptions(KEYCHAIN_SERVICE_BIOMETRIC_ENABLED),
+        );
       } else {
         await Keychain.resetGenericPassword({ service: KEYCHAIN_SERVICE_BIOMETRIC_ENABLED });
       }

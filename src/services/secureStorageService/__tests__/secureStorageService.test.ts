@@ -26,6 +26,8 @@ jest.mock('react-native-keychain', () => ({
   getGenericPassword: jest.fn(),
   setGenericPassword: jest.fn(),
   resetGenericPassword: jest.fn(),
+  ACCESSIBLE: { WHEN_UNLOCKED_THIS_DEVICE_ONLY: 'AccessibleWhenUnlockedThisDeviceOnly' },
+  STORAGE_TYPE: { AES_GCM_NO_AUTH: 'KeystoreAESGCM_NoAuth' },
 }));
 jest.mock('bcryptjs', () => ({
   hashSync: jest.fn((_pin: string) => '$2a$10$mockhash'),
@@ -73,9 +75,11 @@ describe('secureStorageService', () => {
 
       await setPinHash('$2a$10$storedHash');
 
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', '$2a$10$storedHash', {
-        service: '@fintrack/secure_pin_hash',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        '$2a$10$storedHash',
+        expect.objectContaining({ service: '@fintrack/secure_pin_hash' }),
+      );
     });
 
     it('should return true from verifyPin when PIN matches stored hash', async () => {
@@ -118,9 +122,11 @@ describe('secureStorageService', () => {
       await setPin('5678');
 
       expect(bcrypt.hashSync).toHaveBeenCalledWith('5678', 10);
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', '$2a$10$mockhash', {
-        service: '@fintrack/secure_pin_hash',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        '$2a$10$mockhash',
+        expect.objectContaining({ service: '@fintrack/secure_pin_hash' }),
+      );
     });
 
     it('should return true from hasPin when hash is stored', async () => {
@@ -211,9 +217,11 @@ describe('secureStorageService', () => {
 
       await setPinFailedAttempts(1);
 
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', '1', {
-        service: '@fintrack/pin_failed_attempts',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        '1',
+        expect.objectContaining({ service: '@fintrack/pin_failed_attempts' }),
+      );
     });
 
     it('should return null from getPinLockoutUntil when keychain has no value', async () => {
@@ -272,9 +280,11 @@ describe('secureStorageService', () => {
 
       await setPinLockoutUntil(1700000000000);
 
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', '1700000000000', {
-        service: '@fintrack/pin_lockout_until',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        '1700000000000',
+        expect.objectContaining({ service: '@fintrack/pin_lockout_until' }),
+      );
     });
   });
 
@@ -325,9 +335,11 @@ describe('secureStorageService', () => {
 
       await setBiometricEnabled(true);
 
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', '1', {
-        service: '@fintrack/biometric_enabled',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        '1',
+        expect.objectContaining({ service: '@fintrack/biometric_enabled' }),
+      );
     });
 
     it('should reset keychain when setBiometricEnabled(false)', async () => {
@@ -395,9 +407,11 @@ describe('secureStorageService', () => {
 
       await setRealmEncryptionKey(key);
 
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', expect.any(String), {
-        service: '@fintrack/secure_realm_key',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        expect.any(String),
+        expect.objectContaining({ service: '@fintrack/secure_realm_key' }),
+      );
       const storedHex = (Keychain.setGenericPassword as jest.Mock).mock.calls[0][1];
       expect(storedHex).toHaveLength(REALM_ENCRYPTION_KEY_LENGTH * 2);
     });
@@ -442,9 +456,11 @@ describe('secureStorageService', () => {
 
       expect(result).toBeInstanceOf(ArrayBuffer);
       expect(result.byteLength).toBe(64);
-      expect(Keychain.setGenericPassword).toHaveBeenCalledWith('fintrack', expect.any(String), {
-        service: '@fintrack/secure_realm_key',
-      });
+      expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
+        'fintrack',
+        expect.any(String),
+        expect.objectContaining({ service: '@fintrack/secure_realm_key' }),
+      );
     });
   });
 });

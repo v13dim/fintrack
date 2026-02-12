@@ -8,6 +8,8 @@ import React, {
   useState,
 } from 'react';
 
+import { getSession, setSession } from 'utils/authSessionStore';
+
 export interface IAuthContextValue {
   isAuthenticated: boolean;
   signIn: () => void;
@@ -29,13 +31,15 @@ export interface IAuthProviderProps {
 }
 
 export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => getSession());
 
   const signIn = useCallback(() => {
+    setSession(true);
     setIsAuthenticated(true);
   }, []);
 
   const signOut = useCallback(() => {
+    setSession(false);
     setIsAuthenticated(false);
   }, []);
 
