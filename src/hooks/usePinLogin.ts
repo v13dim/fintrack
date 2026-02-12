@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'contexts';
 
 import { BiometricAuthService, PinAuthService } from 'services';
+
+import { useBiometricCheckOnMount } from './useBiometricCheckOnMount';
 
 const PIN_LENGTH = 4;
 const LOCKOUT_POLL_MS = 1000;
@@ -15,36 +17,13 @@ export const usePinLogin = () => {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [locked, setLocked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isCheckingBiometric, setIsCheckingBiometric] = useState(true);
   const [biometricPermissionDenied, setBiometricPermissionDenied] = useState(false);
 
   const goHome = useCallback(() => {
     signIn();
   }, [signIn]);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const [enabled, available] = await Promise.all([
-        BiometricAuthService.isBiometricEnabled(),
-        BiometricAuthService.isBiometricAvailable(),
-      ]);
-      if (cancelled || !enabled || !available) {
-        setIsCheckingBiometric(false);
-        return;
-      }
-      const success = await BiometricAuthService.authenticateWithBiometric();
-      if (cancelled) return;
-      if (success) {
-        goHome();
-      } else {
-        setIsCheckingBiometric(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [goHome]);
+  const isCheckingBiometric = useBiometricCheckOnMount(goHome);
 
   const refreshLockout = useCallback(async () => {
     const remaining = await PinAuthService.getRemainingLockoutSeconds();
@@ -69,32 +48,30 @@ export const usePinLogin = () => {
 
   const handleDigit = useCallback(
     (digit: string) => {
-      if (locked) return;
+      if (locked || value.length >= PIN_LENGTH) return;
       setErrorMessage(null);
-      if (value.length >= PIN_LENGTH) return;
       const next = value + digit;
       setValue(next);
+      if (next.length !== PIN_LENGTH) return;
 
-      if (next.length === PIN_LENGTH) {
-        setIsLoading(true);
-        PinAuthService.verifyPin(next)
-          .then(result => {
-            setIsLoading(false);
-            if (result.success) {
-              goHome();
-              return;
-            }
-            setValue('');
-            if (result.locked) {
-              setRemainingSeconds(result.remainingSeconds);
-              setLocked(true);
-              setErrorMessage(t('pin.login.locked', { seconds: result.remainingSeconds }));
-            } else {
-              setErrorMessage(t('pin.login.incorrect'));
-            }
-          })
-          .catch(() => setIsLoading(false));
-      }
+      setIsLoading(true);
+      PinAuthService.verifyPin(next)
+        .then(result => {
+          if (result.success) {
+            goHome();
+            return;
+          }
+          setValue('');
+          if (result.locked) {
+            setRemainingSeconds(result.remainingSeconds);
+            setLocked(true);
+            setErrorMessage(t('pin.login.locked', { seconds: result.remainingSeconds }));
+            return;
+          }
+          setErrorMessage(t('pin.login.incorrect'));
+        })
+        .catch(() => {})
+        .finally(() => setIsLoading(false));
     },
     [value, locked, goHome, t],
   );
@@ -123,9 +100,11 @@ export const usePinLogin = () => {
     if (success) goHome();
   }, [goHome]);
 
-  const displayError = locked
-    ? t('pin.login.locked', { seconds: remainingSeconds })
-    : errorMessage ?? undefined;
+  const displayError = useMemo(
+    () =>
+      locked ? t('pin.login.locked', { seconds: remainingSeconds }) : errorMessage ?? undefined,
+    [locked, remainingSeconds, errorMessage, t],
+  );
 
   return {
     value,

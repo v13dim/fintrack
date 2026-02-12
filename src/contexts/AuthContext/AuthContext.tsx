@@ -8,6 +8,8 @@ import React, {
   useState,
 } from 'react';
 
+import { setAuthSession } from 'services';
+
 export interface IAuthContextValue {
   isAuthenticated: boolean;
   signIn: () => void;
@@ -26,26 +28,23 @@ export const useAuth = () => {
 
 export interface IAuthProviderProps {
   children: ReactNode;
+  /** Restored from storage on app init so isAuthenticated survives remounts. */
+  initialIsAuthenticated?: boolean;
 }
 
-/** Survives AuthProvider remount (e.g. after Error Boundary retry); reset on process death. */
-let sessionActive = false;
-
-/** Reset session state for tests. Not part of public API. */
-export function __resetAuthSessionForTests(): void {
-  sessionActive = false;
-}
-
-export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => sessionActive);
+export const AuthProvider: FC<IAuthProviderProps> = ({
+  children,
+  initialIsAuthenticated = false,
+}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated);
 
   const signIn = useCallback(() => {
-    sessionActive = true;
+    setAuthSession(true);
     setIsAuthenticated(true);
   }, []);
 
   const signOut = useCallback(() => {
-    sessionActive = false;
+    setAuthSession(false);
     setIsAuthenticated(false);
   }, []);
 

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'contexts';
 
@@ -26,23 +26,25 @@ export const usePinCreate = () => {
       const next = value + digit;
       setValue(next);
 
-      if (next.length === PIN_LENGTH) {
-        if (step === 1) {
-          setFirstPin(next);
-          setValue('');
-          setStep(2);
-        } else {
-          if (next === firstPin) {
-            setIsLoading(true);
-            PinAuthService.createPin(next)
-              .then(goHome)
-              .catch(() => setIsLoading(false));
-          } else {
-            setErrorMessage(t('pin.create.mismatch'));
-            setValue('');
-          }
-        }
+      if (next.length !== PIN_LENGTH) return;
+
+      if (step === 1) {
+        setFirstPin(next);
+        setValue('');
+        setStep(2);
+        return;
       }
+
+      if (next !== firstPin) {
+        setErrorMessage(t('pin.create.mismatch'));
+        setValue('');
+        return;
+      }
+
+      setIsLoading(true);
+      PinAuthService.createPin(next)
+        .then(goHome)
+        .finally(() => setIsLoading(false));
     },
     [value, step, firstPin, goHome, t],
   );
@@ -52,8 +54,11 @@ export const usePinCreate = () => {
     setValue(prev => prev.slice(0, -1));
   }, []);
 
-  const title = step === 1 ? t('pin.create.title') : t('pin.create.repeatPrompt');
-  const subtitle = step === 1 ? t('pin.create.subtitle') : undefined;
+  const title = useMemo(
+    () => (step === 1 ? t('pin.create.title') : t('pin.create.repeatPrompt')),
+    [step, t],
+  );
+  const subtitle = useMemo(() => (step === 1 ? t('pin.create.subtitle') : undefined), [step, t]);
 
   return {
     value,

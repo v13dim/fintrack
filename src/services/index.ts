@@ -6,8 +6,10 @@ export {
 } from './autoLockStorageService';
 export { BiometricAuthService } from './biometricAuthService';
 export {
+  getAuthSession,
   getOnboardingCompleted,
   OnboardingStorageService,
+  setAuthSession,
   setOnboardingCompleted,
 } from './onboardingStorageService';
 export type { VerifyPinResult } from './pinAuthService';

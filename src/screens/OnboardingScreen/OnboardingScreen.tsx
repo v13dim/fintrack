@@ -20,6 +20,13 @@ const SLIDE_DURATION_MS = 250;
 
 const STEP_ICONS = ['📊📈', '🎯💵', '🔒📱'];
 
+const titles = ['onboarding.screen1.title', 'onboarding.screen2.title', 'onboarding.screen3.title'];
+const descriptions = [
+  'onboarding.screen1.description',
+  'onboarding.screen2.description',
+  'onboarding.screen3.description',
+];
+
 export const OnboardingScreen: FC = () => {
   const styles = useOnboardingScreenStyles();
   const { t } = useTranslation();
@@ -29,18 +36,11 @@ export const OnboardingScreen: FC = () => {
   const translateX = useSharedValue(0);
   const { width: screenWidth } = Dimensions.get('window');
 
-  const [isSaving, setIsSaving] = useState(false);
-
   const goToPinCreate = async () => {
-    if (isSaving) return;
-    setIsSaving(true);
     try {
       await OnboardingStorageService.setOnboardingCompleted(true);
-      navigation.replace(AuthStackScreens.PinCreate);
-    } catch {
-      navigation.replace(AuthStackScreens.PinCreate);
     } finally {
-      setIsSaving(false);
+      navigation.replace(AuthStackScreens.PinCreate);
     }
   };
 
@@ -65,17 +65,6 @@ export const OnboardingScreen: FC = () => {
     transform: [{ translateX: translateX.value }],
   }));
 
-  const titles = [
-    t('onboarding.screen1.title'),
-    t('onboarding.screen2.title'),
-    t('onboarding.screen3.title'),
-  ];
-  const descriptions = [
-    t('onboarding.screen1.description'),
-    t('onboarding.screen2.description'),
-    t('onboarding.screen3.description'),
-  ];
-
   return (
     <GradientBackground>
       <View style={styles.container}>
@@ -84,8 +73,8 @@ export const OnboardingScreen: FC = () => {
             <View style={styles.iconBox}>
               <Text style={styles.iconEmoji}>{STEP_ICONS[step]}</Text>
             </View>
-            <Text.H2 style={styles.title}>{titles[step]}</Text.H2>
-            <Text.Body style={styles.subtitle}>{descriptions[step]}</Text.Body>
+            <Text.H2 style={styles.title}>{t(titles[step])}</Text.H2>
+            <Text.Body style={styles.subtitle}>{t(descriptions[step])}</Text.Body>
           </Animated.View>
           <View>
             <PageIndicator currentIndex={step} totalCount={ONBOARDING_STEPS} testID='page-dot' />
@@ -98,23 +87,13 @@ export const OnboardingScreen: FC = () => {
               <Button.Primary fullWidth onPress={handleNext} testID='onboarding-next'>
                 {t('onboarding.next')}
               </Button.Primary>
-              <Button.Ghost
-                fullWidth
-                onPress={goToPinCreate}
-                testID='onboarding-skip'
-                disabled={isSaving}
-              >
+              <Button.Ghost fullWidth onPress={goToPinCreate} testID='onboarding-skip'>
                 {t('onboarding.skip')}
               </Button.Ghost>
             </>
           ) : (
             <>
-              <Button.Primary
-                fullWidth
-                onPress={handleNext}
-                testID='onboarding-get-started'
-                disabled={isSaving}
-              >
+              <Button.Primary fullWidth onPress={handleNext} testID='onboarding-get-started'>
                 {t('onboarding.getStarted')}
               </Button.Primary>
               <View style={styles.btnPlaceholder} />

@@ -1,7 +1,7 @@
 import { mockReplace } from '../__mocks__/OnboardingScreen.module-mocks';
 
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react-native';
 
 import { OnboardingStorageService } from 'services';
 
@@ -48,10 +48,12 @@ describe('OnboardingScreen', () => {
   it('should call setOnboardingCompleted and replace with PinCreate when Skip is pressed', async () => {
     renderWithTheme(<OnboardingScreen />);
 
-    fireEvent.press(screen.getByTestId('onboarding-skip'));
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('onboarding-skip'));
+    });
 
+    expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
     await waitFor(() => {
-      expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
       expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
     });
   });
@@ -61,10 +63,12 @@ describe('OnboardingScreen', () => {
 
     fireEvent.press(screen.getByTestId('onboarding-next'));
     fireEvent.press(screen.getByTestId('onboarding-next'));
-    fireEvent.press(screen.getByTestId('onboarding-get-started'));
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('onboarding-get-started'));
+    });
 
+    expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
     await waitFor(() => {
-      expect(OnboardingStorageService.setOnboardingCompleted).toHaveBeenCalledWith(true);
       expect(mockReplace).toHaveBeenCalledWith(PIN_CREATE_SCREEN);
     });
   });

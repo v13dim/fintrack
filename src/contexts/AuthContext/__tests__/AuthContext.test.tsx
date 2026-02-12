@@ -1,13 +1,13 @@
 import React from 'react';
 import { act, renderHook } from '@testing-library/react-native';
 
-import { __resetAuthSessionForTests, AuthProvider, useAuth } from '../AuthContext';
+import { AuthProvider, useAuth } from '../AuthContext';
+
+jest.mock('services', () => ({
+  setAuthSession: jest.fn(),
+}));
 
 describe('AuthContext', () => {
-  beforeEach(() => {
-    __resetAuthSessionForTests();
-  });
-
   it('should provide isAuthenticated false by default', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <AuthProvider>{children}</AuthProvider>
@@ -46,22 +46,16 @@ describe('AuthContext', () => {
     expect(result.current.isAuthenticated).toBe(false);
   });
 
-  it('should throw when useAuth is used outside AuthProvider', () => {
-    expect(() => renderHook(() => useAuth())).toThrow('useAuth must be used within AuthProvider');
+  it('should use initialIsAuthenticated when provided', () => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <AuthProvider initialIsAuthenticated={true}>{children}</AuthProvider>
+    );
+    const { result } = renderHook(() => useAuth(), { wrapper });
+
+    expect(result.current.isAuthenticated).toBe(true);
   });
 
-  it('should restore isAuthenticated from session after AuthProvider remount', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <AuthProvider>{children}</AuthProvider>
-    );
-    const { result, unmount } = renderHook(() => useAuth(), { wrapper });
-
-    act(() => result.current.signIn());
-    expect(result.current.isAuthenticated).toBe(true);
-
-    unmount();
-
-    const { result: resultAfterRemount } = renderHook(() => useAuth(), { wrapper });
-    expect(resultAfterRemount.current.isAuthenticated).toBe(true);
+  it('should throw when useAuth is used outside AuthProvider', () => {
+    expect(() => renderHook(() => useAuth())).toThrow('useAuth must be used within AuthProvider');
   });
 });

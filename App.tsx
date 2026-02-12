@@ -56,7 +56,7 @@ const NavSwitcher: FC<INavSwitcherProps> = ({ isFirstLaunch, hasPin }) => {
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-  const { isReady, isFirstLaunch, hasPin } = useAppInit();
+  const { isReady, isFirstLaunch, hasPin, hasSession } = useAppInit();
 
   useEffect(() => {
     if (isReady) {
@@ -70,7 +70,7 @@ function App() {
         <AppErrorBoundary>
           <Suspense fallback={<AppSuspenseFallback />}>
             <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-            <AuthProvider>
+            <AuthProvider initialIsAuthenticated={hasSession}>
               {isReady ? (
                 <NavigationContainer>
                   <NavSwitcher isFirstLaunch={isFirstLaunch} hasPin={hasPin} />
