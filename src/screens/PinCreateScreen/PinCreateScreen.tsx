@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -12,10 +12,6 @@ export const PinCreateScreen: FC = () => {
   const styles = usePinCreateScreenStyles();
   const { t } = useTranslation();
   const pin = usePinCreate();
-
-  useEffect(() => {
-    console.warn('[Auth] PinCreateScreen mounted');
-  }, []);
 
   return (
     <GradientBackground>

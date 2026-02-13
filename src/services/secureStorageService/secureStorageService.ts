@@ -48,8 +48,7 @@ export class SecureStorageService {
         return result.password;
       }
       return null;
-    } catch (e) {
-      console.warn('[SecureStorage] getPinHash failed for', KEYCHAIN_SERVICE_PIN_HASH, e);
+    } catch {
       return null;
     }
   }
@@ -105,12 +104,7 @@ export class SecureStorageService {
         if (Number.isInteger(n) && n >= 0) return Math.min(n, 3);
       }
       return 0;
-    } catch (e) {
-      console.warn(
-        '[SecureStorage] getPinFailedAttempts failed for',
-        KEYCHAIN_SERVICE_PIN_FAILED_ATTEMPTS,
-        e,
-      );
+    } catch {
       return 0;
     }
   }
@@ -138,12 +132,7 @@ export class SecureStorageService {
         if (Number.isInteger(ts)) return ts;
       }
       return null;
-    } catch (e) {
-      console.warn(
-        '[SecureStorage] getPinLockoutUntil failed for',
-        KEYCHAIN_SERVICE_PIN_LOCKOUT_UNTIL,
-        e,
-      );
+    } catch {
       return null;
     }
   }
@@ -191,12 +180,7 @@ export class SecureStorageService {
         return null;
       }
       return this.hexToArrayBuffer(password);
-    } catch (e) {
-      console.warn(
-        '[SecureStorage] getRealmEncryptionKey failed for',
-        KEYCHAIN_SERVICE_REALM_KEY,
-        e,
-      );
+    } catch {
       return null;
     }
   }
@@ -243,12 +227,7 @@ export class SecureStorageService {
         service: KEYCHAIN_SERVICE_BIOMETRIC_ENABLED,
       });
       return result !== false && result.password === '1';
-    } catch (e) {
-      console.warn(
-        '[SecureStorage] getBiometricEnabled failed for',
-        KEYCHAIN_SERVICE_BIOMETRIC_ENABLED,
-        e,
-      );
+    } catch {
       return false;
     }
   }

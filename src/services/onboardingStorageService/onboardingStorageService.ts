@@ -20,9 +20,7 @@ export class OnboardingStorageService {
   static async setOnboardingCompleted(completed: boolean): Promise<void> {
     try {
       await AsyncStorage.setItem(ONBOARDING_COMPLETED_KEY, completed ? 'true' : 'false');
-      console.warn('[Auth] OnboardingStorage setOnboardingCompleted', completed);
-    } catch (e) {
-      console.warn('[Auth] OnboardingStorage setOnboardingCompleted error', e);
+    } catch {
       // Fail silently; app can still function
     }
   }

@@ -36,19 +36,9 @@ export const OnboardingScreen: FC = () => {
   const translateX = useSharedValue(0);
   const { width: screenWidth } = Dimensions.get('window');
 
-  useEffect(() => {
-    console.warn('[Auth] OnboardingScreen mounted');
-  }, []);
-
-  useEffect(() => {
-    console.warn('[Auth] OnboardingScreen step', step + 1, '/', ONBOARDING_STEPS);
-  }, [step]);
-
   const goToPinCreate = async () => {
-    console.warn('[Auth] Onboarding goToPinCreate (skip or getStarted)');
     try {
       await OnboardingStorageService.setOnboardingCompleted(true);
-      console.warn('[Auth] Onboarding completed, navigating to PinCreate');
     } finally {
       navigation.replace(AuthStackScreens.PinCreate);
     }

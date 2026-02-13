@@ -24,7 +24,6 @@ export function useAppStateLock(signOut: () => void): void {
       if (nextState === 'background') {
         backgroundedAt.current = Date.now();
         cameFromBackground.current = true;
-        console.warn('[Auth] AppStateLock background');
         return;
       }
       if (nextState !== 'active') return;
@@ -36,27 +35,9 @@ export function useAppStateLock(signOut: () => void): void {
         const seconds = intervalToSeconds(interval);
         if (seconds == null) return;
         const elapsed = (Date.now() - backgroundedAt.current) / 1000;
-        if (elapsed < MIN_BACKGROUND_SECONDS) {
-          console.warn('[Auth] AppStateLock active, elapsed', elapsed.toFixed(1), 's < min, skip');
-          return;
-        }
+        if (elapsed < MIN_BACKGROUND_SECONDS) return;
         if (elapsed >= seconds) {
-          console.warn(
-            '[Auth] AppStateLock active, elapsed',
-            elapsed.toFixed(1),
-            's >=',
-            seconds,
-            's, signOut',
-          );
           signOut();
-        } else {
-          console.warn(
-            '[Auth] AppStateLock active, elapsed',
-            elapsed.toFixed(1),
-            's <',
-            seconds,
-            's, no lock',
-          );
         }
       });
     };

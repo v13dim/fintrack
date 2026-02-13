@@ -243,7 +243,7 @@ describe('usePinLogin', () => {
   });
 
   it('should not goHome when enableBiometric throws', async () => {
-    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    jest.spyOn(console, 'log').mockImplementation(() => undefined);
     jest.mocked(BiometricAuthService.requestBiometricPermission).mockResolvedValue(true);
     jest.mocked(BiometricAuthService.isBiometricEnabled).mockResolvedValue(false);
     jest.mocked(BiometricAuthService.enableBiometric).mockRejectedValue(new Error('fail'));
@@ -257,7 +257,7 @@ describe('usePinLogin', () => {
     });
 
     expect(mockSignIn).not.toHaveBeenCalled();
-    jest.mocked(console.warn).mockRestore();
+    jest.mocked(console.log).mockRestore();
   });
 
   it('should call goHome when authenticateWithBiometric succeeds on biometric press', async () => {
