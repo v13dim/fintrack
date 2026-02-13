@@ -1,0 +1,17 @@
+import { createStyles } from 'theme';
+
+export const useGradientBackgroundStyles = createStyles(() => ({
+  container: {
+    flex: 1,
+  },
+  canvas: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  },
+  content: {
+    flex: 1,
+  },
+}));

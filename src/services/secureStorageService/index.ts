@@ -1,0 +1,17 @@
+export {
+  clearPinHash,
+  getBiometricEnabled,
+  getOrCreateRealmEncryptionKey,
+  getPinFailedAttempts,
+  getPinHash,
+  getPinLockoutUntil,
+  getRealmEncryptionKey,
+  hasPin,
+  setBiometricEnabled,
+  setPin,
+  setPinFailedAttempts,
+  setPinHash,
+  setPinLockoutUntil,
+  setRealmEncryptionKey,
+  verifyPin,
+} from './secureStorageService';

@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+
+import { Text } from 'components';
 
 import { useHelloWorldStyles } from './HelloWorld.styles';
 
@@ -8,9 +10,9 @@ export const HelloWorld: FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text testID='hello-world-text' style={styles.text}>
+      <Text.H3 testID='hello-world-text' color='primary'>
         Hello world!
-      </Text>
+      </Text.H3>
     </View>
   );
 };

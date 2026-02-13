@@ -1,0 +1,1 @@
+export { BiometricAuthService } from './biometricAuthService';

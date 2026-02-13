@@ -1,3 +1,8 @@
+---
+description: 
+alwaysApply: true
+---
+
 # FinTrack - AI Development Guidelines
 
 ## Project Overview
@@ -164,6 +169,43 @@ export const useComponentStyles = createStyles<
 }));
 ```
 
+### Service Structure
+
+**All services are implemented as classes with static methods.**
+
+- One class per service (e.g. `OnboardingStorageService`, `SecureStorageService`).
+- Methods are **static** (no instance state; stateless services).
+- Export the class and, for backward compatibility, function wrappers that delegate to the class.
+- File name: `serviceNameService.ts` (e.g. `onboardingStorageService.ts`).
+- Class name: `PascalCaseStorageService` or `PascalCaseService`.
+
+```typescript
+// serviceNameService.ts
+export class ServiceNameService {
+  static async getSomething(): Promise<T> {
+    // ...
+  }
+  static async setSomething(value: T): Promise<void> {
+    // ...
+  }
+}
+
+// Backward-compatible function exports
+export const getSomething = ServiceNameService.getSomething.bind(ServiceNameService);
+export const setSomething = ServiceNameService.setSomething.bind(ServiceNameService);
+```
+
+When adding a **new** service, always create a class first; then export the class and optional function wrappers from the module.
+
+### Animations
+
+**Always use `react-native-reanimated` for animations.** Do not use React Native's built-in `Animated` API.
+
+- Use `useSharedValue`, `useAnimatedStyle`, `withTiming` / `withSpring`, and `Animated.View` (and other `Animated.*` components) from `react-native-reanimated`.
+- Animations run on the UI thread for better performance.
+- For new animations, follow existing patterns (e.g. `OnboardingScreen` slide/fade).
+- See `docs/conventions/animations.md` for details.
+
 ## Component Organization Rules
 
 **Organization Strategy:**
@@ -210,8 +252,11 @@ export const useComponentStyles = createStyles<
 - ✅ Use TypeScript strict typing
 - ✅ Place business logic in hooks/services, not components
 - ✅ Access database only through services
+- ✅ Implement services as classes with static methods (see Service Structure)
+- ✅ Use react-native-reanimated for all animations (see Animations)
 - ✅ Use theme constants for colors/spacing
 - ✅ Use `createStyles` from `theme` to create style hooks
+- ✅ Use the app **Text** component (`components/common/Text`) for all UI text; use **compound syntax** (`Text.H1`, `Text.H2`, `Text.Body`, `Text.Button`, etc.), not `<Text variant="…">`—see `docs/conventions/text-component.md`
 - ✅ Each component should have its own style hook (e.g., `useComponentStyles`)
 - ✅ Use localization for all user-facing text
 - ✅ Follow the module structure pattern (tests, mocks, implementation)
@@ -221,11 +266,15 @@ export const useComponentStyles = createStyles<
 ### DON'T:
 
 - ❌ Import database directly from components (use services)
+- ❌ Add new services as standalone functions only (use a class with static methods)
+- ❌ Use React Native's Animated API for new code (use react-native-reanimated)
 - ❌ Put business logic in components
 - ❌ Use relative imports when path aliases are available
 - ❌ Skip writing tests
 - ❌ Hardcode strings (use localization)
 - ❌ Hardcode colors/spacing (use theme)
+- ❌ Use React Native's `Text` for app UI (use `Text` from `components` / `components/common` instead)
+- ❌ Use `<Text variant="…">` (use compound components: `Text.H2`, `Text.Body`, `Text.Button`, etc.)
 - ❌ Use StyleSheet.create directly (use createStyles instead)
 - ❌ Create files outside the established structure
 - ❌ Mix concerns (UI + business logic + data access)
@@ -233,7 +282,10 @@ export const useComponentStyles = createStyles<
 
 ## Where to Look for Specific Things
 
-- **Architecture decisions**: `docs/architecture/ADR-001-high-level-architecture.md`, `ADR-002.md`
+- **Architecture decisions**: `docs/adr/ADR-001-high-level-architecture.md`, `ADR-002.md`
+- **Service conventions** (class-based services): `docs/conventions/services.md`, `src/services/secureStorageService/`
+- **Animation conventions** (Reanimated only): `docs/conventions/animations.md`, `src/screens/OnboardingScreen/OnboardingScreen.tsx`
+- **Text component** (use for all UI text): `docs/conventions/text-component.md`, `src/components/common/Text/`
 - **Component examples**: `src/screens/HelloWorld/` (shows full module structure)
 - **TypeScript config**: `tsconfig.json` (path aliases, baseUrl)
 - **Test examples**: `src/screens/HelloWorld/__tests__/`
@@ -266,9 +318,11 @@ export const useComponentStyles = createStyles<
 **Adding a new service:**
 
 1. Create folder: `services/serviceNameService/`
-2. Follow module structure pattern
-3. Abstract data access (use `db/` layer)
-4. Export from `services/index.ts`
+2. **Implement as a class** with static methods (e.g. `export class TransactionService { static create(...) { ... } }`).
+3. Export the class and, if needed, function wrappers for backward compatibility.
+4. Follow module structure pattern (__tests__, __mocks__, implementation, index.ts).
+5. Abstract data access (use `db/` layer).
+6. Export from `services/index.ts`
 
 ## Important Notes
 

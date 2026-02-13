@@ -1,17 +1,17 @@
 import '../__mocks__/HelloWorld.module-mocks';
 
 import React from 'react';
-import { render, screen } from '@testing-library/react-native';
-import { ThemeProvider } from 'contexts/ThemeContext';
+import { screen } from '@testing-library/react-native';
 
-import { lightTheme } from 'theme/lightTheme';
+import { renderWithTheme } from 'testUtils';
 
 import { HelloWorld } from '../HelloWorld';
 
-const renderWithTheme = (ui: React.ReactElement) =>
-  render(<ThemeProvider theme={lightTheme}>{ui}</ThemeProvider>);
-
 describe('HelloWorld', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should display the hello world message', () => {
     renderWithTheme(<HelloWorld />);
 
