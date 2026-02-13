@@ -19,6 +19,7 @@ export const baseColors = {
  */
 export const shadowColors = {
   // Black shadows with different opacity
+  black40: '#00000066', // 40% opacity
   black10: '#0000001A', // 10% opacity
   black08: '#00000014', // 8% opacity
   black06: '#0000000F', // 6% opacity

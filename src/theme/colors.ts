@@ -99,6 +99,7 @@ export const lightThemeColors: IColors = {
   // Base colors (using commonColors for consistency)
   white: commonColors.white,
   black: commonColors.black,
+  shadow: commonColors.shadow,
   // UI elements
   toggleInactive: '#cccccc',
 } as const;

@@ -19,7 +19,7 @@ describe('App', () => {
   it('should render SafeAreaProvider with content', () => {
     render(<App />);
 
-    expect(screen.getByTestId('hello-world')).toBeTruthy();
+    expect(screen.getByTestId('root-navigator')).toBeTruthy();
   });
 
   it('should render StatusBar', () => {
@@ -45,10 +45,9 @@ describe('App', () => {
     expect(statusBar.props.barStyle).toBe('light-content');
   });
 
-  it('should render HelloWorld screen', () => {
+  it('should render root navigator', () => {
     render(<App />);
 
-    const helloWorld = screen.getByTestId('hello-world');
-    expect(helloWorld).toBeTruthy();
+    expect(screen.getByTestId('root-navigator')).toBeTruthy();
   });
 });

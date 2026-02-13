@@ -1,0 +1,68 @@
+{
+  "splash": {
+    "title": "FinTrack",
+    "loading": "Loading..."
+  },
+  "onboarding": {
+    "next": "Next",
+    "skip": "Skip",
+    "getStarted": "Get Started",
+    "screen1": {
+      "title": "Take Control of Your Finances",
+      "description": "Track your income and expenses in seconds"
+    },
+    "screen2": {
+      "title": "Plan Your Budget",
+      "description": "Set limits by category and get notifications"
+    },
+    "screen3": {
+      "title": "Your Data is Protected",
+      "description": "All data is stored only on your device"
+    }
+  },
+  "pin": {
+    "change": {
+      "currentTitle": "Enter current PIN",
+      "currentSubtitle": "Verify your PIN to continue",
+      "newTitle": "Enter new PIN"
+    },
+    "create": {
+      "title": "Create PIN",
+      "subtitle": "Enter a 4-digit PIN to secure your data",
+      "repeatPrompt": "Enter your PIN again",
+      "mismatch": "PINs don't match"
+    },
+    "login": {
+      "title": "Enter PIN",
+      "subtitle": "Enter your PIN to continue",
+      "incorrect": "Incorrect PIN",
+      "locked": "Try again in {{seconds}} seconds",
+      "biometricPrompt": "Authenticate to open"
+    },
+    "loading": "Processing..."
+  },
+  "biometric": {
+    "enable": "Use Face ID / Touch ID",
+    "unavailable": "Biometrics not available",
+    "failed": "Authentication failed"
+  },
+  "autoLock": {
+    "title": "Auto-lock",
+    "description": "Lock app after inactivity",
+    "options": {
+      "30sec": "30 seconds",
+      "1min": "1 minute",
+      "5min": "5 minutes",
+      "never": "Never"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "security": "Security",
+    "changePin": "Change PIN"
+  },
+  "common": {
+    "error": "Error",
+    "retry": "Retry"
+  }
+}

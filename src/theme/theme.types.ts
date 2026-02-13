@@ -34,6 +34,7 @@ export type IBaseColors = Readonly<{
  */
 export type IShadowColors = Readonly<{
   black10: string;
+  black40: string;
   black08: string;
   black06: string;
   black05: string;
@@ -286,6 +287,7 @@ export type IColors = Readonly<{
   text: ITextColors;
   border: IBorderColors;
   status: IStatusColors;
+  shadow: IShadowColors;
   white: string;
   black: string;
   toggleInactive: string;

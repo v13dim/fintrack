@@ -11,6 +11,7 @@ const mockLightTheme: ITheme = {
     status: {} as ITheme['colors']['status'],
     white: '',
     black: '',
+    shadow: {} as ITheme['colors']['shadow'],
     toggleInactive: '',
   },
   typography: {} as ITheme['typography'],

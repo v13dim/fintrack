@@ -1,0 +1,1 @@
+export { AppSuspenseFallback } from './AppSuspenseFallback';
