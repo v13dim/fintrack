@@ -8,13 +8,18 @@ import { View as MockView } from 'react-native';
 
 export const mockReplace = jest.fn();
 
-jest.mock('react-native-reanimated', () => ({
-  __esModule: true,
-  default: { View: MockView },
-  useSharedValue: (initial: number) => ({ value: initial }),
-  useAnimatedStyle: (fn: () => object) => (typeof fn === 'function' ? fn() : {}),
-  withTiming: (toValue: number) => toValue,
-}));
+jest.mock('react-native-reanimated', () => {
+  return {
+    __esModule: true,
+    default: {
+      View: MockView,
+      createAnimatedComponent: (Comp: React.ComponentType<unknown>) => Comp,
+    },
+    useSharedValue: (initial: number) => ({ value: initial }),
+    useAnimatedStyle: (fn: () => object) => (typeof fn === 'function' ? fn() : {}),
+    withTiming: (toValue: number) => toValue,
+  };
+});
 
 const onboardingT: Record<string, string> = {
   'onboarding.next': 'Next',

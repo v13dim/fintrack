@@ -8,7 +8,7 @@ export interface IPinInputProps {
   /** Disable keypad (e.g. during lockout). */
   disabled?: boolean;
   /** Title above the dots. */
-  title: string;
+  title?: string;
   /** Optional subtitle. */
   subtitle?: string;
   /** Error message below title (e.g. "PINs don't match"). */

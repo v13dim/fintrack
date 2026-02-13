@@ -94,7 +94,7 @@ export class BiometricAuthService {
         service: KEYCHAIN_SERVICE_BIOMETRIC_TOKEN,
         accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET_OR_DEVICE_PASSCODE,
       });
-      return result !== false && result != null && result.password === BIOMETRIC_TOKEN_VALUE;
+      return result !== false && result?.password === BIOMETRIC_TOKEN_VALUE;
     } catch (e) {
       console.log('[BiometricAuth] authenticateWithBiometric error:', e);
       return false;

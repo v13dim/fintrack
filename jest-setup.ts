@@ -5,7 +5,10 @@ import { mockCreateReactElement } from 'testUtils/mockCreateReactElement';
 
 jest.mock('react-native-reanimated', () => ({
   __esModule: true,
-  default: { View: MockView },
+  default: {
+    View: MockView,
+    createAnimatedComponent: (Comp: React.ComponentType<unknown>) => Comp,
+  },
   useSharedValue: (initial: number) => ({ value: initial }),
   useAnimatedStyle: (fn: () => object) => (typeof fn === 'function' ? fn() : {}),
   withTiming: (toValue: number) => toValue,
@@ -51,6 +54,31 @@ jest.mock('react-i18next', () => ({
     i18n: {},
   }),
 }));
+
+jest.mock('@react-native-community/blur', () => ({
+  BlurView: (props: Record<string, unknown>) =>
+    mockCreateReactElement('BlurView', { testID: 'blur-view', ...props }),
+}));
+
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+}));
+
+jest.mock('@react-navigation/stack', () => ({
+  createStackNavigator: () => ({
+    Navigator: ({ children }: { children: React.ReactNode }) => children,
+    Screen: () => null,
+  }),
+}));
+
+jest.mock('@react-navigation/bottom-tabs', () => ({
+  createBottomTabNavigator: () => ({
+    Navigator: ({ children }: { children: React.ReactNode }) => children,
+    Screen: () => null,
+  }),
+}));
+
+jest.mock('@gorhom/bottom-sheet');
 
 jest.mock('react-native-get-random-values', () => ({}));
 

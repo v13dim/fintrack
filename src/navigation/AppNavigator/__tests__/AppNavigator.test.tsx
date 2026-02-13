@@ -2,23 +2,32 @@ import '../__mocks__/AppNavigator.module-mocks';
 
 import React from 'react';
 import { screen } from '@testing-library/react-native';
+import { TabBarVisibilityProvider } from 'contexts';
 
 import { renderWithTheme } from 'testUtils';
 
 import { AppNavigator } from '../AppNavigator';
-import { AppStackScreens } from '../AppNavigator.types';
+import { MainTabScreens } from '../AppNavigator.types';
+
+const renderAppNavigator = () =>
+  renderWithTheme(
+    <TabBarVisibilityProvider>
+      <AppNavigator />
+    </TabBarVisibilityProvider>,
+  );
 
 describe('AppNavigator', () => {
-  it('should render stack navigator with header hidden', () => {
-    renderWithTheme(<AppNavigator />);
+  it('should render tab navigator', () => {
+    renderAppNavigator();
 
-    expect(screen.getByTestId('app-stack-navigator')).toBeTruthy();
+    expect(screen.getByTestId('app-tab-navigator')).toBeTruthy();
   });
 
-  it('should register Home and Settings screens', () => {
-    renderWithTheme(<AppNavigator />);
+  it('should register Home, Analytics and Settings tabs', () => {
+    renderAppNavigator();
 
-    expect(screen.getByTestId(`screen-${AppStackScreens.Home}`)).toBeTruthy();
-    expect(screen.getByTestId(`screen-${AppStackScreens.Settings}`)).toBeTruthy();
+    expect(screen.getByTestId(`tab-${MainTabScreens.Home}`)).toBeTruthy();
+    expect(screen.getByTestId(`tab-${MainTabScreens.Analytics}`)).toBeTruthy();
+    expect(screen.getByTestId(`tab-${MainTabScreens.Settings}`)).toBeTruthy();
   });
 });

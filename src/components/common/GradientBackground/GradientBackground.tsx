@@ -31,7 +31,7 @@ export const GradientBackground: FC<IGradientBackgroundProps> = ({ children }) =
           />
         </Rect>
       </Canvas>
-      {children != null ? <View style={styles.content}>{children}</View> : null}
+      {children ? <View style={styles.content}>{children}</View> : null}
     </View>
   );
 };

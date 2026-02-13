@@ -15,7 +15,7 @@ export const PageIndicator: FC<IPageIndicatorProps> = ({
     <View style={styles.container} testID={`${testID}-container`}>
       {Array.from({ length: totalCount }).map((_, i) => (
         <View
-          key={i}
+          key={`${testID}-dot-${i}`}
           style={i === currentIndex ? styles.dotActive : styles.dot}
           testID={i === currentIndex ? `${testID}-active` : testID}
         />

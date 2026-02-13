@@ -5,19 +5,21 @@ import { useAuth } from 'contexts';
 import { BiometricAuthService, PinAuthService } from 'services';
 
 import { useBiometricCheckOnMount } from './useBiometricCheckOnMount';
+import { type IUsePinEntryApi, usePinEntry } from './usePinEntry';
 
-const PIN_LENGTH = 4;
 const LOCKOUT_POLL_MS = 1000;
 
 export const usePinLogin = () => {
   const { t } = useTranslation();
   const { signIn } = useAuth();
-  const [value, setValue] = useState('');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [locked, setLocked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [biometricPermissionDenied, setBiometricPermissionDenied] = useState(false);
+  const [biometricEnabledInSettings, setBiometricEnabledInSettings] = useState(false);
+
+  useEffect(() => {
+    BiometricAuthService.isBiometricEnabled().then(setBiometricEnabledInSettings);
+  }, []);
 
   const goHome = useCallback(() => {
     signIn();
@@ -46,40 +48,32 @@ export const usePinLogin = () => {
     return () => clearInterval(id);
   }, [locked]);
 
-  const handleDigit = useCallback(
-    (digit: string) => {
-      if (locked || value.length >= PIN_LENGTH) return;
-      setErrorMessage(null);
-      const next = value + digit;
-      setValue(next);
-      if (next.length !== PIN_LENGTH) return;
-
-      setIsLoading(true);
-      PinAuthService.verifyPin(next)
-        .then(result => {
-          if (result.success) {
-            goHome();
-            return;
-          }
-          setValue('');
-          if (result.locked) {
-            setRemainingSeconds(result.remainingSeconds);
-            setLocked(true);
-            setErrorMessage(t('pin.login.locked', { seconds: result.remainingSeconds }));
-            return;
-          }
-          setErrorMessage(t('pin.login.incorrect'));
-        })
-        .catch(() => undefined)
-        .finally(() => setIsLoading(false));
-    },
-    [value, locked, goHome, t],
-  );
-
-  const handleBackspace = useCallback(() => {
-    if (!locked) setErrorMessage(null);
-    setValue(prev => prev.slice(0, -1));
-  }, [locked]);
+  const pinEntry = usePinEntry({
+    disabled: locked,
+    onComplete: useCallback(
+      (pin: string, api: IUsePinEntryApi) => {
+        api.setIsLoading(true);
+        PinAuthService.verifyPin(pin)
+          .then(result => {
+            if (result.success) {
+              goHome();
+              return;
+            }
+            api.setValue('');
+            if (result.locked) {
+              setRemainingSeconds(result.remainingSeconds);
+              setLocked(true);
+              api.setErrorMessage(t('pin.login.locked', { seconds: result.remainingSeconds }));
+              return;
+            }
+            api.setErrorMessage(t('pin.login.incorrect'));
+          })
+          .catch(() => undefined)
+          .finally(() => api.setIsLoading(false));
+      },
+      [goHome, t],
+    ),
+  });
 
   const handleBiometricPress = useCallback(async () => {
     const granted = await BiometricAuthService.requestBiometricPermission();
@@ -91,8 +85,7 @@ export const usePinLogin = () => {
     if (!enabled) {
       try {
         await BiometricAuthService.enableBiometric();
-      } catch (e) {
-        console.log('[PinLogin] enableBiometric failed:', e);
+      } catch {
         return;
       }
     }
@@ -102,21 +95,24 @@ export const usePinLogin = () => {
 
   const displayError = useMemo(
     () =>
-      locked ? t('pin.login.locked', { seconds: remainingSeconds }) : errorMessage ?? undefined,
-    [locked, remainingSeconds, errorMessage, t],
+      locked
+        ? t('pin.login.locked', { seconds: remainingSeconds })
+        : pinEntry.errorMessage ?? undefined,
+    [locked, remainingSeconds, pinEntry.errorMessage, t],
   );
 
   return {
-    value,
-    handleDigit,
-    handleBackspace,
+    value: pinEntry.value,
+    handleDigit: pinEntry.handleDigit,
+    handleBackspace: pinEntry.handleBackspace,
     handleBiometricPress,
+    showBiometricKey: biometricEnabledInSettings,
     biometricKeyTappable: !biometricPermissionDenied,
     disabled: locked,
     title: t('pin.login.title'),
     subtitle: t('pin.login.subtitle'),
     errorMessage: displayError,
-    isLoading,
+    isLoading: pinEntry.isLoading,
     isCheckingBiometric,
   };
 };

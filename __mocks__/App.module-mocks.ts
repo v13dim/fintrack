@@ -2,6 +2,15 @@ import { mockCreateReactElement } from 'testUtils';
 
 jest.mock('localization/i18n', () => ({}));
 
+jest.mock('react-native-gesture-handler', () => ({
+  GestureHandlerRootView: ({ children }: { children: React.ReactNode }) =>
+    mockCreateReactElement('GestureHandlerRootView', { children }),
+}));
+
+jest.mock('@gorhom/bottom-sheet', () => ({
+  BottomSheetModalProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
+
 jest.mock('react-native-bootsplash', () => ({
   __esModule: true,
   default: { hide: jest.fn() },

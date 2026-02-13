@@ -4,6 +4,10 @@ import { TouchableOpacity, View } from 'react-native';
 import { Text } from 'components/common';
 import { BiometricKey } from 'components/pin/BiometricKey';
 
+import { useTheme } from 'hooks/useTheme';
+
+import { Fingerprint } from 'assets/svg';
+
 import { usePinKeypadStyles } from './PinKeypad.styles';
 import type { IPinKeypadProps } from './PinKeypad.types';
 
@@ -19,7 +23,7 @@ export const PinKeypad: FC<IPinKeypadProps> = ({
   testID = 'pin-keypad',
 }) => {
   const styles = usePinKeypadStyles();
-
+  const { colors } = useTheme();
   return (
     <View style={styles.keypad}>
       {DIGITS.map(d => (
@@ -42,7 +46,9 @@ export const PinKeypad: FC<IPinKeypadProps> = ({
           testID={`${testID}-key-biometric`}
         />
       ) : (
-        <View style={[styles.key, styles.keyEmpty]} />
+        <View style={[styles.key, styles.keyEmpty]} testID={`${testID}-key-empty`}>
+          <Fingerprint size={40} color={colors.accent.greenText} />
+        </View>
       )}
       <TouchableOpacity
         style={[styles.key, disabled ? styles.keyDisabled : null]}

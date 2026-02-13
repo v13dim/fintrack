@@ -29,7 +29,7 @@ export const PinInput: FC<IPinInputProps> = ({
     <View style={styles.container} testID={testID}>
       <View style={styles.header}>
         <View style={styles.titleContainer}>
-          <Text.H3 color='accentDark'>{title}</Text.H3>
+          {title ? <Text.H3 color='accentDark'>{title}</Text.H3> : null}
           {subtitle ? <Text.Body color='secondary'>{subtitle}</Text.Body> : null}
           {errorMessage ? (
             <Text.BodySmall color='error' testID={`${testID}-error`}>

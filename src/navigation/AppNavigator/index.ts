@@ -1,3 +1,3 @@
 export { AppNavigator } from './AppNavigator';
-export type { AppStackParamList } from './AppNavigator.types';
-export { AppStackScreens } from './AppNavigator.types';
+export type { MainTabParamList } from './AppNavigator.types';
+export { MainTabScreens } from './AppNavigator.types';

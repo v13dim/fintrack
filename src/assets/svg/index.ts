@@ -1,2 +1,9 @@
 export { Fingerprint } from './Fingerprint';
+export { IconAnalytics } from './IconAnalytics';
+export { IconBack } from './IconBack';
+export { IconCheck } from './IconCheck';
+export { IconClose } from './IconClose';
+export { IconHome } from './IconHome';
+export { IconRightArrow } from './IconRightArrow';
+export { IconSettings } from './IconSettings';
 export { Logo } from './Logo';

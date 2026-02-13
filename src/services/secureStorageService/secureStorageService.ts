@@ -99,8 +99,8 @@ export class SecureStorageService {
       const result = await Keychain.getGenericPassword({
         service: KEYCHAIN_SERVICE_PIN_FAILED_ATTEMPTS,
       });
-      if (result && typeof result === 'object' && result.password != null) {
-        const n = parseInt(result.password, 10);
+      if (result !== false && result?.password != null) {
+        const n = Number.parseInt(result.password, 10);
         if (Number.isInteger(n) && n >= 0) return Math.min(n, 3);
       }
       return 0;
@@ -127,8 +127,8 @@ export class SecureStorageService {
       const result = await Keychain.getGenericPassword({
         service: KEYCHAIN_SERVICE_PIN_LOCKOUT_UNTIL,
       });
-      if (result && typeof result === 'object' && result.password != null) {
-        const ts = parseInt(result.password, 10);
+      if (result !== false && result?.password != null) {
+        const ts = Number.parseInt(result.password, 10);
         if (Number.isInteger(ts)) return ts;
       }
       return null;
@@ -158,7 +158,7 @@ export class SecureStorageService {
   private static hexToArrayBuffer(hex: string): ArrayBuffer {
     const bytes = new Uint8Array(hex.length / 2);
     for (let i = 0; i < bytes.length; i++) {
-      bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+      bytes[i] = Number.parseInt(hex.slice(i * 2, i * 2 + 2), 16);
     }
     return bytes.buffer;
   }

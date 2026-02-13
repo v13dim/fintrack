@@ -1,27 +1,28 @@
 import { createStyles } from 'theme';
 
-export const useSettingsScreenStyles = createStyles(({ theme: { spacing } }) => ({
+export const useSettingsScreenStyles = createStyles(({ theme: { colors, spacing }, insets }) => ({
   container: {
     flex: 1,
-    paddingHorizontal: spacing.xl,
-    paddingTop: spacing['40'],
   },
-  title: {
-    marginBottom: spacing.xl,
+  content: {
+    paddingTop: insets.top + spacing[82],
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.xxl,
   },
-  sectionHeader: {
-    marginTop: spacing.lg,
-    marginBottom: spacing.sm,
-  },
-  row: {
+  bottomSheetOption: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.sm,
-    borderRadius: 8,
   },
-  rowTouchable: {
-    marginBottom: spacing.xs,
+  bottomSheetOptionPressed: {
+    opacity: 0.7,
+  },
+  bottomSheetOptionSelected: {
+    backgroundColor: colors.accent.greenBg,
+    borderRadius: 12,
+    marginHorizontal: -spacing.sm,
+    paddingHorizontal: spacing.lg,
   },
 }));

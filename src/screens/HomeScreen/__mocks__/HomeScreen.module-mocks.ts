@@ -3,24 +3,16 @@
  * Variables prefixed with "mock" are allowed in jest.mock factories.
  */
 
-import { mockCreateReactElement } from 'testUtils/mockCreateReactElement';
-
 export const mockNavigate = jest.fn();
+export const mockGetParent = jest.fn(() => ({ navigate: mockNavigate }));
 
 jest.mock('navigation', () => ({
-  AppStackScreens: {
-    Home: 'Home',
-    Settings: 'Settings',
-  },
-  AppStackParamList: {},
+  MainTabScreens: { Home: 'Home', Analytics: 'Analytics', Settings: 'Settings' },
 }));
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({
+    getParent: mockGetParent,
     navigate: mockNavigate,
   }),
-}));
-
-jest.mock('screens/HelloWorld', () => ({
-  HelloWorld: () => mockCreateReactElement('HelloWorld', { testID: 'hello-world' }),
 }));

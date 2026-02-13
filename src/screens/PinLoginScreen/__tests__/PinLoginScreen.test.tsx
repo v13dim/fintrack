@@ -112,12 +112,13 @@ describe('PinLoginScreen', () => {
   });
 
   it('should make biometric key non-tappable after user denies permission', async () => {
+    jest.mocked(BiometricAuthService.isBiometricEnabled).mockResolvedValue(true);
     jest.mocked(BiometricAuthService.requestBiometricPermission).mockResolvedValue(false);
 
     renderWithTheme(<PinLoginScreen />);
 
     await waitFor(() => {
-      expect(screen.getByTestId('pin-login-input')).toBeTruthy();
+      expect(screen.getByTestId('pin-login-input-key-biometric')).toBeTruthy();
     });
 
     fireEvent.press(screen.getByTestId('pin-login-input-key-biometric'));

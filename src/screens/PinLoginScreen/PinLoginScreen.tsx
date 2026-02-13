@@ -13,6 +13,9 @@ export const PinLoginScreen: FC = () => {
   const { t } = useTranslation();
   const pin = usePinLogin();
 
+  const showLoader = pin.isCheckingBiometric || pin.isLoading;
+  const loaderMessage = pin.isCheckingBiometric ? t('pin.login.biometricPrompt') : t('pin.loading');
+
   return (
     <GradientBackground>
       <View style={styles.container}>
@@ -26,15 +29,10 @@ export const PinLoginScreen: FC = () => {
           title={pin.title}
           subtitle={pin.subtitle}
           errorMessage={pin.errorMessage}
-          showBiometricPlaceholder
+          showBiometricPlaceholder={pin.showBiometricKey}
         />
       </View>
-      {pin.isCheckingBiometric || pin.isLoading ? (
-        <FullScreenLoader
-          message={pin.isCheckingBiometric ? t('pin.login.biometricPrompt') : t('pin.loading')}
-          testID='pin-login-loader'
-        />
-      ) : null}
+      {showLoader ? <FullScreenLoader message={loaderMessage} testID='pin-login-loader' /> : null}
     </GradientBackground>
   );
 };

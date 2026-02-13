@@ -1,7 +1,13 @@
-export type { AppStackParamList } from './AppNavigator';
-export { AppStackScreens } from './AppNavigator';
+export type { AnalyticsStackParamList } from './AnalyticsStackNavigator';
+export { AnalyticsStackScreens } from './AnalyticsStackNavigator';
+export type { MainTabParamList } from './AppNavigator';
+export { MainTabScreens } from './AppNavigator';
 export { AppNavigator } from './AppNavigator';
 export type { AuthStackParamList } from './AuthNavigator';
 export type { IAuthNavigatorProps } from './AuthNavigator';
 export { AuthStackScreens } from './AuthNavigator';
 export { AuthNavigator } from './AuthNavigator';
+export type { HomeStackParamList } from './HomeStackNavigator';
+export { HomeStackScreens } from './HomeStackNavigator';
+export type { SettingsStackParamList } from './SettingsStackNavigator';
+export { SettingsStackScreens } from './SettingsStackNavigator';

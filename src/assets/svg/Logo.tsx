@@ -16,6 +16,12 @@ const VIEW_BOX_FULL = '0 0 200 200';
 const VIEW_BOX_ICON = '0 0 200 160';
 const VIEW_BOX_WORDMARK = '0 0 180 56';
 
+const VIEW_BOX_BY_VARIANT: Record<LogoVariant, string> = {
+  full: VIEW_BOX_FULL,
+  icon: VIEW_BOX_ICON,
+  wordmark: VIEW_BOX_WORDMARK,
+};
+
 const COIN_CX = 100;
 const COIN_CY = 95;
 const COIN_R = 48;
@@ -49,8 +55,7 @@ export const Logo: FC<ILogoProps> = ({
   const dollarColor = colors.accent.green;
   const textColor = colors.text.primary;
 
-  const viewBox =
-    variant === 'icon' ? VIEW_BOX_ICON : variant === 'wordmark' ? VIEW_BOX_WORDMARK : VIEW_BOX_FULL;
+  const viewBox = VIEW_BOX_BY_VARIANT[variant];
   const showGraphic = variant === 'full' || variant === 'icon';
   const showText = variant === 'full' || variant === 'wordmark';
 

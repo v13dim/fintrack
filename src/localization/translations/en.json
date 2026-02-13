@@ -21,6 +21,11 @@
     }
   },
   "pin": {
+    "change": {
+      "currentTitle": "Enter current PIN",
+      "currentSubtitle": "Verify your PIN to continue",
+      "newTitle": "Enter new PIN"
+    },
     "create": {
       "title": "Create PIN",
       "subtitle": "Enter a 4-digit PIN to secure your data",
@@ -53,7 +58,8 @@
   },
   "settings": {
     "title": "Settings",
-    "security": "Security"
+    "security": "Security",
+    "changePin": "Change PIN"
   },
   "common": {
     "error": "Error",

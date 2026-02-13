@@ -4,7 +4,7 @@ const AUTO_LOCK_INTERVAL_KEY = '@fintrack/auto_lock_interval';
 
 export type AutoLockInterval = '30' | '60' | '300' | 'never';
 
-const VALID_VALUES: AutoLockInterval[] = ['30', '60', '300', 'never'];
+const VALID_VALUES = new Set<AutoLockInterval>(['30', '60', '300', 'never']);
 const DEFAULT_INTERVAL: AutoLockInterval = '60';
 
 /**
@@ -15,7 +15,7 @@ export class AutoLockStorageService {
   static async getAutoLockInterval(): Promise<AutoLockInterval> {
     try {
       const value = await AsyncStorage.getItem(AUTO_LOCK_INTERVAL_KEY);
-      if (value != null && VALID_VALUES.includes(value as AutoLockInterval)) {
+      if (value != null && VALID_VALUES.has(value as AutoLockInterval)) {
         return value as AutoLockInterval;
       }
       return DEFAULT_INTERVAL;

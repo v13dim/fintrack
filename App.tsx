@@ -8,10 +8,12 @@ import React, { FC, Suspense, useEffect } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import Config from 'react-native-config';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as Sentry from '@sentry/react-native';
-import { AuthProvider, ThemeProvider, useAuth } from 'contexts';
+import { AuthProvider, TabBarVisibilityProvider, ThemeProvider, useAuth } from 'contexts';
 
 import { AppNavigator, AuthNavigator } from 'navigation';
 
@@ -50,7 +52,9 @@ const NavSwitcher: FC<INavSwitcherProps> = ({ isFirstLaunch, hasPin }) => {
   return isAuthenticated ? (
     <>
       <AppStateLockHandler signOut={signOut} />
-      <AppNavigator />
+      <TabBarVisibilityProvider>
+        <AppNavigator />
+      </TabBarVisibilityProvider>
     </>
   ) : (
     <AuthNavigator isFirstLaunch={isFirstLaunch} hasPin={hasPin} />
@@ -68,22 +72,26 @@ function App() {
   }, [isReady]);
 
   return (
-    <SafeAreaProvider>
-      <ThemeProvider>
-        <AppErrorBoundary>
-          <Suspense fallback={<AppSuspenseFallback />}>
-            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-            <AuthProvider>
-              {isReady ? (
-                <NavigationContainer>
-                  <NavSwitcher isFirstLaunch={isFirstLaunch} hasPin={hasPin} />
-                </NavigationContainer>
-              ) : null}
-            </AuthProvider>
-          </Suspense>
-        </AppErrorBoundary>
-      </ThemeProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <AppErrorBoundary>
+            <Suspense fallback={<AppSuspenseFallback />}>
+              <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+              <AuthProvider>
+                {isReady ? (
+                  <BottomSheetModalProvider>
+                    <NavigationContainer>
+                      <NavSwitcher isFirstLaunch={isFirstLaunch} hasPin={hasPin} />
+                    </NavigationContainer>
+                  </BottomSheetModalProvider>
+                ) : null}
+              </AuthProvider>
+            </Suspense>
+          </AppErrorBoundary>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 
