@@ -16,6 +16,7 @@ export const usePinCreate = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const goHome = useCallback(() => {
+    console.warn('[Auth] PinCreate goHome (signIn)');
     signIn();
   }, [signIn]);
 
@@ -29,6 +30,7 @@ export const usePinCreate = () => {
       if (next.length !== PIN_LENGTH) return;
 
       if (step === 1) {
+        console.warn('[Auth] PinCreate step 1 done, ask repeat');
         setFirstPin(next);
         setValue('');
         setStep(2);
@@ -36,14 +38,19 @@ export const usePinCreate = () => {
       }
 
       if (next !== firstPin) {
+        console.warn('[Auth] PinCreate mismatch');
         setErrorMessage(t('pin.create.mismatch'));
         setValue('');
         return;
       }
 
+      console.warn('[Auth] PinCreate PIN matched, creating...');
       setIsLoading(true);
       PinAuthService.createPin(next)
-        .then(goHome)
+        .then(() => {
+          console.warn('[Auth] PinCreate PIN created, goHome');
+          goHome();
+        })
         .finally(() => setIsLoading(false));
     },
     [value, step, firstPin, goHome, t],

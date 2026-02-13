@@ -20,6 +20,7 @@ export const usePinLogin = () => {
   const [biometricPermissionDenied, setBiometricPermissionDenied] = useState(false);
 
   const goHome = useCallback(() => {
+    console.warn('[Auth] PinLogin goHome (signIn)');
     signIn();
   }, [signIn]);
 
@@ -29,9 +30,13 @@ export const usePinLogin = () => {
     const remaining = await PinAuthService.getRemainingLockoutSeconds();
     setRemainingSeconds(remaining);
     setLocked(remaining > 0);
+    if (remaining > 0) {
+      console.warn('[Auth] PinLogin lockout remaining', remaining, 's');
+    }
   }, []);
 
   useEffect(() => {
+    console.warn('[Auth] PinLogin screen mounted');
     refreshLockout();
   }, [refreshLockout]);
 
@@ -58,19 +63,24 @@ export const usePinLogin = () => {
       PinAuthService.verifyPin(next)
         .then(result => {
           if (result.success) {
+            console.warn('[Auth] PinLogin PIN verified, goHome');
             goHome();
             return;
           }
           setValue('');
           if (result.locked) {
+            console.warn('[Auth] PinLogin locked', result.remainingSeconds, 's');
             setRemainingSeconds(result.remainingSeconds);
             setLocked(true);
             setErrorMessage(t('pin.login.locked', { seconds: result.remainingSeconds }));
             return;
           }
+          console.warn('[Auth] PinLogin incorrect PIN');
           setErrorMessage(t('pin.login.incorrect'));
         })
-        .catch(() => {})
+        .catch(() => {
+          console.warn('[Auth] PinLogin verifyPin error');
+        })
         .finally(() => setIsLoading(false));
     },
     [value, locked, goHome, t],
@@ -82,8 +92,10 @@ export const usePinLogin = () => {
   }, [locked]);
 
   const handleBiometricPress = useCallback(async () => {
+    console.warn('[Auth] PinLogin biometric press');
     const granted = await BiometricAuthService.requestBiometricPermission();
     if (!granted) {
+      console.warn('[Auth] PinLogin biometric permission denied');
       setBiometricPermissionDenied(true);
       return;
     }
@@ -91,13 +103,19 @@ export const usePinLogin = () => {
     if (!enabled) {
       try {
         await BiometricAuthService.enableBiometric();
+        console.warn('[Auth] PinLogin biometric enabled');
       } catch (e) {
-        console.log('[PinLogin] enableBiometric failed:', e);
+        console.warn('[Auth] PinLogin enableBiometric failed', e);
         return;
       }
     }
     const success = await BiometricAuthService.authenticateWithBiometric();
-    if (success) goHome();
+    if (success) {
+      console.warn('[Auth] PinLogin biometric success, goHome');
+      goHome();
+    } else {
+      console.warn('[Auth] PinLogin biometric failed or cancelled');
+    }
   }, [goHome]);
 
   const displayError = useMemo(

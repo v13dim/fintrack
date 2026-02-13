@@ -20,15 +20,22 @@ export function useAppInit(): IAppInitState {
   });
 
   const init = useCallback(async () => {
+    console.warn('[Auth] AppInit start');
     try {
       const [onboardingCompleted, pinSet] = await Promise.all([getOnboardingCompleted(), hasPin()]);
-
+      const isFirstLaunch = !onboardingCompleted;
+      console.warn('[Auth] AppInit done', {
+        onboardingCompleted,
+        hasPin: pinSet,
+        isFirstLaunch,
+      });
       setState({
         isReady: true,
-        isFirstLaunch: !onboardingCompleted,
+        isFirstLaunch,
         hasPin: pinSet,
       });
-    } catch {
+    } catch (e) {
+      console.warn('[Auth] AppInit error', e);
       setState({
         isReady: true,
         isFirstLaunch: true,

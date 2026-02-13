@@ -5,7 +5,14 @@ import { AuthStackScreens } from 'navigation/AuthNavigator/AuthNavigator.types';
  * Used by AuthNavigator to set initialRouteName.
  */
 export function getAuthInitialRoute(isFirstLaunch: boolean, hasPin: boolean): AuthStackScreens {
-  if (isFirstLaunch) return AuthStackScreens.Onboarding;
-  if (hasPin) return AuthStackScreens.PinLogin;
+  if (isFirstLaunch) {
+    console.warn('[Auth] getAuthInitialRoute Onboarding', { isFirstLaunch, hasPin });
+    return AuthStackScreens.Onboarding;
+  }
+  if (hasPin) {
+    console.warn('[Auth] getAuthInitialRoute PinLogin', { isFirstLaunch, hasPin });
+    return AuthStackScreens.PinLogin;
+  }
+  console.warn('[Auth] getAuthInitialRoute PinCreate', { isFirstLaunch, hasPin });
   return AuthStackScreens.PinCreate;
 }

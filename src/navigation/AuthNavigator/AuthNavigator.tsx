@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { OnboardingScreen, PinCreateScreen, PinLoginScreen } from 'screens';
 
@@ -16,6 +16,10 @@ export interface IAuthNavigatorProps {
 
 export const AuthNavigator: FC<IAuthNavigatorProps> = ({ isFirstLaunch, hasPin }) => {
   const initialRoute = getAuthInitialRoute(isFirstLaunch, hasPin);
+
+  useEffect(() => {
+    console.warn('[Auth] AuthNavigator mounted', { initialRoute, isFirstLaunch, hasPin });
+  }, [initialRoute, isFirstLaunch, hasPin]);
 
   return (
     <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>

@@ -103,4 +103,43 @@ describe('useAppStateLock', () => {
 
     expect(signOut).not.toHaveBeenCalled();
   });
+
+  it('should not call signOut when only inactive was received (e.g. system dialog)', async () => {
+    const signOut = jest.fn();
+    renderHook(() => useAppStateLock(signOut));
+
+    act(() => {
+      listener!('inactive');
+    });
+    jest.spyOn(Date, 'now').mockReturnValue(Date.now() + 120 * 1000);
+
+    await act(async () => {
+      listener!('active');
+    });
+
+    await new Promise<void>(r => setTimeout(r, 50));
+
+    expect(AutoLockStorageService.getAutoLockInterval).not.toHaveBeenCalled();
+    expect(signOut).not.toHaveBeenCalled();
+  });
+
+  it('should not call signOut when background was less than 1 second', async () => {
+    const signOut = jest.fn();
+    renderHook(() => useAppStateLock(signOut));
+
+    act(() => {
+      listener!('background');
+    });
+    await new Promise<void>(r => setTimeout(r, 0));
+
+    jest.spyOn(Date, 'now').mockReturnValue(Date.now() + 500);
+
+    await act(async () => {
+      listener!('active');
+    });
+
+    await new Promise<void>(r => setTimeout(r, 50));
+
+    expect(signOut).not.toHaveBeenCalled();
+  });
 });

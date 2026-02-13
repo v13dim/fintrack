@@ -31,14 +31,20 @@ export interface IAuthProviderProps {
 }
 
 export const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => getSession());
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const session = getSession();
+    console.warn('[Auth] AuthContext initial session', session);
+    return session;
+  });
 
   const signIn = useCallback(() => {
+    console.warn('[Auth] AuthContext signIn');
     setSession(true);
     setIsAuthenticated(true);
   }, []);
 
   const signOut = useCallback(() => {
+    console.warn('[Auth] AuthContext signOut');
     setSession(false);
     setIsAuthenticated(false);
   }, []);
